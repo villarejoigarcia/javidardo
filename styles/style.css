@@ -176,7 +176,7 @@ header a:hover {
 }
 
 .gallery-item:hover {
-	height: calc(100% - var(--kv));
+	height: calc(75% - var(--kv));
 }
 
 #gallery img:not(.active) {
