@@ -29,11 +29,11 @@ const content = {
         // category: ["Interior"],
       },
       media: [
-        { type: "image", src: "images/javidardo_0873_heapsandwoods_5.webp" },
+        { type: "image", src: "images/javidardo_0873_heapsandwoods_1.webp" },
         { type: "image", src: "images/javidardo_0873_heapsandwoods_2.webp" },
         { type: "image", src: "images/javidardo_0873_heapsandwoods_3.webp" },
         { type: "image", src: "images/javidardo_0873_heapsandwoods_4.webp" },
-        { type: "image", src: "images/javidardo_0873_heapsandwoods_1.webp" },
+        { type: "image", src: "images/javidardo_0873_heapsandwoods_5.webp" },
       ]
     },
     {
