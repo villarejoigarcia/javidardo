@@ -7,16 +7,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ester G. Mera</title>
-  <meta name="description" content="From Vigo, Galicia. Based in Spain, working worldwide.">
-  <meta name="author" content="Ester G. Mera">
+  <title>Javi Dardo</title>
+  <meta name="description" content="Fashion and still life photographer based in Barcelona and working worldwide.">
+  <meta name="author" content="@villarejoigarcia">
   <link rel="icon" type="image/x-icon" href="">
   <link href="styles/style.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -24,32 +23,50 @@
   <main id="content">
   
     <header>
-    
-      <h1 id="title"><a href="">Ester G. Mera</a></h1>
+
+      <div>
+        <h1>Javi Dardo</h1>
+      </div>
       
-      <nav>
-        <div id="film-button">
-          <a>Film</a>
+      <div class="menus">
+        <h6>Category</h6>
+        <a>Fashion</a>
+        <a>Interior</a>
+        <a>Product</a>
+      </div>
+
+      <div class="menus">
+        <h6>View</h6>
+        <a id="gallery-button" class="active">Gallery</a>
+        <a id="archive-button">Archive</a>
+        <a>Selected</a>
+      </div>
+
+      <div id="about">
+        <a>About</a>
+        <div id="switcher">
+          <div id="bright-mode"></div>
+          <div id="dark-mode"></div>
         </div>
-        <div id="photo-button">
-          <a>Photo</a>
-        </div>
-        <a id="about-button">About</a>
-      </nav>
-    
-      <section id="info-container"></section>
+      </div>
     
     </header>
 
-    <section id="gallery-container">
+    <section id="front-page">
       
+        <div id="gallery">
+      
+          <!-- Content -->
+      
+        </div>
+
         <div id="archive">
       
           <!-- Content -->
       
         </div>
-      
-        <div id="list">
+
+        <div id="selected">
       
           <!-- Content -->
       
@@ -57,53 +74,7 @@
     
     </section>
 
-    <div id="single-index" class="hide"></div>
-
-    <p id="loading" class="hide"></p>
-
     <section id="about">
-
-      <div id="contact">
-
-        <h1>Contact</h1>
-
-        <div>
-
-          <div id="bio">
-            <!-- content -->
-          </div>
-
-          <div id="not-social">
-            <!-- content -->
-          </div>
-
-          <div id="social">
-            <!-- content -->
-          </div>
-
-        </div>
-
-      </div>
-
-      <div id="press">
-
-        <div class="heading">
-          <h1>Press & highlights</h1>
-          <a id="press-button">+ View all</a>
-        </div>
-
-
-        <div class="content">
-        
-          <!-- content -->
-
-          <div class="main"></div>
-          <div class="other"></div>
-          <div class="third"></div>
-        
-        </div>
-
-      </div>
 
     </section>
     
@@ -111,7 +82,6 @@
 
   <script src="scripts/content.js"></script>
   <script src="scripts/main.js"></script>
-  <script src="https://player.vimeo.com/api/player.js"></script>
 
 </body>
 
