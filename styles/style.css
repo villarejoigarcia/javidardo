@@ -202,10 +202,15 @@ header a:hover {
 	cursor: pointer;
 }
 
-.media-index {
+/* .media-index {
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
+} */
+
+#gallery .media-index {
+	position: absolute;
+	right: 0;
 }
 
 #gallery .media-index>* {
