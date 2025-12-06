@@ -15,6 +15,11 @@ const content = {
         { type: "image", src: "images/javidardo_0869_floor_3.webp" },
         { type: "image", src: "images/javidardo_0869_floor_4.webp" },
         { type: "image", src: "images/javidardo_0869_floor_5.webp" },
+        { type: "image", src: "images/javidardo_0869_floor_6.webp" },
+        { type: "image", src: "images/javidardo_0869_floor_7.webp" },
+        { type: "image", src: "images/javidardo_0869_floor_8.webp" },
+        { type: "image", src: "images/javidardo_0869_floor_9.webp" },
+        { type: "image", src: "images/javidardo_0869_floor_10.webp" },
       ]
     },
     {

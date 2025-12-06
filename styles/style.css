@@ -103,7 +103,7 @@ header h6 {
 
 header>*:first-child h1 {
 	position: absolute;
-	left: 8px;
+	left: var(--kv);
 	bottom: 5px;
 }
 
@@ -191,11 +191,15 @@ header a:hover {
 .caption {
 	margin-bottom: var(--kv);
 	position: relative;
-	pointer-events: none;
+	/* pointer-events: none; */
 }
 
 .caption>*:first-child::after {
 	content: ".";
+}
+
+.caption span {
+	cursor: pointer;
 }
 
 .media-index {
@@ -205,7 +209,7 @@ header a:hover {
 }
 
 #gallery .media-index>* {
-	margin-right: 6px;
+	padding-right: 6px;
 }
 
 .media-index>* {
@@ -273,7 +277,12 @@ header a:hover {
 	justify-content: space-between;
 	padding-left: 0;
 	padding-right: var(--kv);
+	padding-bottom: 0;
 	height: fit-content;
+}
+
+#archive .caption>* {
+	flex: 1;
 }
 
 #archive>*.active>* {
@@ -290,6 +299,14 @@ header a:hover {
 #archive>*.active .caption {
 	padding-left: 0;
 	padding-right: var(--kv);
+}
+
+#archive .client {
+	margin: 0 auto;
+}
+
+#archive .media-count {
+	margin-left: auto;
 }
 
 /*responsive*/

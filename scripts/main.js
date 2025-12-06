@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 					const indexContainer = $('<div>').addClass('media-index');
 
-					project.media.forEach((m, i) => {
+					project.media.slice(0, 5).forEach((m, i) => {
 						const number = $('<span>')
 							.text(i + 1)
 							.attr('data-index', i + 1)
@@ -67,7 +67,7 @@ $(document).ready(function () {
 
 				const itemMedia = $('<div>').addClass('media');
 
-				project.media.forEach((m, i) => {
+				project.media.slice(0, 5).forEach((m, i) => {
 
 					const cover = $('<img>')
 						.attr('src', m.src)
@@ -84,69 +84,14 @@ $(document).ready(function () {
 			}
 		});
 
-		// //archive
-		// const archiveContainer = $('#archive');
-
-		// c.projects.forEach((project, index) => {
-
-		// 	const archiveItem = $('<div>').addClass('archive-item').attr('data-index', index);
-
-		// 	// heading
-		// 	if (project.fields) {
-
-		// 		const itemCaption = $('<div>').addClass('caption');
-
-		// 		Object.entries(project.fields).forEach(([key, value]) => {
-		// 			const div = $('<div>');
-		// 			const title = $('<p>').text(value);
-		// 			div.append(title);
-		// 			itemCaption.append(div);
-		// 		});
-
-		// 		if (project.media?.length > 0) {
-
-		// 			const indexContainer = $('<div>').addClass('media-index');
-
-		// 			const mediaTotal = $('<span>')
-		// 				.addClass('media-count')
-		// 				.text(`${project.media.length} images`);
-
-		// 			indexContainer.append(mediaTotal);
-
-		// 			itemCaption.append(indexContainer);
-
-		// 			archiveItem.append(itemCaption);
-		// 		}
-		// 	}
-
-		// 	// media
-		// 	if (project.media && project.media.length > 0) {
-
-		// 		const itemMedia = $('<div>');
-
-		// 		project.media.forEach((m, i) => {
-
-		// 			const cover = $('<img>')
-		// 				.attr('src', m.src)
-		// 				.attr('alt', project.fields.client)
-		// 				.attr('data-index', i + 1)
-		// 				.toggleClass('active', i === 0);
-
-		// 			itemMedia.append(cover);
-		// 		});
-
-		// 		archiveItem.append(itemMedia);
-
-		// 		archiveContainer.append(archiveItem);
-		// 	}
-		// });
-
 		//archive
 		const archiveContainer = $('#archive');
 
 		c.projects.forEach((project, index) => {
 
-			const archiveItem = $('<div>').addClass('archive-item').attr('data-index', index);
+			const archiveItem = $('<div>').addClass('archive-item')
+				.attr('data-index', index)
+				.toggleClass('active', index > 1);
 
 			// heading
 			if (project.fields) {
@@ -155,7 +100,7 @@ $(document).ready(function () {
 
 				Object.entries(project.fields).forEach(([key, value]) => {
 					const div = $('<div>');
-					const title = $('<p>').text(value);
+					const title = $('<p>').text(value).addClass(key);
 					div.append(title);
 					itemCaption.append(div);
 				});
@@ -244,10 +189,13 @@ function storyFormat() {
 
 	$('.gallery-item').each(function () {
 
+		let captionActive = false;
+
 		const item = $(this);
 
 		const images = item.find('img[data-index]');
-		const indexes = item.find('.media-index [data-index]');
+		const mediaIndex = item.find('.media-index [data-index]');
+		const caption = item.find('.caption');
 
 		let current = 1;
 		const total = images.length;
@@ -255,15 +203,30 @@ function storyFormat() {
 		const activate = (i) => {
 			current = i;
 			images.removeClass('active');
-			indexes.removeClass('active');
+			mediaIndex.removeClass('active');
 
 			images.filter(`[data-index="${i}"]`).addClass('active');
-			indexes.filter(`[data-index="${i}"]`).addClass('active');
+			mediaIndex.filter(`[data-index="${i}"]`).addClass('active');
 		};
+
+		caption.on('mouseenter', function() {
+			captionActive = true;
+		});
+
+		caption.on('mouseleave', function() {
+			captionActive = false;
+		});
+
+		// index control
+		caption.on('mouseenter', '[data-index]', function () {
+			const i = parseInt($(this).attr('data-index'), 10);
+			activate(i);
+		});
 
 		const startAutoplay = () => {
 			clearInterval(interval);
 			interval = setInterval(() => {
+				if (captionActive) return;
 				current = (current % total) + 1;
 				activate(current);
 			}, 500);
