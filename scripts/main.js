@@ -124,7 +124,7 @@ $(document).ready(function () {
 			// media
 			if (project.media && project.media.length > 0) {
 
-				project.media.forEach((m, i) => {
+				project.media.slice(0, 5).forEach((m, i) => {
 
 					const itemMedia = $('<div>');
 
@@ -132,7 +132,7 @@ $(document).ready(function () {
 						.attr('src', m.src)
 						.attr('alt', project.fields.client)
 						.attr('data-index', i + 1)
-						.toggleClass('active', i === 0);
+						// .toggleClass('active', i === 0);
 
 					itemMedia.append(cover);
 
@@ -264,6 +264,11 @@ $(document).on('click', '.archive-item, .menus:not(:first-child) a', function ()
 	$('#archive').removeClass('active');
 	$('#archive-button').removeClass('active');
 	$('#gallery-button').addClass('active');
+
+	setTimeout(() => {
+		$('.archive-item').removeClass('active');
+		$('#archive').scrollTop(0);
+	}, 500);
 
 });
 

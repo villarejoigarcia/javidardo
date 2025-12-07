@@ -192,6 +192,7 @@ header a:hover {
 	margin-bottom: var(--kv);
 	position: relative;
 	/* pointer-events: none; */
+	background-color: white;
 }
 
 .caption>*:first-child::after {
