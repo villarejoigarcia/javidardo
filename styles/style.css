@@ -79,6 +79,10 @@ a {
 	cursor: pointer;
 }
 
+span {
+	display: block;
+}
+
 #front-page {
 	position: relative;
 }
@@ -237,8 +241,9 @@ header a:hover {
 } */
 
 #gallery .media-index {
-	position: absolute;
-	right: 0;
+	margin-left: auto;
+	/* position: absolute;
+	right: 0; */
 }
 
 #gallery .media-index>*,
