@@ -5,6 +5,23 @@ const content = {
   projects: [
     {
       fields: {
+        title: "0874",
+        client: "AD",
+        // category: ["Fashion"],
+      },
+      media: [
+        { type: "image", src: "images/javidardo_0874_ad_1.webp" },
+        { type: "image", src: "images/javidardo_0874_ad_3.webp" },
+        { type: "image", src: "images/javidardo_0874_ad_5.webp" },
+        { type: "image", src: "images/javidardo_0874_ad_17.webp" },
+        { type: "image", src: "images/javidardo_0874_ad_18.webp" },
+        // { type: "image", src: "images/javidardo_0869_floor_10.webp" },
+        // { type: "image", src: "images/javidardo_0869_floor_7.webp" },
+        // { type: "image", src: "images/javidardo_0869_floor_8.webp" },
+      ]
+    },
+    {
+      fields: {
         title: "0869",
         client: "Floor",
         // category: ["Fashion"],
@@ -39,6 +56,20 @@ const content = {
         // { type: "image", src: "images/javidardo_1048_thecollector_10.webp" },
         // { type: "image", src: "images/javidardo_1048_thecollector_11.webp" },
         // { type: "image", src: "images/javidardo_1048_thecollector_12.webp" },
+      ]
+    },
+    {
+      fields: {
+        title: "0961",
+        client: "Gigi Ros",
+        // category: ["Fashion"],
+      },
+      media: [
+        { type: "image", src: "images/javidardo_0961_gigiros_4.webp" },
+        { type: "image", src: "images/javidardo_0961_gigiros_6.webp" },
+        { type: "image", src: "images/javidardo_0961_gigiros_2.webp" },
+        { type: "image", src: "images/javidardo_0961_gigiros_3.webp" },
+        { type: "image", src: "images/javidardo_0961_gigiros_1.webp" },
       ]
     },
     {
@@ -80,11 +111,11 @@ const content = {
         // category: ["Fashion"],
       },
       media: [
-        { type: "image", src: "images/javidardo_0982_uniqlo_11.webp" },
         { type: "image", src: "images/javidardo_0982_uniqlo_1.webp" },
         { type: "image", src: "images/javidardo_0982_uniqlo_3.webp" },
         { type: "image", src: "images/javidardo_0982_uniqlo_6.webp" },
         { type: "image", src: "images/javidardo_0982_uniqlo_4.webp" },
+        { type: "image", src: "images/javidardo_0982_uniqlo_11.webp" },
         // { type: "image", src: "images/javidardo_0982_uniqlo_6.webp" },
         // { type: "image", src: "images/javidardo_0982_uniqlo_7.webp" },
         // { type: "image", src: "images/javidardo_0982_uniqlo_8.webp" },
@@ -204,6 +235,20 @@ const content = {
     },
     {
       fields: {
+        title: "0959",
+        client: "Heaps & Woods",
+        // category: ["Product"],
+      },
+      media: [
+        { type: "image", src: "images/javidardo_0959_heapsandwoods_43.webp" },
+        { type: "image", src: "images/javidardo_0959_heapsandwoods_70.webp" },
+        { type: "image", src: "images/javidardo_0959_heapsandwoods_90.webp" },
+        { type: "image", src: "images/javidardo_0959_heapsandwoods_106.webp" },
+        { type: "image", src: "images/javidardo_0959_heapsandwoods_109.webp" },
+      ]
+    },
+    {
+      fields: {
         title: "1040",
         client: "PDPAOLA",
         // category: ["Fashion"],
@@ -224,10 +269,10 @@ const content = {
       },
       media: [
         { type: "image", src: "images/javidardo_1014_kavehome_13.webp" },
-        { type: "image", src: "images/javidardo_1014_kavehome_7.webp" },
+        { type: "image", src: "images/javidardo_1014_kavehome_11.webp" },
         { type: "image", src: "images/javidardo_1014_kavehome_9.webp" },
-        { type: "image", src: "images/javidardo_1014_kavehome_3.webp" },
-        { type: "image", src: "images/javidardo_1014_kavehome_1.webp" },
+        { type: "image", src: "images/javidardo_1014_kavehome_7.webp" },
+        { type: "image", src: "images/javidardo_1014_kavehome_4.webp" },
         // { type: "image", src: "images/javidardo_1014_kavehome_6.webp" },
         // { type: "image", src: "images/javidardo_1014_kavehome_7.webp" },
         // { type: "image", src: "images/javidardo_1014_kavehome_8.webp" },

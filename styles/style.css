@@ -37,7 +37,7 @@ img {
 	object-fit: cover;
 	width: 100%;
 	height: auto;
-	aspect-ratio: 4/5;
+	/* aspect-ratio: 4/5; */
 }
 
 /*fonts*/
@@ -157,6 +157,7 @@ header a:hover {
 	background-color: var(--color-negative);
 	border-radius: var(--kv);
 	transition: var(--transition_s);
+	position: relative;
 }
 
 #bright-mode {
@@ -164,7 +165,7 @@ header a:hover {
 	border: 1px solid var(--color-negative);
 	position: absolute;
 	width: 200%;
-	z-index: -1;
+	z-index: 0;
 	transition: var(--transition_s);
 }
 
@@ -261,7 +262,6 @@ header a:hover {
 	top: 0;
 	left: 0;
 	padding: var(--kv);
-	/* background-color: rgba(255,255,255,.95); */
 	width: 100vw;
 	height: 100vh;
 	overflow: scroll;
@@ -363,7 +363,8 @@ header a:hover {
 	justify-content: center;
 }
 
-#selected-list .caption:not(.active)>* {
+#selected-list .caption:not(.active) p,
+#selected-list .caption:not(.active) ::after {
 	color: var(--color-grey);
 }
 
