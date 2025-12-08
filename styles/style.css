@@ -37,7 +37,7 @@ img {
 	object-fit: cover;
 	width: 100%;
 	height: auto;
-	/* aspect-ratio: 4/5; */
+	aspect-ratio: 4/5;
 }
 
 /*fonts*/
@@ -349,12 +349,12 @@ header a:hover {
 
 #selected {
 	display: flex;
+	/* padding-left: calc(100%/3); */
 }
 
 #selected>* {
 	position: relative;
 	flex: 1;
-	padding-right: calc(100%/3);
 }
 
 #selected .media-index {
@@ -373,7 +373,12 @@ header a:hover {
 }
 
 #selected-media {
-	transform: translateX(calc(100%/6*-1));
+	/* transform: translateX(calc(100%/6*-1)); */
+	flex: .5;
+}
+
+#selected .caption>* {
+	flex: 1;
 }
 
 /*responsive*/
