@@ -68,7 +68,7 @@ const content = {
         client: "North Deco",
         // category: ["Fashion"],
       },
-      hierarchy: "default",
+      hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_1011_northdeco_100.webp" },
         { type: "image", src: "images/javidardo_1011_northdeco_74.webp" },
@@ -175,7 +175,7 @@ const content = {
         client: "North Deco",
         // category: ["Fashion"],
       },
-      hierarchy: "default",
+      hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0989_northdeco_56.webp" },
         { type: "image", src: "images/javidardo_0989_northdeco_25.webp" },

@@ -200,7 +200,7 @@ header a:hover {
 	height: 0;
 	overflow: hidden;
 	transition: var(--transition);
-	padding-top: calc(var(--kv) + var(--header));
+	padding-top: calc(var(--header));
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -220,7 +220,7 @@ header.active {
 }
 
 header.active #logo h1 {
-	transform: translateY(calc(100% + 5px + var(--kv)));
+	transform: translateY(calc(100% + 5px));
 }
 
 header .menus {
@@ -497,7 +497,6 @@ header.active .menus * {
 #selected {
 	display: flex;
 	height: calc(100vh - var(--header) - var(--kv));
-	padding: var(--kv) 0 calc(var(--kv)*2) var(--kv);
 }
 
 #selected-list {
@@ -541,9 +540,8 @@ header.active .menus * {
 #selected-list .caption {
 	position: absolute;
 	top: 50%;
-	left: calc(100vw/3.333);
+	left: 50%;
 	transform-origin: center;
-	width: 40vw;
 	/* z-index: 1; */
 }
 

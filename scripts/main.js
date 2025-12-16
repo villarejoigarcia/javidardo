@@ -161,7 +161,7 @@ $(document).ready(function () {
 			const itemCaption = $('<div>')
 				.addClass('caption')
 				.attr('data-index', index + 1)
-				.toggleClass('active', index === 0);
+				// .toggleClass('active', index === 0);
 
 			Object.entries(project.fields).forEach(([key, value]) => {
 				const div = $('<div>');
@@ -241,7 +241,7 @@ $(document).ready(function () {
 	// functions
 	horizontalScroll();
 	story();
-	dartboard();
+	// dartboard();
 
 });
 
@@ -337,21 +337,21 @@ function story() {
 	});
 }
 
-function dartboard() {
+// function dartboard() {
 
-	$('#selected-list .caption').on('mouseenter', function () {
+// 	$('#selected-list .caption').on('mouseenter', function () {
 		
-		const index = $(this).data('index');
+// 		const index = $(this).data('index');
 
-		$('#selected-list .caption').removeClass('active');
-		$(this).addClass('active');
+// 		$('#selected-list .caption').removeClass('active');
+// 		$(this).addClass('active');
 
-		$('#selected-media .selected-item').removeClass('active');
-		$(`#selected-media .selected-item[data-index="${index}"]`).addClass('active');
+// 		$('#selected-media .selected-item').removeClass('active');
+// 		$(`#selected-media .selected-item[data-index="${index}"]`).addClass('active');
 
-	});
+// 	});
 
-}
+// }
 
 // filter
 
@@ -517,6 +517,27 @@ $(document).ready(function () {
 		setTimeout(() => isThrottled = false, 300);
 	}, { passive: false });
 
+	// hover
+	const isMobile = window.innerWidth <= 768;
+
+	selectedItems.forEach((item, i) => {
+
+		function activeThumb() {
+			activeIndex = i;
+			setActive(activeIndex);
+		}
+
+		if (!isMobile) {
+			item.addEventListener('mouseenter', () => {
+				activeThumb();
+			});
+		} else {
+			item.addEventListener('click', () => {
+				activeThumb();
+			});
+		}
+	});
+
 	// arrows
 	document.addEventListener('keydown', (e) => {
 		const nextKeys = ['ArrowDown', 'ArrowRight'];
@@ -549,6 +570,7 @@ $(document).ready(function () {
 			const angle = (360 / total) * index - 90;
 
 			item.style.transform = `
+			translateX(-50%)
 			rotate(${angle}deg)
 			translate(${radius}px)
 			rotate(${-angle}deg)
