@@ -370,12 +370,12 @@ $(document).on('click', '#view a', function () {
 		$('#gallery').removeClass('unactive');
 	}
 
-	if (!$(this).is('#archive-button')) {
-		setTimeout(() => {
-			$('.archive-item').not().first().removeClass('active');
-			$('#archive').scrollTop(0);
-		}, 500);
-	}
+	// if (!$(this).is('#archive-button')) {
+	// 	setTimeout(() => {
+	// 		$('.archive-item').not().first().removeClass('active');
+	// 		$('#archive').scrollTop(0);
+	// 	}, 500);
+	// }
 
 });
 
