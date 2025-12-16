@@ -414,3 +414,56 @@ $(document).on('click', '#switcher', function () {
 	$(':root').toggleClass('dark');
 
 });
+
+// interactive
+
+$(document).ready(function () {
+
+	const selected = document.querySelector('#selected');
+	const selectedList = document.querySelector('#selected-list');
+	const selectedMedia = document.querySelector('#selected-media');
+
+	const selectedItems = Array.from(selectedList.children);
+	const selectedMediaItems = Array.from(selectedMedia.children);
+
+	let activeIndex = 0;
+	let isThrottled = false;
+
+	function loopIndex(index) {
+		const last = selectedItems.length - 1;
+		if (index > last) return 0;
+		if (index < 0) return last;
+		return index;
+	}
+
+	function setActive(index) {
+
+		// list
+		selectedItems.forEach((item, i) => {
+			item.classList.toggle('active', i === index);
+		});
+
+		// media
+		selectedMediaItems.forEach((media, i) => {
+			media.classList.toggle('active', i === index);
+		});
+	}
+
+	setActive(activeIndex);
+
+	// scroll
+	selected.addEventListener('wheel', (e) => {
+		e.preventDefault();
+		if (isThrottled) return;
+
+		activeIndex = e.deltaY > 0
+			? loopIndex(activeIndex + 1)
+			: loopIndex(activeIndex - 1);
+
+		setActive(activeIndex);
+
+		isThrottled = true;
+		setTimeout(() => isThrottled = false, 300);
+	}, { passive: false });
+
+});
