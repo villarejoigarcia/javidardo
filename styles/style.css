@@ -541,9 +541,9 @@ header.active .menus * {
 #selected-list .caption {
 	position: absolute;
 	top: 50%;
-	left: 33.333vw;
+	left: calc(100vw/3.333);
 	transform-origin: center;
-	width: 33.333vw;
+	width: 40vw;
 	/* z-index: 1; */
 }
 
