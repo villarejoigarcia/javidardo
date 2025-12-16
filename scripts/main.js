@@ -417,6 +417,54 @@ $(document).on('click', '#switcher', function () {
 
 });
 
+// about
+$(document).on('click', '#about a', function () {
+
+
+	if ($('#about-container').hasClass('active')) {
+		$(this).text('About');
+
+		setTimeout(() => {
+			$('#about-container').toggleClass('active');
+			$('header').toggleClass('active');
+			$('.menus').toggleClass('active');
+		}, 333);
+		
+	} else {
+		$(this).text('Close');
+
+		$('#about-container').toggleClass('active');
+		$('header').toggleClass('active');
+		$('.menus').toggleClass('active');
+	}
+
+	$('#about-filter').toggleClass('active');
+
+});
+
+$(document).on('click', '#about-filter', function () {
+
+	if ($('#about-container').hasClass('active')) {
+
+		setTimeout(() => {
+			$('#about-container').removeClass('active');
+			$('header').removeClass('active');
+			$('.menus').removeClass('active');
+		}, 333);
+		
+	} else {
+
+		$('#about-container').removeClass('active');
+		$('header').removeClass('active');
+		$('.menus').removeClass('active');
+	}
+
+	$('#about-filter').removeClass('active');
+
+	$('#about a').text('About');
+
+});
+
 // interactive
 
 $(document).ready(function () {

@@ -4,7 +4,7 @@
 	--kv: 8px;
 	--color-grey: #cccccc;
 	--transition: all .666s;
-	--transition_s: all .333s;
+	--transition_s: all .666s, color .333s;
 	--transition_l: all 1.333s;
 	--header: 63px;
 	--color-positive: #ffffff;
@@ -64,7 +64,16 @@ span,
 	transition: var(--transition_s);
 }
 
-h1 {
+span {
+	display: block;
+}
+
+h1 span {
+	display: initial;
+}
+
+h1,
+h1 span {
 	font-family: "Sometimes Times";
 	font-size: 50px;
 }
@@ -79,8 +88,8 @@ a {
 	cursor: pointer;
 }
 
-span {
-	display: block;
+a:hover {
+	color: var(--color-grey);
 }
 
 #front-page {
@@ -104,7 +113,7 @@ header {
 	left: 0;
 	align-items: end;
 	padding: calc(var(--kv)*2) var(--kv) var(--kv);
-	background-color: var(--color-positive);
+	/* background-color: var(--color-positive); */
 	transition: var(--transition_s);
 }
 
@@ -116,7 +125,8 @@ header>*:not(:first-child) {
 	position: relative;
 }
 
-header h6 {
+header h6,
+#about-container h6:not(#legal, #listening) {
 	position: absolute;
 	bottom: 0;
 	right: 100%;
@@ -175,6 +185,102 @@ header a:hover {
 
 #dark-mode.active {
 	transform: translate(100%);
+}
+
+/*about*/
+
+#about-container {
+	position: absolute;
+	z-index: 1;
+	background-color: var(--color-positive);
+	width: 100%;
+	left: 0;
+	padding: 0 var(--kv);
+	bottom: 0;
+	height: 0;
+	overflow: hidden;
+	transition: var(--transition);
+	padding-top: calc(var(--kv) + var(--header));
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#about-container.active {
+	height: calc(66.666vh + var(--header));
+	padding-bottom: var(--kv);
+}
+
+#about-container h1 span {
+	visibility: hidden;
+}
+
+header.active {
+	transform: translateY(calc(-66.666vh));
+}
+
+header.active #logo h1 {
+	transform: translateY(calc(100% + 5px + var(--kv)));
+}
+
+header .menus {
+	transition: var(--transition_s);
+}
+
+header.active .menus * {
+	color: var(--color-grey);
+	opacity: .333;
+	pointer-events: none;
+}
+
+#about-footer {
+	display: flex;
+	position: relative;
+}
+
+#about-footer>* {
+	flex: 1;
+}
+
+.about-item {
+	display: flex;
+	align-items: end;
+	gap: var(--kv);
+	position: relative;
+}
+
+.about-item:first-child {
+	flex-direction: column;
+	align-items: start;
+	gap: 0;
+	justify-content: end;
+}
+
+.about-item:last-child {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+#about-filter {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: white;
+	mix-blend-mode: difference;
+	opacity: 0;
+	transition: var(--transition);
+	pointer-events: none;
+	transition-delay: 0;
+}
+
+#about-filter.active {
+	opacity: 1;
+	pointer-events: auto;
+	transition-delay: .333s;
 }
 
 /*gallery*/
@@ -390,7 +496,7 @@ header a:hover {
 
 #selected {
 	display: flex;
-	height: calc(100vh - var(--header));
+	height: calc(100vh - var(--header) - var(--kv));
 	padding: var(--kv) 0 calc(var(--kv)*2) var(--kv);
 }
 
@@ -436,22 +542,10 @@ header a:hover {
 	position: absolute;
 	top: 50%;
 	left: 33.333vw;
-	/* transform: translate(-50%, -50%); */
 	transform-origin: center;
 	width: 33.333vw;
+	/* z-index: 1; */
 }
-
-/*dartboard*/
-
-/* #selected-list .caption:nth-child(2),
-#selected-list .caption:nth-child(10) {
-	padding-left: 25vw;
-}
-
-#selected-list .caption:nth-child(4),
-#selected-list .caption:nth-child(8) {
-	padding-left: 5vw;
-} */
 
 /*responsive*/
 
