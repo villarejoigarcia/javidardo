@@ -150,29 +150,31 @@ $(document).ready(function () {
 		const selectedContainer = $('#selected');
 		const selectedList = $('<div>').attr('id', 'selected-list');
 
+		// filtrar solo selected
+		const selectedProjects = c.projects.filter(project =>
+			project.fields && project.hierarchy === 'selected'
+		);
+
 		// list
-		c.projects.forEach((project, index) => {
+		selectedProjects.forEach((project, index) => {
 
-			if (project.fields) {
+			const itemCaption = $('<div>')
+				.addClass('caption')
+				.attr('data-index', index + 1)
+				.toggleClass('active', index === 0);
 
-				const itemCaption = $('<div>')
-					.addClass('caption')
-					.attr('data-index', index + 1)
-					.toggleClass('active', index === 0);
+			Object.entries(project.fields).forEach(([key, value]) => {
+				const div = $('<div>');
+				const title = $('<p>').text(value).addClass(key);
+				div.append(title);
+				itemCaption.append(div);
+			});
 
-				Object.entries(project.fields).forEach(([key, value]) => {
-					const div = $('<div>');
-					const title = $('<p>').text(value).addClass(key);
-					div.append(title);
-					itemCaption.append(div);
-				});
-
-				selectedList.append(itemCaption);
-				selectedContainer.append(selectedList);
-
-			}
-
+			selectedList.append(itemCaption);
 		});
+
+		// append una sola vez
+		selectedContainer.append(selectedList);
 		
 		// media
 		const selectedMedia = $('<div>').attr('id', 'selected-media');
@@ -465,5 +467,33 @@ $(document).ready(function () {
 		isThrottled = true;
 		setTimeout(() => isThrottled = false, 300);
 	}, { passive: false });
+
+});
+
+// dartboard
+$(document).ready(function () {
+
+	const circle = document.querySelector('#selected-list');
+	const items = circle.querySelectorAll('.caption');
+	const total = items.length;
+
+	function layoutCircle() {
+		const radius = circle.clientHeight / 2;
+
+		items.forEach((item, index) => {
+			const angle = (360 / total) * index - 90;
+
+			item.style.transform = `
+			rotate(${angle}deg)
+			translate(${radius}px)
+			rotate(${-angle}deg)
+		`;
+		});
+	}
+
+	const observer = new ResizeObserver(layoutCircle);
+	observer.observe(circle);
+
+	layoutCircle();
 
 });

@@ -269,10 +269,13 @@ header a:hover {
 	padding: var(--kv);
 	width: 100vw;
 	height: 100vh;
-	overflow: scroll;
 	transition: var(--transition);
 	opacity: 0;
 	pointer-events: none;
+}
+
+#archive {
+	overflow: scroll;
 }
 
 #archive.active,
@@ -352,9 +355,8 @@ header a:hover {
 
 /*selected*/
 
-#selected {
+/* #selected {
 	display: flex;
-	/* padding-left: calc(100%/3); */
 }
 
 #selected>* {
@@ -378,13 +380,78 @@ header a:hover {
 }
 
 #selected-media {
-	/* transform: translateX(calc(100%/6*-1)); */
+	transform: translateX(calc(100%/6*-1));
 	flex: .5;
 }
 
 #selected .caption>* {
 	flex: 1;
+} */
+
+#selected {
+	display: flex;
+	height: calc(100vh - var(--header));
+	padding: var(--kv) 0 calc(var(--kv)*2) var(--kv);
 }
+
+#selected-list {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	
+}
+
+#selected-list .caption {
+	flex: 0 1 50%;
+	align-items: center;
+	justify-content: center;
+}
+
+#selected-list .caption:first-child,
+#selected-list .caption:last-child {
+	flex: 0 1 100%;
+}
+
+#selected-media {
+	position: absolute;
+	width: 16.666vw;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+#selected .media-index {
+	display: flex;
+	margin-bottom: var(--kv);
+	justify-content: center;
+}
+
+#selected-list .caption:not(.active) p,
+#selected-list .caption:not(.active) ::after {
+	color: var(--color-grey);
+}
+
+#selected-list .caption {
+	position: absolute;
+	top: 50%;
+	left: 33.333vw;
+	/* transform: translate(-50%, -50%); */
+	transform-origin: center;
+	width: 33.333vw;
+}
+
+/*dartboard*/
+
+/* #selected-list .caption:nth-child(2),
+#selected-list .caption:nth-child(10) {
+	padding-left: 25vw;
+}
+
+#selected-list .caption:nth-child(4),
+#selected-list .caption:nth-child(8) {
+	padding-left: 5vw;
+} */
 
 /*responsive*/
 
