@@ -179,7 +179,7 @@ $(document).ready(function () {
 		// media
 		const selectedMedia = $('<div>').attr('id', 'selected-media');
 		
-		c.projects.forEach((project, index) => {
+		selectedProjects.forEach((project, index) => {
 
 			if (project.media && project.media.length > 0) {
 
@@ -340,6 +340,7 @@ function story() {
 function dartboard() {
 
 	$('#selected-list .caption').on('mouseenter', function () {
+		
 		const index = $(this).data('index');
 
 		$('#selected-list .caption').removeClass('active');
