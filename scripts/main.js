@@ -468,6 +468,22 @@ $(document).ready(function () {
 		setTimeout(() => isThrottled = false, 300);
 	}, { passive: false });
 
+	// arrows
+	document.addEventListener('keydown', (e) => {
+		const nextKeys = ['ArrowDown', 'ArrowRight'];
+		const prevKeys = ['ArrowUp', 'ArrowLeft'];
+
+		if (nextKeys.includes(e.key)) {
+			activeIndex = loopIndex(activeIndex + 1);
+			setActive(activeIndex);
+		}
+
+		if (prevKeys.includes(e.key)) {
+			activeIndex = loopIndex(activeIndex - 1);
+			setActive(activeIndex);
+		}
+	});
+
 });
 
 // dartboard
