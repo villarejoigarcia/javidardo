@@ -114,7 +114,8 @@ header {
 	align-items: end;
 	padding: calc(var(--kv)*2) var(--kv) var(--kv);
 	/* background-color: var(--color-positive); */
-	transition: var(--transition_s);
+	/* transition: var(--transition_s); */
+	transition: all 1s;
 }
 
 header>* {
@@ -199,7 +200,10 @@ header a:hover {
 	bottom: 0;
 	height: 0;
 	overflow: hidden;
-	transition: var(--transition);
+	transition:
+			padding 1s,
+			height 1s,
+			background-color .666s;
 	padding-top: calc(var(--header));
 	display: flex;
 	flex-direction: column;
@@ -569,10 +573,10 @@ header.active .menus * {
 		font-size: 12px;
 	}
 
-	img,
+	/* img,
 	video {
 		width: 100% !important;
 		padding: 0 !important;
-	}
+	} */
 
 }
