@@ -1,3 +1,26 @@
+function slugs() {
+
+	if (!window.content || !window.content.projects) return;
+
+	const c = window.content;
+
+	c.projects.forEach(project => {
+
+		const title = project.fields?.title || '';
+
+		const slug = title
+			.toLowerCase()
+			.normalize('NFD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.replace(/[^\w\s-]/g, '')
+			.trim()
+			.replace(/\s+/g, '-');
+
+		project.slug = slug;
+
+	});
+}
+
 $(document).ready(function () {
 
 	if (!window.content || !window.content.projects) return;
@@ -29,19 +52,19 @@ $(document).ready(function () {
 
 		c.projects.forEach((project, index) => {
 
-			const galleryItem = $('<div>').addClass('gallery-item').attr('data-index', index);
+			const galleryItem = $('<a>').addClass('gallery-item')
+			.attr('data-index', index + 1)
+			.attr('href', `#${project.slug}`);
 
 			// heading
 			if (project.fields) {
 
 				const itemCaption = $('<div>').addClass('caption');
-
-				Object.entries(project.fields).forEach(([key, value]) => {
-					const div = $('<div>');
-					const title = $('<p>').text(value);
-					div.append(title);
-					itemCaption.append(div);
-				});
+				const values = Object.values(project.fields);
+				const title = $('<p>').text(values.join('.'));
+				const div = $('<div>');
+				div.append(title);
+				itemCaption.append(div);
 
 				if (project.media?.length > 0) {
 
@@ -90,7 +113,7 @@ $(document).ready(function () {
 		c.projects.forEach((project, index) => {
 
 			const archiveItem = $('<div>').addClass('archive-item')
-				.attr('data-index', index)
+				.attr('data-index', index + 1)
 				.toggleClass('active', index === 1);
 
 			// heading
@@ -163,12 +186,11 @@ $(document).ready(function () {
 				.attr('data-index', index + 1)
 				// .toggleClass('active', index === 0);
 
-			Object.entries(project.fields).forEach(([key, value]) => {
-				const div = $('<div>');
-				const title = $('<p>').text(value).addClass(key);
-				div.append(title);
-				itemCaption.append(div);
-			});
+			const values = Object.values(project.fields);
+			const title = $('<p>').text(values.join('.'));
+			const div = $('<div>');
+			div.append(title);
+			itemCaption.append(div);
 
 			selectedList.append(itemCaption);
 		});
@@ -224,6 +246,41 @@ $(document).ready(function () {
 			}
 		});
 
+		// close
+
+		$(document).on('click', '#single-close', function () {
+
+			$('#front-page').children().addClass('hide');
+			$('#front-page').removeAttr('data-template');
+
+			$('#single-links').removeClass('active');
+
+			setTimeout(() => {
+
+				$('#front-page').empty();
+
+				setTimeout(() => {
+
+					$('#front-page').append(galleryContainer);
+					$('#front-page').append(archiveContainer);
+					$('#front-page').append(selectedContainer);
+
+					$('#front-links').removeClass('hide');
+
+					setTimeout(() => {
+
+						$('#front-page').children().removeClass('hide');
+						history.pushState({}, '', window.location.pathname);
+						story();
+
+					});
+
+				});
+
+			}, 1000);
+
+		});
+
 	}
 
 	responsive();
@@ -241,7 +298,6 @@ $(document).ready(function () {
 	// functions
 	horizontalScroll();
 	story();
-	// dartboard();
 
 });
 
@@ -266,11 +322,13 @@ function story() {
 
 	let interval;
 
-	$('.gallery-item, .selected-item').each(function () {
+	$('.gallery-item, .selected-item, #single-gallery').each(function () {
 
 		let captionActive = false;
 
 		const item = $(this);
+
+		const media = item.find('.media');
 
 		const images = item.find('img[data-index]');
 		const mediaIndex = item.find('.media-index [data-index]');
@@ -311,7 +369,7 @@ function story() {
 			}, 500);
 		};
 
-		item.on('mouseenter', function () {
+		media.on('mouseenter', function () {
 
 			// get last index
 			const activeImage = images.filter('.active');
@@ -324,7 +382,7 @@ function story() {
 			startAutoplay();
 		});
 
-		item.on('mouseleave', function () {
+		media.on('mouseleave click', function () {
 			clearInterval(interval);
 
 			// last active
@@ -337,28 +395,13 @@ function story() {
 	});
 }
 
-// function dartboard() {
+// view
 
-// 	$('#selected-list .caption').on('mouseenter', function () {
-		
-// 		const index = $(this).data('index');
-
-// 		$('#selected-list .caption').removeClass('active');
-// 		$(this).addClass('active');
-
-// 		$('#selected-media .selected-item').removeClass('active');
-// 		$(`#selected-media .selected-item[data-index="${index}"]`).addClass('active');
-
-// 	});
-
-// }
-
-// filter
-
-$(document).on('click', '#view a', function () {
+$(document).on('click', '#view>div a', function () {
 	const index = $(this).data('index');
 
-	$('#view a').removeClass('active');
+	// $('#view>div a').removeClass('active');
+	$(this).siblings().removeClass('active');
 	$(this).addClass('active');
 
 	$('#front-page>*').removeClass('active');
@@ -369,13 +412,6 @@ $(document).on('click', '#view a', function () {
 	if ($(this).is('#gallery-button')) {
 		$('#gallery').removeClass('unactive');
 	}
-
-	// if (!$(this).is('#archive-button')) {
-	// 	setTimeout(() => {
-	// 		$('.archive-item').not().first().removeClass('active');
-	// 		$('#archive').scrollTop(0);
-	// 	}, 500);
-	// }
 
 });
 
@@ -427,15 +463,34 @@ $(document).on('click', '#about a', function () {
 
 		setTimeout(() => {
 			$('#about-container').toggleClass('active');
+
+			const parent = $('#about-container');
+			parent.height(0);
+
 			$('header').toggleClass('active');
+
+			$('header').css('transform', 'translateY(0)');
+
 			$('.menus').toggleClass('active');
 		}, 333);
 		
 	} else {
 		$(this).text('Close');
 
+		const parent = $('#about-container');
+		let totalHeight = 0;
+
+		parent.children().not(':first').each(function () {
+			totalHeight += $(this).outerHeight(true);
+		});
+
+		parent.height(totalHeight);
+
 		$('#about-container').toggleClass('active');
+
 		$('header').toggleClass('active');
+		$('header').css('transform', 'translateY(-' + totalHeight + 'px)');
+
 		$('.menus').toggleClass('active');
 	}
 
@@ -584,3 +639,212 @@ $(document).ready(function () {
 	layoutCircle();
 
 });
+
+// url
+
+// $(document).on('click', '.gallery-item', function (e) {
+// 	e.preventDefault();
+// 	const slug = $(this).attr('href').substring(1);
+// 	history.pushState({ slug }, '', `#${slug}`);
+// 	showProject(slug);
+// });
+
+$(window).on('popstate', function () {
+	const hash = window.location.hash;
+	if (hash) {
+		const slug = hash.substring(1);
+		showProject(slug);
+	} else {
+		responsive();
+	}
+});
+
+$(document).ready(function () {
+	const hash = window.location.hash;
+	if (hash) {
+		const slug = hash.substring(1);
+		showProject(slug);
+	}
+});
+
+// single
+function showProject(slug) {
+	const index = window.content.projects.findIndex(p => p.slug === slug);
+	const project = window.content.projects[index];
+	const container = $('#front-page');
+	const transition = 1000;
+
+	const viewLinks = $('#view').children('.links');
+
+	if (!project) return;
+
+	const isSingle = container.attr('data-template') === 'single';
+
+	if (!isSingle) {
+
+		container.children().addClass('hide');
+		// viewLinks.addClass('hide');
+		$('#front-links').addClass('hide');
+
+		setTimeout(() => {
+			container.empty();
+			container.attr('data-template', 'single');
+
+			renderPost();
+
+		}, transition);
+
+
+	} else {
+		const postContainer = $('#post');
+		const mediaContainer = postContainer.find('#media-container');
+
+		mediaContainer.empty();
+
+		renderMedia(mediaContainer, project);
+
+		const activeIndex = index + 1;
+		postContainer.find('#list .caption').each(function () {
+			const itemIndex = $(this).data('index');
+			$(this).toggleClass('active', itemIndex === activeIndex);
+		});
+
+
+		story();
+	}
+
+	function renderPost() {
+		const postContainer = $('<div>').attr('id', 'post')
+			.attr('data-index', index + 1)
+			.addClass('hide');
+
+		// list
+		if (project.fields) {
+			const singleNav = $('<div>').attr('id', 'single-nav');
+
+			const singleClose = $('<h6>').attr('id', 'single-close');
+			const link = $('<a>').text('Close');
+			singleClose.append(link);
+
+			const list = $('<div>').attr('id', 'list');
+			const activeIndex = index + 1;
+
+			window.content.projects.forEach((p, i) => {
+				const itemIndex = i + 1;
+				const itemCaption = $('<div>')
+					.addClass('caption')
+					.attr('data-index', itemIndex)
+					.toggleClass('active', itemIndex === activeIndex);
+
+				const values = Object.values(p.fields);
+				const title = $('<a>').attr('href', `#${p.slug}`).text(values.join('.'));
+
+				itemCaption.append(title);
+				list.append(itemCaption);
+			});
+
+			singleNav.append(singleClose).append(list);
+			postContainer.append(singleNav);
+		}
+
+		// media
+		const mediaContainer = $('<div>').attr('id', 'media-container');
+		renderMedia(mediaContainer, project);
+		postContainer.append(mediaContainer);
+
+		container.append(postContainer);
+
+		setTimeout(() => postContainer.removeClass('hide'), 0);
+
+		story();
+
+		// view 
+		// viewLinks.removeClass('hide');
+
+		setTimeout(() => {
+
+			// viewLinks.empty();
+
+			setTimeout(() => {
+
+				$('#single-links').addClass('active');
+
+				// const singleArchive = $('<a>').text('All');
+				// const singleStory = $('<a>').text('Single');
+
+				// viewLinks.append(singleArchive);
+				// viewLinks.append(singleStory);
+
+			});
+		});
+	}
+
+	function renderMedia(mediaContainer, project) {
+		if (!project.media) return;
+
+		// single
+		const singleGallery = $('<div>').attr('id', 'single-gallery');
+		const singleMedia = $('<div>').addClass('media');
+		const indexContainer = $('<div>').addClass('media-index');
+
+		project.media.forEach((m, i) => {
+			if (m.type === 'image') {
+				const $img = $('<img>')
+					.attr('src', m.src)
+					.attr('alt', project.fields.client)
+					.attr('data-index', i + 1)
+					.toggleClass('active', i === 0);
+				singleMedia.append($img);
+
+				const number = $('<span>')
+					.text(i + 1)
+					.attr('data-index', i + 1)
+					.toggleClass('active', i === 0);
+				indexContainer.append(number);
+			}
+		});
+
+		singleGallery.append(singleMedia).append(indexContainer);
+		mediaContainer.append(singleGallery);
+
+		// all
+		const archiveGallery = $('<div>').attr('id', 'single-archive');
+
+		project.media.forEach((m, i) => {
+
+			const archiveMedia = $('<div>').addClass('media-archive');
+
+			if (m.type === 'image') {
+				const $img = $('<img>')
+					.attr('src', m.src)
+					.attr('alt', project.fields.client)
+					.attr('data-index', i + 1);
+					// .toggleClass('active', i === 0);
+				archiveMedia.append($img);
+
+				const number = $('<span>')
+					.text(i + 1)
+					.attr('data-index', i + 1);
+					// .toggleClass('active', i === 0);
+				archiveMedia.append(number);
+			}
+
+			archiveGallery.append(archiveMedia);
+			
+		});
+
+		mediaContainer.append(archiveGallery);
+
+		// view
+		$('#single-button').on('click', function () {
+			archiveGallery.addClass('hide');
+			singleGallery.addClass('active');
+		});
+
+		$('#all-button').on('click', function () {
+			archiveGallery.removeClass('hide');
+			singleGallery.removeClass('active');
+		});
+
+	}
+}

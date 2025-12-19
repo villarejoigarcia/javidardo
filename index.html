@@ -20,9 +20,7 @@
 
 <body>
 
-  <main id="content">
-  
-    <header>
+  <header>
 
       <div id="logo">
         <h1>Javi Dardo</h1>
@@ -37,9 +35,15 @@
 
       <div class="menus" id="view">
         <h6>View</h6>
-        <a id="gallery-button" class="active" data-index="0">Gallery</a>
-        <a id="archive-button" data-index="1">Archive</a>
-        <a id="selected-button" data-index="2">Selected</a>
+        <div id="front-links">
+          <a id="gallery-button" class="active" data-index="0">Gallery</a>
+          <a id="archive-button" data-index="1">Archive</a>
+          <a id="selected-button" data-index="2">Selected</a>
+        </div>
+        <div id="single-links">
+          <a id="all-button" class="active" data-index="0">All</a>
+          <a id="single-button" data-index="1">Single</a>
+        </div>
       </div>
 
       <div id="about">
@@ -52,9 +56,13 @@
     
     </header>
 
+  <main id="content">
+
     <div id="about-filter"></div>
 
     <section id="about-container">
+
+      <h6 id="updated">Last update: Dec. 19, 2025</h6>
     
       <h1><span>Javi Dardo</span> is a fashion and still life photographer based in Barcelona and working worldwide. He
         produces both commercial projects with more personal ones, combining digital and analog photography.</h1>
@@ -121,10 +129,6 @@
       
         </div>
     
-    </section>
-
-    <section id="about">
-
     </section>
     
   </main>

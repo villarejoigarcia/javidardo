@@ -34,13 +34,14 @@ const content = {
         { type: "image", src: "images/javidardo_1048_thecollector_11.webp" },
         { type: "image", src: "images/javidardo_1048_thecollector_2.webp" },
         { type: "image", src: "images/javidardo_1048_thecollector_7.webp" },
-        // { type: "image", src: "images/javidardo_1048_thecollector_6.webp" },
-        // { type: "image", src: "images/javidardo_1048_thecollector_7.webp" },
-        // { type: "image", src: "images/javidardo_1048_thecollector_8.webp" },
-        // { type: "image", src: "images/javidardo_1048_thecollector_9.webp" },
-        // { type: "image", src: "images/javidardo_1048_thecollector_10.webp" },
-        // { type: "image", src: "images/javidardo_1048_thecollector_11.webp" },
-        // { type: "image", src: "images/javidardo_1048_thecollector_12.webp" },
+        
+        { type: "image", src: "images/javidardo_1048_thecollector_6.webp" },
+        { type: "image", src: "images/javidardo_1048_thecollector_7.webp" },
+        { type: "image", src: "images/javidardo_1048_thecollector_8.webp" },
+        { type: "image", src: "images/javidardo_1048_thecollector_9.webp" },
+        { type: "image", src: "images/javidardo_1048_thecollector_10.webp" },
+        { type: "image", src: "images/javidardo_1048_thecollector_11.webp" },
+        { type: "image", src: "images/javidardo_1048_thecollector_12.webp" },
       ]
     },
     {
