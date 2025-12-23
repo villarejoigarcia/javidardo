@@ -506,13 +506,19 @@ $(document).on('click', '#about-filter', function () {
 			$('#about-container').removeClass('active');
 			$('header').removeClass('active');
 			$('.menus').removeClass('active');
+			const parent = $('#about-container');
+			parent.height(0);
+			$('header').css('transform', 'translateY(0)');
 		}, 333);
-		
+
 	} else {
 
 		$('#about-container').removeClass('active');
 		$('header').removeClass('active');
 		$('.menus').removeClass('active');
+		const parent = $('#about-container');
+		parent.height(0);
+		$('header').css('transform', 'translateY(0)');
 	}
 
 	$('#about-filter').removeClass('active');
