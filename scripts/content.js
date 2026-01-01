@@ -7,8 +7,8 @@ const content = {
       fields: {
         title: "0869",
         client: "Floor",
-        // category: ["Fashion"],
       },
+      category: "Fashion",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0869_floor_9.webp" },
@@ -25,8 +25,8 @@ const content = {
       fields: {
         title: "1048",
         client: "The Collector",
-        // category: ["Fashion"],
       },
+      category: "Fashion",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_1048_thecollector_1.webp" },
@@ -48,8 +48,8 @@ const content = {
       fields: {
         title: "0981",
         client: "Multiopticas",
-        // category: ["Product"],
       },
+      category: "Product",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_1024_multiopticas_9.webp" },
@@ -67,8 +67,8 @@ const content = {
       fields: {
         title: "1011",
         client: "North Deco",
-        // category: ["Fashion"],
       },
+      category: "Product",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_1011_northdeco_100.webp" },
@@ -82,8 +82,8 @@ const content = {
       fields: {
         title: "0982",
         client: "Uniqlo",
-        // category: ["Fashion"],
       },
+      category: "Fashion",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0982_uniqlo_1.webp" },
@@ -103,8 +103,8 @@ const content = {
       fields: {
         title: "0874",
         client: "AD",
-        // category: ["Fashion"],
       },
+      category: "Interior",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0874_ad_1.webp" },
@@ -121,8 +121,8 @@ const content = {
       fields: {
         title: "0961",
         client: "Gigi Ros",
-        // category: ["Fashion"],
       },
+      category: "Art",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0961_gigiros_4.webp" },
@@ -136,8 +136,8 @@ const content = {
       fields: {
         title: "0916",
         client: "Santa Living",
-        // category: ["Interior"],
       },
+      category: "Interior",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0916_santaliving_18.webp" },
@@ -151,8 +151,8 @@ const content = {
       fields: {
         title: "0906",
         client: "Synergie",
-        // category: ["Fashion"],
       },
+      category: "Art",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0906_synergie_9.webp" },
@@ -174,8 +174,8 @@ const content = {
       fields: {
         title: "0989",
         client: "North Deco",
-        // category: ["Fashion"],
       },
+      category: "Product",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0989_northdeco_56.webp" },
@@ -189,8 +189,8 @@ const content = {
       fields: {
         title: "0964",
         client: "Multiopticas",
-        // category: ["Product"],
       },
+      category: "Product",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0964_multiopticas_1.webp" },
@@ -204,8 +204,8 @@ const content = {
       fields: {
         title: "0876",
         client: "Tenedores",
-        // category: ["Product"],
       },
+      category: "Product",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0876_tenedores_6.webp" },
@@ -222,8 +222,8 @@ const content = {
       fields: {
         title: "0966",
         client: "Uniqlo",
-        // category: ["Fashion"],
       },
+      category: "Fashion",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0966_uniqlo_9.webp" },
@@ -237,8 +237,8 @@ const content = {
       fields: {
         title: "1029",
         client: "North Deco",
-        // category: ["Fashion"],
       },
+      category: "Fashion",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_1029_northdeco_19.webp" },
@@ -252,8 +252,8 @@ const content = {
       fields: {
         title: "0959",
         client: "Heaps & Woods",
-        // category: ["Product"],
       },
+      category: "Product",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0959_heapsandwoods_43.webp" },
@@ -267,8 +267,8 @@ const content = {
       fields: {
         title: "1040",
         client: "PDPAOLA",
-        // category: ["Fashion"],
       },
+      category: "Fashion",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_1040_pdpaola_2.webp" },
@@ -282,8 +282,8 @@ const content = {
       fields: {
         title: "1014",
         client: "Kave Home",
-        // category: ["Fashion"],
       },
+      category: "Product",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_1014_kavehome_13.webp" },
@@ -305,8 +305,8 @@ const content = {
       fields: {
         title: "0996",
         client: "Casa MC",
-        // category: ["Fashion"],
       },
+      category: "Interior",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0996_casamc_9.webp" },
@@ -327,8 +327,8 @@ const content = {
       fields: {
         title: "0943",
         client: "Bodegon",
-        // category: ["Product"],
       },
+      category: "Product",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0943_bodegon_6.webp" },
@@ -347,8 +347,8 @@ const content = {
       fields: {
         title: "0873",
         client: "Heaps & Woods",
-        // category: ["Interior"],
       },
+      category: "Interior",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0873_heapsandwoods_4.webp" },
@@ -362,8 +362,8 @@ const content = {
       fields: {
         title: "1042",
         client: "Professional Cosmetics",
-        // category: ["Fashion"],
       },
+      category: "Fashion",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_1042_cosmetics_61.webp" },

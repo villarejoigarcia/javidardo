@@ -47,14 +47,59 @@ $(document).ready(function () {
 	// load
 	function responsive() {
 
+		// categories
+		const categoriesWrapper = $('#categories');
+		categoriesWrapper.find('a').remove();
+
+		const categories = [
+			...new Set(
+				window.content.projects
+					.map(project => project.category)
+					.filter(Boolean)
+			)
+		].sort((a, b) => a.localeCompare(b));
+
+		categories.forEach(category => {
+
+			const categoryFormat = category
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.replace(/[^\w\s-]/g, '')
+				.trim()
+				.replace(/\s+/g, '-');
+
+			const link = $('<a>')
+				.text(category)
+				.attr('data-category', categoryFormat);
+
+			categoriesWrapper.append(link);
+		});
+
 		//gallery
 		const galleryContainer = $('#gallery');
 
 		c.projects.forEach((project, index) => {
 
-			const galleryItem = $('<a>').addClass('gallery-item')
-			.attr('data-index', index + 1)
-			.attr('href', `#${project.slug}`);
+			const categoryFormat = project.category
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.replace(/[^\w\s-]/g, '')
+				.trim()
+				.replace(/\s+/g, '-');
+
+			const galleryItem = $('<a>')
+				.addClass('gallery-item')
+				.attr('data-index', index + 1)
+				.attr('href', `#${project.slug}`)
+				.attr('data-category', categoryFormat);
+
+			const isMobile = window.innerWidth <= 768;
+
+			if (isMobile && index === 0) {
+				galleryItem.addClass('active');
+			}
 
 			// heading
 			if (project.fields) {
@@ -854,3 +899,65 @@ function showProject(slug) {
 
 	}
 }
+
+// gallery item
+
+$(document).on('mouseenter', '.gallery-item', function () {
+	$(this).addClass('active');
+	$('.gallery-item').not(this).removeClass('active');
+});
+
+$(document).on('mouseleave', '.gallery-item', function () {
+	$('.gallery-item').removeClass('active');
+});
+
+// categories
+
+$(document).on('mouseenter', '.gallery-item', function () {
+	const category = $(this).data('category');
+
+	$('#categories a').removeClass('active');
+	$('#categories a[data-category="' + category + '"]').addClass('active');
+});
+
+$(document).on('mouseleave', '.gallery-item', function () {
+	$('#categories a').removeClass('active');
+});
+
+$(document).on('click', '#categories a', function () {
+	const category = $(this).data('category');
+
+	// categorías
+	$('#categories a').removeClass('active');
+	$(this).addClass('active');
+
+	// gallery items
+	$('.gallery-item').removeClass('active');
+	const $activeItems = $('.gallery-item[data-category="' + category + '"]');
+	$activeItems.addClass('active');
+
+	// mover scroll al primer activo
+	const $gallery = $('#gallery');
+	const $firstActive = $activeItems.first();
+
+	if ($firstActive.length) {
+	
+
+			setTimeout(() => {
+
+				const galleryLeft = $gallery.offset().left;
+		const itemLeft = $firstActive.offset().left;
+		const scrollLeft = $gallery.scrollLeft();
+
+		const targetScroll =
+			scrollLeft + (itemLeft - galleryLeft) - 8;
+
+
+		$gallery.animate(
+			{ scrollLeft: targetScroll },
+			1000
+		);
+
+		}, 666);
+	}
+});

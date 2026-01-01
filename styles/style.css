@@ -6,7 +6,7 @@
 	--transition: all .666s;
 	--transition_s: all .666s, color .333s;
 	--transition_l: all 1.333s;
-	--header: 63px;
+	--header: 66px;
 	--color-positive: #ffffff;
 	--color-negative: #000000;
 }
@@ -116,7 +116,7 @@ header {
 	bottom: 0;
 	left: 0;
 	align-items: end;
-	padding: calc(var(--kv)*2) var(--kv) var(--kv);
+	padding: calc(var(--kv)*1) var(--kv) var(--kv);
 	/* background-color: var(--color-positive); */
 	/* transition: var(--transition_s); */
 	transition: all 1s;
@@ -217,6 +217,11 @@ header a:hover {
 	bottom: 0;
 	left: 0;
 }
+
+/* #categories {
+	display: flex;
+	gap: var(--kv);
+} */
 
 /*about*/
 
@@ -358,7 +363,8 @@ header.active .menus * {
 	height: 100%;
 }
 
-.gallery-item:hover {
+/* .gallery-item:hover, */
+.gallery-item.active {
 	height: calc(75% - var(--kv));
 }
 
@@ -737,7 +743,7 @@ header.active .menus * {
 
 	/*settings*/
 
-	:root {
+	/* :root {
 		--kv: 14px;
 	}
 
@@ -749,7 +755,7 @@ header.active .menus * {
 	::before,
 	::after {
 		font-size: 12px;
-	}
+	} */
 
 	/* img,
 	video {
