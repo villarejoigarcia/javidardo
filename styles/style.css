@@ -423,11 +423,11 @@ header.active .menus * {
 } */
 
 #gallery .media-index {
-	/* margin-left: auto; */
+	margin-left: auto;
 	/* position: absolute;
 	right: 0; */
-	flex-grow: 1;
-	justify-content: end;
+	/* flex-grow: 1; */
+	/* justify-content: end; */
 }
 
 #gallery .media-index>*,
@@ -629,8 +629,10 @@ header.active .menus * {
 
 #selected .media-index {
 	display: flex;
-	margin-bottom: var(--kv);
+	/* margin: 0 auto var(--kv) auto; */
+	/* width: fit-content; */
 	justify-content: center;
+	margin-bottom: var(--kv);
 }
 
 #selected-list .caption:not(.active) p,
@@ -749,6 +751,7 @@ header.active .menus * {
 
 #single-archive > .media-archive.active {
 	grid-column: span 2;
+	/* order: -1; */
 }
 
 #single-archive > .media-archive.hide {
