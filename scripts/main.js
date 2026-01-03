@@ -584,6 +584,8 @@ $(document).on('mouseenter', '.archive-item', function () {
 
 $(document).on('mouseleave', '.archive-item', function () {
 
+	if ($('#categories a').hasClass('filter')) return;
+
 	$('.archive-item, #categories a').removeClass('active');
 
 });
