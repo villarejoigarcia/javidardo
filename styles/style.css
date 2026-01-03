@@ -223,6 +223,25 @@ header a:hover {
 	gap: var(--kv);
 } */
 
+#categories a {
+	color: var(--color-grey);
+	overflow: hidden;
+	height: 1.3em;
+}
+
+#categories a.filter::before {
+	content: "- ";
+}
+
+#categories a:not(.active).selected {
+	height: 0;
+}
+
+/* #categories a.selected {
+	position: absolute;
+	bottom: 0;
+} */
+
 /*about*/
 
 #about-container {
@@ -363,9 +382,17 @@ header.active .menus * {
 	height: 100%;
 }
 
-/* .gallery-item:hover, */
+.caption {
+	transition: var(--transition);
+}
+
 .gallery-item.active {
 	height: calc(75% - var(--kv));
+}
+
+.gallery-item.filter {
+	opacity: .1;
+	pointer-events: none;
 }
 
 #gallery img:not(.active),
@@ -446,35 +473,59 @@ header.active .menus * {
 	pointer-events: auto;
 }
 
-#archive>* {
+.archive-item {
 	display: flex;
 	flex-wrap: wrap;
 	transition: var(--transition);
 }
 
-#archive>*>* {
+.archive-item>* {
 	flex: 0 1 calc(100%/3);
-	padding-right: calc(100%/6);
+	padding-right: calc(100%/4);
 	padding-bottom: calc(100%/12);
 	transition: var(--transition);
 }
 
-#archive>*>*:nth-child(6n + 4),
-#archive>*>*:nth-child(6n + 5),
-#archive>*>*:nth-child(6n + 6) {
+.archive-item.active>* {
+	padding-right: calc(100%/6);
+}
+
+.archive-item>*:nth-child(6n + 4),
+.archive-item>*:nth-child(6n + 5),
+.archive-item>*:nth-child(6n + 6) {
+   padding-right: 0;
+   padding-left: calc(100%/4);
+}
+
+.archive-item.active>*:nth-child(6n + 4),
+.archive-item.active>*:nth-child(6n + 5),
+.archive-item.active>*:nth-child(6n + 6) {
    padding-right: 0;
    padding-left: calc(100%/6);
 }
 
 #archive .media-index {
 	position: relative;
-	/* right: calc(100%/2); */
 	transform: none;
 	left: auto;
 }
 
-.menus a.active {
+.archive-item {
+	margin-bottom: var(--kv);
+}
+
+.archive-item.filter {
+	opacity: .1;
+}
+
+.menus a {
 	color: var(--color-grey);
+}
+
+.menus a.active,
+.menus a:hover {
+	/* color: var(--color-grey); */
+	color: var(--color-negative) !important; 
 }
 
 #archive .caption {
@@ -489,17 +540,6 @@ header.active .menus * {
 
 #archive .caption>* {
 	flex: 1;
-}
-
-#archive>*.active>* {
-	padding-right: calc(100%/4);
-}
-
-#archive>*.active>*:nth-child(6n + 4),
-#archive>*.active>*:nth-child(6n + 5),
-#archive>*.active>*:nth-child(6n + 6) {
-   padding-right: 0;
-   padding-left: calc(100%/4);
 }
 
 #archive>*.active .caption {
@@ -719,6 +759,14 @@ header.active .menus * {
 
 .media-archive {
 	height: fit-content;
+}
+
+#single-close a {
+	color: var(--color-grey);
+}
+
+#single-close a:hover {
+	color: var(--color-negative);
 }
 
 /*interactive*/

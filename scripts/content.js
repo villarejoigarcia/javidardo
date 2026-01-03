@@ -26,7 +26,7 @@ const content = {
         title: "1048",
         client: "The Collector",
       },
-      category: "Fashion",
+      category: "Product",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_1048_thecollector_1.webp" },
@@ -68,7 +68,7 @@ const content = {
         title: "1011",
         client: "North Deco",
       },
-      category: "Product",
+      category: "Interiorism",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_1011_northdeco_100.webp" },
@@ -104,7 +104,7 @@ const content = {
         title: "0874",
         client: "AD",
       },
-      category: "Interior",
+      category: "Interiorism",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0874_ad_1.webp" },
@@ -137,7 +137,7 @@ const content = {
         title: "0916",
         client: "Santa Living",
       },
-      category: "Interior",
+      category: "Interiorism",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0916_santaliving_18.webp" },
@@ -175,7 +175,7 @@ const content = {
         title: "0989",
         client: "North Deco",
       },
-      category: "Product",
+      category: "Interiorism",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0989_northdeco_56.webp" },
@@ -205,7 +205,7 @@ const content = {
         title: "0876",
         client: "Tenedores",
       },
-      category: "Product",
+      category: "Art",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0876_tenedores_6.webp" },
@@ -238,7 +238,7 @@ const content = {
         title: "1029",
         client: "North Deco",
       },
-      category: "Fashion",
+      category: "Interiorism",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_1029_northdeco_19.webp" },
@@ -253,7 +253,7 @@ const content = {
         title: "0959",
         client: "Heaps & Woods",
       },
-      category: "Product",
+      category: "Interiorism",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0959_heapsandwoods_43.webp" },
@@ -268,7 +268,7 @@ const content = {
         title: "1040",
         client: "PDPAOLA",
       },
-      category: "Fashion",
+      category: "Product",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_1040_pdpaola_2.webp" },
@@ -283,7 +283,7 @@ const content = {
         title: "1014",
         client: "Kave Home",
       },
-      category: "Product",
+      category: "Interiorism",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_1014_kavehome_13.webp" },
@@ -306,7 +306,7 @@ const content = {
         title: "0996",
         client: "Casa MC",
       },
-      category: "Interior",
+      category: "Interiorism",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0996_casamc_9.webp" },
@@ -328,7 +328,7 @@ const content = {
         title: "0943",
         client: "Bodegon",
       },
-      category: "Product",
+      category: "Art",
       hierarchy: "selected",
       media: [
         { type: "image", src: "images/javidardo_0943_bodegon_6.webp" },
@@ -348,7 +348,7 @@ const content = {
         title: "0873",
         client: "Heaps & Woods",
       },
-      category: "Interior",
+      category: "Interiorism",
       hierarchy: "default",
       media: [
         { type: "image", src: "images/javidardo_0873_heapsandwoods_4.webp" },
