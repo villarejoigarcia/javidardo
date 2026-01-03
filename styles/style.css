@@ -479,6 +479,10 @@ header.active .menus * {
 	transition: var(--transition);
 }
 
+.archive-item.delay>* {
+	transition-delay: .666s;
+}
+
 .archive-item>* {
 	flex: 0 1 calc(100%/3);
 	padding-right: calc(100%/4);
@@ -607,6 +611,7 @@ header.active .menus * {
 	flex: 0 1 50%;
 	align-items: center;
 	justify-content: center;
+	transition: none;
 }
 
 #selected-list .caption:first-child,

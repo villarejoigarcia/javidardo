@@ -175,7 +175,9 @@ $(document).ready(function () {
 			// heading
 			if (project.fields) {
 
-				const itemCaption = $('<div>').addClass('caption');
+				const itemCaption = $('<a>')
+				.addClass('caption')
+				.attr('href', `#${project.slug}`);
 
 				Object.entries(project.fields).forEach(([key, value]) => {
 					const div = $('<div>');
@@ -207,13 +209,18 @@ $(document).ready(function () {
 
 					const itemMedia = $('<div>');
 
+					const postSlug = $('<a>')
+						.attr('href', `#${project.slug}`);
+
 					const cover = $('<img>')
 						.attr('src', m.src)
 						.attr('alt', project.fields.client)
-						.attr('data-index', i + 1)
+						.attr('data-index', i + 1);
 						// .toggleClass('active', i === 0);
 
-					itemMedia.append(cover);
+					postSlug.append(cover);
+					
+					itemMedia.append(postSlug);
 
 					archiveItem.append(itemMedia);
 
@@ -228,7 +235,6 @@ $(document).ready(function () {
 		const selectedContainer = $('#selected');
 		const selectedList = $('<div>').attr('id', 'selected-list');
 
-		// filtrar solo selected
 		const selectedProjects = c.projects.filter(project =>
 			project.fields && project.hierarchy === 'selected'
 		);
@@ -236,9 +242,10 @@ $(document).ready(function () {
 		// list
 		selectedProjects.forEach((project, index) => {
 
-			const itemCaption = $('<div>')
+			const itemCaption = $('<a>')
 				.addClass('caption')
 				.attr('data-index', index + 1)
+				.attr('href', `#${project.slug}`);
 				// .toggleClass('active', index === 0);
 
 			const values = Object.values(project.fields);
@@ -250,7 +257,6 @@ $(document).ready(function () {
 			selectedList.append(itemCaption);
 		});
 
-		// append una sola vez
 		selectedContainer.append(selectedList);
 		
 		// media
@@ -287,7 +293,9 @@ $(document).ready(function () {
 				selectedItem.append(indexContainer);
 
 				// media
-				const itemMedia = $('<div>').addClass('media');
+				const itemMedia = $('<a>')
+				.addClass('media')
+				.attr('href', `#${project.slug}`);
 
 				project.media.slice(0, 5).forEach((m, i) => {
 
@@ -341,12 +349,15 @@ $(document).ready(function () {
 						
 					});
 
-					$('.gallery-item').removeClass('active filter');
+					$('.gallery-item, .archive-item').removeClass('active filter');
+
+					$('.archive-item').addClass('delay');
+
 					$('#categories a').removeClass('selected');
-					// $('.gallery-item:first-child').addClass('active');
 
 					setTimeout(() => {
 						$('#front-page').css('pointer-events', 'auto');
+						$('.archive-item').removeClass('delay');
 					}, 666);
 
 				});
@@ -483,12 +494,12 @@ $(document).on('click', '#view>div a', function () {
 
 	$('#gallery').addClass('unactive');
 
-	if (!$(this).is('#gallery-button')) {
-		$('#gallery').animate(
-			{ scrollLeft: 0 },
-			1000
-		);
-	}
+	// if (!$(this).is('#gallery-button')) {
+	// 	$('#gallery').animate(
+	// 		{ scrollLeft: 0 },
+	// 		1000
+	// 	);
+	// }
 
 	if ($(this).is('#gallery-button')) {
 
@@ -499,9 +510,7 @@ $(document).on('click', '#view>div a', function () {
 
 	if ($(this).is('#archive-button')) {
 
-		// if (!$(this).hasClass('active')) return;
-
-		$('#categories a, .archive-item').removeClass('active filter');
+		$('#categories a').removeClass('active filter');
 		$('#archive').scrollTop(0);
 
 	}
@@ -523,6 +532,12 @@ $(document).on('click', '#view>div a', function () {
 		if ($('#front-page').attr('data-template') === 'single') return;
 
 		$('#categories a').removeClass('selected');
+	}
+
+	if (!$(this).is('#archive-button')) {
+		setTimeout(() => {
+			$('.archive-item').removeClass('active filter');
+		}, 500);
 	}
 
 	$('.gallery-item').removeClass('active filter');
@@ -550,6 +565,9 @@ $(document).on('click', '#front-page > * > * > *, #front-page > * > *', function
 
 	$('#gallery').removeClass('unactive');
 	$('#categories a').removeClass('active filter selected');
+	setTimeout(() => {
+			$('.archive-item').removeClass('active filter');
+		}, 500);
 });
 
 // archive
@@ -557,8 +575,9 @@ $(document).on('mouseenter', '.archive-item', function () {
 
 	if ($('#categories a').hasClass('filter')) return;
 
-	$('.archive-item').not(this).removeClass('active');
-	$(this).addClass('active');
+	
+		$('.archive-item').not(this).removeClass('active');
+		$(this).addClass('active');
 
 });
 
