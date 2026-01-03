@@ -743,6 +743,18 @@ header.active .menus * {
 	gap: var(--kv);
 }
 
+#single-archive > .media-archive {
+	cursor: zoom-in;
+}
+
+#single-archive > .media-archive.active {
+	grid-column: span 2;
+}
+
+#single-archive > .media-archive.hide {
+	opacity: .1;
+}
+
 #single-gallery.active {
 	opacity: 1;
 	pointer-events: auto;
