@@ -1,8 +1,10 @@
 import { defineType, defineField } from 'sanity'
+import { CaseIcon } from '@sanity/icons'
 
 export const project = defineType({
     name: 'project',
     title: 'Project',
+    icon: CaseIcon,
     type: 'document',
 
     fields: [
@@ -47,7 +49,7 @@ export const project = defineType({
 
         defineField({
             name: 'categories',
-            title: 'Categories',
+            title: 'Category',
             type: 'array',
             of: [{ type: 'reference', to: [{ type: 'category' }] }],
             validation: (rule) => rule.required(),
@@ -58,32 +60,27 @@ export const project = defineType({
             title: 'Images',
             type: 'array',
             of: [{ type: 'image', options: { hotspot: true } }],
-            //validation: (rule) => rule.required(),
+            validation: (rule) => rule.required(),
         }),
 
-        // defineField({
-        //     name: 'seo',
-        //     title: 'Project SEO',
-        //     type: 'seo',
-        //     description: 'If empty, global SEO will be used.',
-        // }),
     ],
 
     preview: {
         select: {
             title: 'title',
-            media: 'images.0',
+            images: 'images',
+            category: 'categories.0.title',
             publishedAt: 'publishedAt',
-            categories0: 'categories.0.title',
-            categories1: 'categories.1.title',
-            categories2: 'categories.2.title',
         },
-        prepare({ title, media, publishedAt, categories0, categories1, categories2 }) {
-            const subtitleCategories = [categories0, categories1, categories2].filter(Boolean).join(', ')
+        prepare({ title, images, category, publishedAt }) {
             const subtitleDate = publishedAt ? ` • ${new Date(publishedAt).toLocaleDateString()}` : ''
-            const subtitle = `${subtitleCategories}${subtitleDate}`
+            const subtitle = `${category || ''}${subtitleDate}`
 
-            return { title, media, subtitle }
+            return {
+                title,
+                media: images?.[0],
+                subtitle
+            }
         }
     }
 })

@@ -14,6 +14,7 @@ export const structure = (S: any) =>
             .items([
               S.listItem()
                 .title('All Projects')
+                .icon(CaseIcon)
                 .child(S.documentTypeList('project')),
               S.divider(),
               S.listItem()
