@@ -16,8 +16,8 @@ export default async function Home() {
   const projects = await client.fetch(query);
 
   return (
-    <main className="overflow-x-auto whitespace-nowrap p-2">
-      <div className="flex gap-2">
+    <main className="w-full h-screen overflow-x-auto overflow-y-hidden whitespace-nowrap p-2">
+      <div className="flex gap-2 h-full">
         {projects.map((project: any) => (
           <div
             key={project.slug.current}
