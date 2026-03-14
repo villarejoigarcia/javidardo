@@ -1,20 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { client } from "../sanity/client";
+import Header from "./components/header";
+import { client } from "@/sanity/client";
 import "./globals.css";
 
 const METADATA_QUERY = `*[_type == "metadata"][0]{
   siteTitle,
   description,
-  keywords,
   "ogImage": ogImage.asset->url,
   "favicon": favicon.asset->url
 }`;
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> { // genera la metadata en el server aunque ahora localhost aparezca como <div hidden> en producción se inserta en <head>
   const data = await client.fetch(METADATA_QUERY);
   const title = data?.siteTitle || "Javi Dardo";
   const description = data?.description || "";
-  const keywords = data?.keywords || "";
   const ogImage = data?.ogImage;
   const favicon = data?.favicon;
 
@@ -24,7 +23,6 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${title}`,
     },
     description,
-    keywords,
     icons: {
       icon: [
         { url: favicon || "/favicon.ico" },
@@ -35,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: title,
       description,
-      url: "https://javidardo.com", // cambiarlo en producción
+      url: "https://javidardo.com", // no se si será esta la url definitiva
       siteName: title,
       images: ogImage
         ? [
@@ -59,13 +57,6 @@ export async function generateMetadata(): Promise<Metadata> {
     robots: {
       index: true,
       follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
     },
   };
 }
@@ -84,6 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <Header />
         {children}
       </body>
     </html>
