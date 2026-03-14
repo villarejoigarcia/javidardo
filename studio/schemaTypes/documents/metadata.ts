@@ -31,13 +31,6 @@ export const metadata = defineType({
     }),
 
     defineField({
-      name: 'keywords',
-      title: 'Keywords',
-      type: 'string',
-      description: 'Separate keywords with comma and space. Ex: design, creative studio, branding',
-    }),
-
-    defineField({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',
