@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Header from "./components/header";
+import About from "./components/about";
 import { client } from "@/sanity/client";
 import "./globals.css";
 
@@ -76,6 +77,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <Header />
+        <About />
         {children}
       </body>
     </html>
