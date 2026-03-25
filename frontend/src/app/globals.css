@@ -27,8 +27,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --kv: var(--kv);
+  --header: var(--header):
 }
 
 body {
@@ -46,13 +46,13 @@ body {
 	display: none;
 }
 
-img {
+/* img {
 	display: block;
 	object-fit: cover;
 	width: 100%;
 	height: auto;
 	aspect-ratio: 4/5;
-}
+} */
 
 a {
 	text-decoration: none;
@@ -73,6 +73,7 @@ span,
 	padding: 0;
 	color: var(--color-negative);
 	transition: var(--transition_s);
+	line-height: 1.2em;
 }
 
 span {
@@ -87,6 +88,7 @@ h1,
 h1 span {
 	font-family: "Sometimes Times";
 	font-size: 50px;
+	line-height: 1em;
 }
 
 h6 {
@@ -115,7 +117,7 @@ a:hover {
 
 /*header*/
 
-header {
+/* header {
 	display: flex;
 	width: 100%;
 	position: fixed;
@@ -124,8 +126,6 @@ header {
 	left: 0;
 	align-items: end;
 	padding: calc(var(--kv)*1) var(--kv) var(--kv);
-	/* background-color: var(--color-positive); */
-	/* transition: var(--transition_s); */
 	transition: all 1s;
 }
 
@@ -225,11 +225,6 @@ header a:hover {
 	left: 0;
 }
 
-/* #categories {
-	display: flex;
-	gap: var(--kv);
-} */
-
 #categories a {
 	color: var(--color-grey);
 	overflow: hidden;
@@ -242,11 +237,6 @@ header a:hover {
 
 #categories a:not(.active).selected {
 	height: 0;
-}
-
-/* #categories a.selected {
-	position: absolute;
-	bottom: 0;
 } */
 
 /*about*/
@@ -840,32 +830,14 @@ header.active .menus * {
 
 /*responsive*/
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
 
-	/*settings*/
-
-	/* :root {
-		--kv: 14px;
+	h1 {
+		font-size: 42px;
 	}
-
-	h1,
-	h2,
-	p,
-	a,
-	span,
-	::before,
-	::after {
-		font-size: 12px;
-	} */
-
-	/* img,
-	video {
-		width: 100% !important;
-		padding: 0 !important;
-	} */
 
 }

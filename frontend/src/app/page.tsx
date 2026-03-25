@@ -1,6 +1,5 @@
 import { client } from '@/sanity/client';
-import { urlFor } from '@/sanity/helper';
-import Link from 'next/link';
+import Gallery, { type ProjectItem } from './components/gallery';
 
 export const revalidate = 60;
 
@@ -13,38 +12,7 @@ const query = `*[_type == "project"] | order(publishedAt desc){
 }`;
 
 export default async function Home() {
-  const projects = await client.fetch(query);
+  const projects = await client.fetch<ProjectItem[]>(query);
 
-  return (
-    <main className="w-full h-screen overflow-x-auto overflow-y-hidden whitespace-nowrap p-2">
-      <div className="flex gap-2 h-full">
-        {projects.map((project: any) => (
-          <div
-            key={project.slug.current}
-            className="inline-block w-80 shrink-0 bg-white"
-            data-category={project.categories[0]?.title || ''}
-          >
-            <p className="p-4 text-black font-mono">
-              {project.code}.{project.title}
-            </p>
-
-            <Link href={`/${project.slug.current}`}>
-              <div className="relative h-96">
-                {project.images.map((img: any, idx: number) => (
-                  <img
-                    key={img.asset._id}
-                    src={urlFor(img).width(400).url()}
-                    alt={project.title}
-                    className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-500"
-                    style={{ zIndex: idx + 1 }}
-                  />
-                ))}
-              </div>
-            </Link>
-
-          </div>
-        ))}
-      </div>
-    </main>
-  );
+  return <Gallery projects={projects} />;
 }
