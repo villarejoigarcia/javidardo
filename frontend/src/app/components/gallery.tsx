@@ -161,27 +161,26 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
       onClick={handleClick}
       className="w-full h-dvh lg:overflow-hidden overflow-x-auto overflow-y-hidden p-(--kv) cursor-ew-resize"
     >
-      <div className="flex h-dvh pb-(--header) lg:w-max relative">
+      <div className="flex h-dvh  lg:w-max relative">
         {projects.map((project) => (
           <div
             key={project.slug.current}
-            className="h-full w-full flex-shrink-0 lg:w-fit lg:pr-(--kv) lg:relative absolute top-0 left-0 bg-white lg:opacity-100 opacity-0"
+            className="h-full pb-(--header) w-full flex-shrink-0 lg:w-fit lg:pr-(--kv) lg:relative absolute top-0 left-0 bg-white lg:opacity-100 opacity-0"
             data-category={project.categories?.[0]?.title || ''}
           >
-            <p>
+            <p className=''>
               {project.code}.{project.title}
             </p>
 
             <div className="h-full">
-              {project.images?.map((img, idx) => (
+              {project.images?.[0] && (
                 <img
-                  key={img.asset._id}
-                  src={urlFor(img).url()}
+                  key={project.images[0].asset._id}
+                  src={urlFor(project.images[0]).url()}
                   alt={project.title}
                   className="w-auto h-full object-cover aspect-4/5 mt-(--kv)"
-                  style={{ zIndex: idx + 1 }}
                 />
-              ))}
+              )}
             </div>
           </div>
         ))}
