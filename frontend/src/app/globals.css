@@ -840,4 +840,8 @@ header.active .menus * {
 		font-size: 42px;
 	}
 
+	:root {
+		--header: 58px;
+	}
+
 }

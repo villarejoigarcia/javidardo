@@ -23,7 +23,7 @@ export default async function Header() {
       </div>
 
       <div className="lg:flex-1 text-right lg:pb-0 pb-[5px]">
-        <p>© 2026</p>
+        <p>Apr. 2026</p>
       </div>
       
       {/* <div>
