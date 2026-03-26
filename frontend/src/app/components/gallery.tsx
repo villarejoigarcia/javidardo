@@ -162,15 +162,39 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
       className="w-full h-dvh lg:overflow-hidden overflow-x-auto overflow-y-hidden p-(--kv) cursor-ew-resize"
     >
       <div className="flex h-dvh  lg:w-max relative">
-        {projects.map((project) => (
+        {!isMobile && (
+          <div className='fixed z-50 top-[calc(50vh-var(--header))] left-0 translate-y-full mix-blend-difference flex w-full justify-between p-(--kv)'>
+            {projects.map((project) => (
+              <div
+                key={project.slug.current}
+              >
+
+                <div className='group flex'>
+                  <p className='text-white!'>{project.code}.</p>
+                  {/* <p className='text-white!'>{project.code}.</p><p className='group-hover:opacity-100 opacity-0 text-white!'>{project.title}</p> */}
+                </div>
+
+
+
+              </div>
+            ))}
+
+          </div>
+        )}
+
+        {/* {projects.slice(0, 8).map((project) => ( */}
+                {projects.map((project) => (
           <div
             key={project.slug.current}
             className="h-full pb-(--header) w-full flex-shrink-0 lg:w-fit lg:pr-(--kv) lg:relative absolute top-0 left-0 bg-white lg:opacity-100 opacity-0"
             data-category={project.categories?.[0]?.title || ''}
           >
-            <p className=''>
-              {project.code}.{project.title}
-            </p>
+            {isMobile && (
+
+              <p className=''>
+                {project.code}.{project.title}
+              </p>
+            )}
 
             <div className="h-full">
               {project.images?.[0] && (
@@ -178,7 +202,7 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
                   key={project.images[0].asset._id}
                   src={urlFor(project.images[0]).url()}
                   alt={project.title}
-                  className="w-auto h-full object-cover aspect-4/5 mt-(--kv)"
+                  className="w-auto h-full object-cover aspect-4/5 lg:mt-0 mt-(--kv)"
                 />
               )}
             </div>

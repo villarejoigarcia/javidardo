@@ -23,7 +23,7 @@ export default async function Header() {
       </div>
 
       <div className="lg:flex-1 text-right lg:pb-0 pb-[5px]">
-        <p>© 2026</p>
+        <a href="https://www.instagram.com/javidardo" target="_blank">@javidardo</a>
       </div>
       
       {/* <div>

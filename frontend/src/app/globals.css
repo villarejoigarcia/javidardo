@@ -72,7 +72,7 @@ span,
 	margin: 0;
 	padding: 0;
 	color: var(--color-negative);
-	transition: var(--transition_s);
+	/* transition: var(--transition_s); */
 	line-height: 1.2em;
 }
 
