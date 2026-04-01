@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Sometimes Times";
+  src: url("/fonts/sometimes_times.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+	--kv: 8px;
+	--color-grey: #aaaaaa;
+	--transition: all .666s;
+	--transition_s: all .666s, color .333s;
+	--transition_l: all 1.333s;
+	/* --header: 66px; */
+	--header: 46px;
+	--color-positive: #ffffff;
+	--color-negative: #000000;
+	--lh: 12px;
+}
+
+:root.dark {
+	--color-grey: #555555;
+	--color-positive: #000000;
+	--color-negative: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --kv: var(--kv);
+  --lh: var(--lh);
+  --header: 46px:
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: var(--color-positive);
+	transition: var(--transition_s);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+	display: none;
+}
+
+/* img {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 4/5;
+} */
+
+a {
+	text-decoration: none;
+}
+
+h1,
+h6,
+p,
+a,
+span,
+::before,
+::after {
+	font-family: "IBM Plex Mono", monospace;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 10px;
+	margin: 0;
+	padding: 0;
+	color: var(--color-negative);
+	/* transition: var(--transition_s); */
+	line-height: 1.2em;
+}
+
+span {
+	display: block;
+}
+
+h1 span {
+	display: initial;
+}
+
+h1,
+h1 span {
+	font-family: "Sometimes Times";
+	font-size: 50px;
+	line-height: 1em;
+}
+
+h6 {
+	text-transform: uppercase;
+	color: var(--color-grey);
+}
+
+a {
+	display: block;
+	cursor: pointer;
+}
+
+a:hover {
+	color: var(--color-grey);
+}
+
+/*responsive*/
+
+@media (min-width: 1024px) {
+
+}
+
+@media (max-width: 1023px) {
+
+	h1 {
+		font-size: 42px;
+	}
+
+	:root {
+		--header: 39px;
+	}
+
+	p,
+	a,
+	h6 {
+		font-size: 8px;
+	}
+
+}
