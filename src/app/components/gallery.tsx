@@ -48,7 +48,8 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
     if (!main) return;
 
     let rafId: number;
-    let speed = 1;
+    
+    let speed = isMobile ? 1.5 : 1;
 
     const animate = () => {
       main.scrollLeft += speed;
@@ -64,7 +65,7 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
     animate();
 
     return () => cancelAnimationFrame(rafId);
-  }, []);
+  }, [isMobile]);
 
   return (
     <main

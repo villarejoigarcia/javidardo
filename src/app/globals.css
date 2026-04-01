@@ -9,7 +9,7 @@
 
 :root {
 	--kv: 8px;
-	--color-grey: #aaaaaa;
+	--color-grey: #cccccc;
 	--transition: all .666s;
 	--transition_s: all .666s, color .333s;
 	--transition_l: all 1.333s;
