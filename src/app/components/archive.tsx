@@ -11,9 +11,9 @@ export default function Archive({ projects }: ArchiveProps) {
   
   return (
 
-    <main className='h-full overflow-y-auto'>
+    <main>
 
-    <div className="flex flex-wrap justify-center content-start h-full gap-y-(--lh) py-[2px] my-(--lh) px-[3.125vw]">
+    <div className="flex flex-wrap justify-center content-start gap-y-(--lh) py-[2px] my-(--lh) px-[3.125vw]">
         
         {[...projects].map((project, index) => (
 
@@ -39,7 +39,7 @@ export default function Archive({ projects }: ArchiveProps) {
                     </div>
 
                     {/* <div className="h-[20dvh]"> */}
-                    <div className='px-[25%]'>
+                    <div className='px-[25%] h-full pb-[calc(var(--lh)*2)] flex items-center'>
                         {project.images?.[0] && (
                             <img
                                 key={project.images[0].asset._id}
