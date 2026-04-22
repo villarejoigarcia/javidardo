@@ -24,8 +24,8 @@ export default function HomeClient({ projects, categories }: HomeClientProps) {
     <>
       <div className="relative h-dvh overflow-hidden">
         <motion.div
-          className="h-[66dvh]"
-          animate={{ opacity: activeView === 'archive' ? 0.05 : 1 }}
+        //   className="h-[66dvh]"
+          animate={{ opacity: activeView === 'archive' ? 0.08 : 1 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
           <Gallery projects={projects} />

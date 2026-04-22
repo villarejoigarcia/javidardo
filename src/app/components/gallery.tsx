@@ -72,11 +72,11 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
     <main
       ref={mainRef}
       // className={`w-full h-full overflow-x-auto overflow-y-hidden transition-opacity duration-1000 ease-in-out ${visible ? 'opacity-100' : 'opacity-0'}`}
-      className={`w-full h-full overflow-x-auto overflow-y-hidden transition-opacity duration-1000 ease-in-out`}
+      className={`w-full overflow-x-auto overflow-y-hidden transition-opacity duration-1000 ease-in-out`}
 
     >
 
-      <div className="flex h-full w-max pr-[2px]">
+      <div className="flex w-max pr-[2px]">
         
         {[...projects, ...projects].map((project, index) => (
           <div
@@ -84,7 +84,7 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
             data-project-item
             // className={`h-full pb-(--header) transition-opacity duration-100 ease-in-out ${index < projects.length ? (visibleItems.includes(index) ? 'opacity-100' : 'opacity-0') : 'opacity-100'}`}
             // className={`${getHeightClass(distances[index] ?? 300)} sticky pl-[2px] left-0 bg-white transition-all duration-200`}
-            className={`h-full sticky pl-[2px] left-0 bg-white transition-all duration-200`}
+            className={`sticky pl-[2px] left-0 hover:pt-[calc(var(--lh)+4px)] duration-500 ease-in-out bg-white transition-all duration-200`}
             data-category={project.categories?.[0]?.title || ''}
           >
             <div className='my-[2px]'>
@@ -93,13 +93,13 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
               </p>
             </div>
 
-            <div className="h-full pb-[calc(var(--lh)+4px)]">
+            <div className="pb-[calc(var(--lh)+4px)]">
               {project.images?.[0] && (
                 <img
                   key={project.images[0].asset._id}
                   src={urlFor(project.images[0]).url()}
                   alt={project.title}
-                  className="w-auto h-full object-cover"
+                  className="w-auto h-[66.667dvh] object-cover"
                 />
               )}
             </div>
