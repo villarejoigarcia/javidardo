@@ -14,10 +14,11 @@
 	--transition_s: all .666s, color .333s;
 	--transition_l: all 1.333s;
 	/* --header: 66px; */
-	--header: 46px;
+	--header: 54px;
 	--color-positive: #ffffff;
 	--color-negative: #000000;
 	--lh: 12px;
+	--kv: 10px;
 }
 
 :root.dark {
@@ -67,7 +68,8 @@ p,
 a,
 span,
 ::before,
-::after {
+::after,
+button {
 	font-family: "IBM Plex Mono", monospace;
 	font-weight: 400;
 	font-style: normal;
@@ -99,12 +101,15 @@ h6 {
 	color: var(--color-grey);
 }
 
-a {
+a,
+button {
 	display: block;
 	cursor: pointer;
+	transition: .5s;
 }
 
-a:hover {
+a:hover,
+button:hover {
 	color: var(--color-grey);
 }
 

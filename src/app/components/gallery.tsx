@@ -32,114 +32,66 @@ type ProjectsGalleryClientProps = {
 export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClientProps) {
   const isMobile = responsive();
   const mainRef = useRef<HTMLElement | null>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setVisible(true), 333);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  // const [visibleItems, setVisibleItems] = useState<number[]>([]);
+  const [distances, setDistances] = useState<number[]>([]);
+  // const [visible, setVisible] = useState(false);
 
   // useEffect(() => {
-  //   projects.forEach((_, index) => {
-  //     setTimeout(() => {
-  //       setVisibleItems(prev => [...prev, index]);
-  //     }, index * 50);
-  //   });
-  // }, [projects]);
+  //   const timeout = setTimeout(() => setVisible(true), 333);
+  //   return () => clearTimeout(timeout);
+  // }, []);
 
   useEffect(() => {
     const main = mainRef.current;
     if (!main) return;
 
-    let rafId: number;
-    let startTime: number | null = null;
-
-    const duration = 1500; // 1 second to reach duplicates
-    const target = main.scrollWidth / 2;
-
-    let speed = isMobile ? 1.333 : .666;
-    let reachedLoop = false;
-
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-
-      const elapsed = timestamp - startTime;
-
-      if (!reachedLoop) {
-        // const progress = Math.min(elapsed / duration, 1);
-        const t = Math.min(elapsed / duration, 1);
-        const progress = t < 0.5
-          ? 4 * t * t * t
-          : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
-        //  const progress = t < 0.5
-        //   ? 2 * t * t
-        //   : -1 +(4 - 2 * t) * t; // easeInOutQuad
-        main.scrollLeft = target * progress;
-
-        if (progress >= 1) {
-          reachedLoop = true;
-          // match autoplay starting point exactly
-          main.scrollLeft = target;
-        }
-      } else {
-        // maintain consistent velocity from last easing frame
-        main.scrollLeft += speed;
-
-        if (main.scrollLeft >= target) {
-          main.scrollLeft = 0;
-        }
+    const handleScroll = () => {
+      const half = main.scrollWidth / 2;
+      if (main.scrollLeft >= half) {
+        main.scrollLeft -= half;
+      } else if (main.scrollLeft <= 0) {
+        main.scrollLeft += half;
       }
-      main.scrollLeft += speed;
-      rafId = requestAnimationFrame(animate);
-    };
-    
-    
-    rafId = requestAnimationFrame(animate);
 
-    return () => cancelAnimationFrame(rafId);
-  }, [isMobile]);
+      // Calcular distancia de cada elemento al borde izquierdo
+      const children = Array.from(main.querySelectorAll('[data-project-item]')) as HTMLElement[];
+      const newDistances = children.map((child) => Math.abs(child.offsetLeft - main.scrollLeft));
+      setDistances(newDistances);
+    };
+
+    main.addEventListener('scroll', handleScroll, { passive: true });
+    return () => main.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // const getHeightClass = (distance: number): string => {
+  //   return distance < 50 ? 'h-full' : 'h-1/2';
+  // };
+
+
 
   return (
     <main
       ref={mainRef}
-      // className={`w-full h-dvh overflow-x-auto overflow-y-hidden transition-opacity duration-666 ${visible ? 'opacity-100' : 'opacity-0'}`}
-      className={`w-full h-dvh overflow-x-auto overflow-y-hidden transition-opacity duration-1000 ease-in-out ${visible ? 'opacity-100' : 'opacity-0'}`}
+      // className={`w-full h-full overflow-x-auto overflow-y-hidden transition-opacity duration-1000 ease-in-out ${visible ? 'opacity-100' : 'opacity-0'}`}
+      className={`w-full h-full overflow-x-auto overflow-y-hidden transition-opacity duration-1000 ease-in-out`}
+
     >
-      <div className="flex h-dvh w-max">
-        {/* {!isMobile && ( */}
-          <div className='fixed z-50 lg:top-[calc(50vh-var(--header))] left-0 lg:translate-y-full mix-blend-difference h-full lg:h-fit lg:pb-0 pb-(--header) lg:pt-0 pt-[calc(var(--lh)+4px)] flex flex-col items-center lg:flex-row w-full lg:justify-between justify-evenly px-[5px] pointer-events-none'>
-            {projects.map((project) => (
-              <div
-                key={project.slug.current}
-              >
 
-                <div className='flex'>
-                  <p className='text-white!'>{project.code}</p>
-                  {/* <p className='text-white!'>{project.code}.</p><p className='group-hover:opacity-100 opacity-0 text-white!'>{project.title}</p> */}
-                </div>
-
-
-
-              </div>
-            ))}
-
-          </div>
-        {/* )} */}
-
+      <div className="flex h-full w-max pr-[2px]">
+        
         {[...projects, ...projects].map((project, index) => (
           <div
             key={`${project.slug.current}-${index}`}
+            data-project-item
             // className={`h-full pb-(--header) transition-opacity duration-100 ease-in-out ${index < projects.length ? (visibleItems.includes(index) ? 'opacity-100' : 'opacity-0') : 'opacity-100'}`}
-            className={`h-full pb-(--header)`}
+            // className={`${getHeightClass(distances[index] ?? 300)} sticky pl-[2px] left-0 bg-white transition-all duration-200`}
+            className={`h-full sticky pl-[2px] left-0 bg-white transition-all duration-200`}
             data-category={project.categories?.[0]?.title || ''}
           >
             <div className='my-[2px]'>
-              <p className='text-center'>
+              <p>
                 {project.code}.{project.title}
               </p>
-              </div>
+            </div>
 
             <div className="h-full pb-[calc(var(--lh)+4px)]">
               {project.images?.[0] && (

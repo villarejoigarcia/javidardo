@@ -1,18 +1,23 @@
 import { client } from '@/sanity/client';
-import Gallery, { type ProjectItem } from './components/gallery';
+import { projectsQuery } from "./queries/projects-query";
+import HomeClient from './components/home-client';
 
-export const revalidate = 60;
+const options = { next: { revalidate: 30 } };
 
-const query = `*[_type == "project"] | order(publishedAt desc){
+const CATEGORIES_QUERY = `
+*[_type == "category"] {
+  _id,
   title,
-  slug,
-  code,
-  images[]{asset->{_id,url}},
-  categories[]-> { title }
-}`;
+  "slug": slug.current
+}
+`;
 
 export default async function Home() {
-  const projects = await client.fetch<ProjectItem[]>(query);
+  const [projects, categories] = await Promise.all([
+    client.fetch(projectsQuery, {}, options),
+    client.fetch(CATEGORIES_QUERY),
+  ]);
 
-  return <Gallery projects={projects} />;
+  return <HomeClient projects={projects} categories={categories} />;
+
 }
