@@ -211,7 +211,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                         }}
                     >
                         <motion.div
-                            className="grid grid-cols-4 gap-[2px] my-[2px] absolute top-0 left-0 w-full"
+                            className={`grid grid-cols-4 gap-[2px] py-[2px] top-0 left-0 w-full max-h-dvh overflow-y-auto ${activeSingleView === 'all' ? 'pointer-events-auto relative' : 'pointer-events-none absolute'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
                             animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'all' ? 1 : 0 }}
                             transition={{
@@ -219,20 +219,23 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                 ease: 'easeOut',
                                 delay: isSingleViewModeChange && activeSingleView === 'all' ? .666 : 0,
                             }}
-                            // style={{ display: activeSingleView === 'all' ? 'grid' : 'none' }}
                         >
                             {project.images.map((img, index) => (
                                 <img
                                     key={`${img.asset._id}-${index}`}
                                     src={urlFor(img).width(800).url()}
                                     alt={project.title}
-                                    className="w-full object-cover"
+                                    className="w-full object-cover cursor-pointer"
+                                    onClick={() => {
+                                        setActiveImageIndex(index);
+                                        setActiveSingleView('single');
+                                    }}
                                 />
                             ))}
                         </motion.div>
 
                         <motion.div
-                            className="flex absolute top-0 left-0 w-full"
+                            className={`flex top-0 left-0 w-full ${activeSingleView === 'single' ? 'pointer-events-auto relative' : 'pointer-events-none absolute'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
                             animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'single' ? 1 : 0 }}
                             transition={{
@@ -240,7 +243,6 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                 ease: 'easeOut',
                                 delay: isSingleViewModeChange && activeSingleView === 'single' ? .666 : 0,
                             }}
-                            // style={{ display: activeSingleView === 'single' ? 'flex' : 'none' }}
                         >
                             <div
                                 className='relative flex-1 pt-[2px] cursor'
