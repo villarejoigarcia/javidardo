@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Logo } from "./logo";
 
 type CategoryItem = {
@@ -9,15 +10,27 @@ type CategoryItem = {
 };
 
 type HeaderProps = {
-  categories: CategoryItem[];
-  activeView: 'gallery' | 'archive';
-  onViewChange: (view: 'gallery' | 'archive') => void;
+  categories?: CategoryItem[];
+  activeCategorySlugs?: string[];
+  activeView?: 'gallery' | 'archive';
+  onViewChange?: (view: 'gallery' | 'archive') => void;
+  viewMode?: 'home' | 'single';
+  activeSingleView?: 'all' | 'single';
+  onSingleViewChange?: (view: 'all' | 'single') => void;
 };
 
-export default function Header({ categories, activeView, onViewChange }: HeaderProps) {
+export default function Header({
+  categories = [],
+  activeCategorySlugs = [],
+  activeView = 'gallery',
+  onViewChange,
+  viewMode = 'home',
+  activeSingleView = 'single',
+  onSingleViewChange,
+}: HeaderProps) {
 
   return (
-    <header className="flex gap-x-(--kv) fixed w-full z-10 bottom-0 left-0 items-end justify-between p-(--kv) bg-white">
+    <header className="flex gap-x-(--kv) fixed w-full z-10 bottom-0 left-0 items-end justify-between p-(--kv) bg-linear-to-t from-white from-10% to-transparent">
     {/* // <header className="flex gap-x-(--kv) fixed w-full z-10 bottom-0 left-0 items-end justify-between p-[5px]"> */}
      
       <div className="flex-1">
@@ -40,19 +53,37 @@ export default function Header({ categories, activeView, onViewChange }: HeaderP
       <div className="flex flex-1 items-end gap-x-(--kv)">
         <h6>View</h6>
         <div className="flex flex-col items-start">
-          <button
-            className={`${activeView === 'gallery' ? 'opacity-30 pointer-events-none' : ''}`}
-            onClick={() => onViewChange('gallery')}
-          >
-            Gallery
-          </button>
-          <button
-            className={`${activeView === 'archive' ? 'opacity-30 pointer-events-none' : ''}`}
-            onClick={() => onViewChange('archive')}
-          >
-            Archive
-          </button>
-          <a>Selected</a>
+          {viewMode === 'single' ? (
+            <>
+            <button
+                className={`${activeSingleView === 'single' ? 'opacity-30 pointer-events-none' : ''}`}
+                onClick={() => onSingleViewChange?.('single')}
+              >
+                Single
+              </button>
+              <button
+                className={`${activeSingleView === 'all' ? 'opacity-30 pointer-events-none' : ''}`}
+                onClick={() => onSingleViewChange?.('all')}
+              >
+                Overview
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className={`${!onViewChange || activeView === 'gallery' ? 'opacity-30 pointer-events-none' : ''}`}
+                onClick={() => onViewChange?.('gallery')}
+              >
+                Gallery
+              </button>
+              <button
+                className={`${!onViewChange || activeView === 'archive' ? 'opacity-30 pointer-events-none' : ''}`}
+                onClick={() => onViewChange?.('archive')}
+              >
+                Archive
+              </button>
+            </>
+          )}
         </div>
       </div>
       
@@ -63,6 +94,7 @@ export default function Header({ categories, activeView, onViewChange }: HeaderP
             <a
               key={category._id}
               data-category={category.slug}
+              className={`${viewMode === 'single' && activeCategorySlugs.length > 0 && !activeCategorySlugs.includes(category.slug) ? 'hidden!' : ''}`}
             >
               {category.title}
             </a>

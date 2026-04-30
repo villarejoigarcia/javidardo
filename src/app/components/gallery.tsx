@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { urlFor } from '@/sanity/helper';
 import { responsive } from './responsive';
 
@@ -27,9 +28,10 @@ export type ProjectItem = {
 
 type ProjectsGalleryClientProps = {
   projects: ProjectItem[];
+  onProjectOpen?: (slug: string) => void;
 };
 
-export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClientProps) {
+export default function ProjectsGalleryClient({ projects, onProjectOpen }: ProjectsGalleryClientProps) {
   const isMobile = responsive();
   const mainRef = useRef<HTMLElement | null>(null);
   const [distances, setDistances] = useState<number[]>([]);
@@ -93,7 +95,15 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
               </p>
             </div>
 
-            <div className="pb-[calc(var(--lh)+4px)]">
+            <Link
+              href={`/${project.slug.current}`}
+              onClick={(event) => {
+                if (!onProjectOpen) return;
+                event.preventDefault();
+                onProjectOpen(project.slug.current);
+              }}
+              className="pb-[calc(var(--lh)+4px)]"
+            >
               {project.images?.[0] && (
                 <img
                   key={project.images[0].asset._id}
@@ -102,7 +112,7 @@ export default function ProjectsGalleryClient({ projects }: ProjectsGalleryClien
                   className="w-auto h-[66.667dvh] object-cover"
                 />
               )}
-            </div>
+            </Link>
           </div>
         ))}
       </div>
