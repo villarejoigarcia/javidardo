@@ -6,24 +6,33 @@ import { type ProjectItem } from './gallery';
 
 type ArchiveProps = {
   projects: ProjectItem[];
-  onProjectOpen?: (slug: string) => void;
+  onProjectOpen?: (slug: string, categorySlug?: string | null) => void;
+  onProjectHoverChange?: (categorySlug: string | null) => void;
 };
 
-export default function Archive({ projects, onProjectOpen }: ArchiveProps) {
-  
+export default function Archive({ projects, onProjectOpen, onProjectHoverChange }: ArchiveProps) {
   return (
 
     <main>
 
-    <div className="flex flex-wrap justify-center content-start gap-x-[2px]">
+    <div className="flex flex-wrap justify-center content-start">
         
         {[...projects].map((project, index) => (
 
           <div
             key={`${project.slug.current}-${index}`}
             // className={`w-auto relative hover:pt-[calc(var(--lh)+4px)] delay-50 duration-500 ease-in-out`}
-            className={`w-auto relative delay-50 duration-500 ease-in-out`}
-            data-category={project.categories?.[0]?.title || ''}
+            // className={`w-auto relative delay-50 duration-500 ${hoveredSlug && hoveredSlug !== project.slug.current ? 'invert' : ''}`}
+            className={`w-auto relative delay-50 duration-500 pt-[calc(var(--lh)+4px)] hover:translate-y-[calc(var(--lh)+4px)] px-[1px]`}
+            data-category={project.categories?.[0]?.slug || ''}
+            onMouseMove={() => onProjectHoverChange?.(project.categories?.[0]?.slug || null)}
+            onMouseLeave={() => onProjectHoverChange?.(null)}
+            // onMouseEnter={() => {
+            //   setHoveredSlug(project.slug.current);
+            // }}
+            // onMouseLeave={() => {
+            //   setHoveredSlug(null);
+            // }}
           >
 
                     <div className='flex justify-center py-[2px]'>
@@ -47,7 +56,7 @@ export default function Archive({ projects, onProjectOpen }: ArchiveProps) {
                       onClick={(event) => {
                         if (!onProjectOpen) return;
                         event.preventDefault();
-                        onProjectOpen(project.slug.current);
+                        onProjectOpen(project.slug.current, project.categories?.[0]?.slug || null);
                       }}
                       className='flex items-center'
                     >

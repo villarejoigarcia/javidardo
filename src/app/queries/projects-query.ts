@@ -3,5 +3,8 @@ export const projectsQuery = `*[_type == "project"] | order(publishedAt desc){
   slug,
   code,
   images[]{asset->{_id,url}},
-  categories[]-> { title }
+  categories[]-> {
+    title,
+    "slug": slug.current
+  }
 }`;

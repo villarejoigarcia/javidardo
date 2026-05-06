@@ -62,6 +62,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
     const [activeSingleView, setActiveSingleView] = useState<'all' | 'single'>('single');
     const previousSingleViewRef = useRef<'all' | 'single'>(activeSingleView);
     const switchTimeoutRef = useRef<number | null>(null);
+    const hoverIntervalRef = useRef<number | null>(null);
     const isSwitchingProject = pendingSlug !== null;
     const isSingleViewModeChange = previousSingleViewRef.current !== activeSingleView;
 
@@ -69,6 +70,10 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
         return () => {
             if (switchTimeoutRef.current !== null) {
                 window.clearTimeout(switchTimeoutRef.current);
+            }
+
+            if (hoverIntervalRef.current !== null) {
+                window.clearInterval(hoverIntervalRef.current);
             }
         };
     }, []);
@@ -107,6 +112,25 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
         setActiveImageIndex((prev) => (prev + 1) % project.images.length);
     };
 
+    // const startHoverImageCarousel = () => {
+    //     if (project.images.length <= 1) return;
+
+    //     if (hoverIntervalRef.current !== null) {
+    //         window.clearInterval(hoverIntervalRef.current);
+    //     }
+
+    //     hoverIntervalRef.current = window.setInterval(() => {
+    //         setActiveImageIndex((prev) => (prev + 1) % project.images.length);
+    //     }, 333);
+    // };
+
+    // const stopHoverImageCarousel = () => {
+    //     if (hoverIntervalRef.current === null) return;
+
+    //     window.clearInterval(hoverIntervalRef.current);
+    //     hoverIntervalRef.current = null;
+    // };
+
     useEffect(() => {
         if (searchParams.get('from')) {
             router.replace(pathname, { scroll: false });
@@ -115,6 +139,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
 
     useEffect(() => {
         setActiveImageIndex(0);
+        // stopHoverImageCarousel();
     }, [project.images.length, project.slug]);
 
     useEffect(() => {
@@ -235,7 +260,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                         </motion.div>
 
                         <motion.div
-                            className={`flex top-0 left-0 w-full ${activeSingleView === 'single' ? 'pointer-events-auto relative' : 'pointer-events-none absolute'}`}
+                            className={`flex top-0 left-0 w-full cursor-e-resize ${activeSingleView === 'single' ? 'pointer-events-auto relative' : 'pointer-events-none absolute'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
                             animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'single' ? 1 : 0 }}
                             transition={{
@@ -246,9 +271,14 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                         >
                             <div
                                 className='relative flex-1 pt-[2px] cursor'
-                                onMouseEnter={() => setIsImageCarouselPaused(true)}
-                                onMouseLeave={() => setIsImageCarouselPaused(false)}
-                                onClick={handleNextImage}
+                                // onMouseEnter={() => setIsImageCarouselPaused(true)}
+                                // onMouseLeave={() => setIsImageCarouselPaused(false)}
+                                onClick={() => {
+                                    handleNextImage();
+                                    // stopHoverImageCarousel();
+                                }}
+                                // onMouseEnter={startHoverImageCarousel}
+                                // onMouseLeave={stopHoverImageCarousel}
                             >
                                 
                                 {project.images.map((img, index) => (
@@ -269,7 +299,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                     <p
                                         key={index}
                                         onMouseEnter={() => setActiveImageIndex(index)}
-                                        className={`block pr-[calc(var(--lh)/2)]! py-(--kv)! cursor-pointer ${index === activeImageIndex ? 'text-black' : 'text-(--color-grey)!'}`}
+                                        className={`block pr-[calc(var(--lh)/2)]! py-(--kv)! cursor-ew-resize ${index === activeImageIndex ? 'text-black' : 'text-(--color-grey)!'}`}
                                     >{index+1}</p>
                                 ))}
 

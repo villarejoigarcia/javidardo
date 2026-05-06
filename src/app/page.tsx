@@ -1,6 +1,7 @@
 import { client } from '@/sanity/client';
 import { projectsQuery } from "./queries/projects-query";
 import HomeClient from './components/home-client';
+import { div } from 'framer-motion/client';
 
 const options = { next: { revalidate: 30 } };
 
@@ -19,5 +20,11 @@ export default async function Home() {
   ]);
 
   return <HomeClient projects={projects} categories={categories} />;
+
+  // return (
+  //   <>
+      
+  //   </>
+  // );
 
 }

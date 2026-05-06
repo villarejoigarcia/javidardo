@@ -12,6 +12,7 @@ type CategoryItem = {
 type HeaderProps = {
   categories?: CategoryItem[];
   activeCategorySlugs?: string[];
+  hoveredCategorySlug?: string | null;
   activeView?: 'gallery' | 'archive';
   onViewChange?: (view: 'gallery' | 'archive') => void;
   viewMode?: 'home' | 'single';
@@ -22,12 +23,16 @@ type HeaderProps = {
 export default function Header({
   categories = [],
   activeCategorySlugs = [],
+  hoveredCategorySlug,
   activeView = 'gallery',
   onViewChange,
   viewMode = 'home',
   activeSingleView = 'single',
   onSingleViewChange,
 }: HeaderProps) {
+  const sortedCategories = [...categories].sort((a, b) =>
+    a.title.localeCompare(b.title, 'es', { sensitivity: 'base' })
+  );
 
   return (
     <header className="flex gap-x-(--kv) fixed w-full z-10 bottom-0 left-0 items-end justify-between p-(--kv) bg-linear-to-t from-white from-10% to-transparent">
@@ -87,17 +92,17 @@ export default function Header({
         </div>
       </div>
       
-      <div className="flex flex-1 items-end gap-x-(--kv)">
+      <div className="lg:flex hidden flex-1 items-end gap-x-(--kv)">
         <h6>Category</h6>
         <div className="flex flex-col">
-          {categories.map((category) => (
-            <a
+          {sortedCategories.map((category) => (
+            <p
               key={category._id}
               data-category={category.slug}
-              className={`${viewMode === 'single' && activeCategorySlugs.length > 0 && !activeCategorySlugs.includes(category.slug) ? 'hidden!' : ''}`}
+              className={`${viewMode === 'single' && activeCategorySlugs.length > 0 && !activeCategorySlugs.includes(category.slug) ? 'hidden!' : ''} ${hoveredCategorySlug && category.slug !== hoveredCategorySlug ? 'opacity-30' : ''} duration-500`}
             >
               {category.title}
-            </a>
+            </p>
           ))}
         </div>
       </div>

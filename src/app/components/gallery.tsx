@@ -14,6 +14,7 @@ type ProjectImage = {
 
 type ProjectCategory = {
   title: string;
+  slug?: string;
 };
 
 export type ProjectItem = {
@@ -28,13 +29,19 @@ export type ProjectItem = {
 
 type ProjectsGalleryClientProps = {
   projects: ProjectItem[];
-  onProjectOpen?: (slug: string) => void;
+  onProjectOpen?: (slug: string, categorySlug?: string | null) => void;
+  onProjectHoverChange?: (categorySlug: string | null) => void;
 };
 
-export default function ProjectsGalleryClient({ projects, onProjectOpen }: ProjectsGalleryClientProps) {
+export default function ProjectsGalleryClient({
+  projects,
+  onProjectOpen,
+  onProjectHoverChange,
+}: ProjectsGalleryClientProps) {
   const isMobile = responsive();
   const mainRef = useRef<HTMLElement | null>(null);
   const [distances, setDistances] = useState<number[]>([]);
+  const [hoveredProjectKey, setHoveredProjectKey] = useState<string | null>(null);
   // const [visible, setVisible] = useState(false);
 
   // useEffect(() => {
@@ -81,13 +88,25 @@ export default function ProjectsGalleryClient({ projects, onProjectOpen }: Proje
       <div className="flex w-max pr-[2px]">
         
         {[...projects, ...projects].map((project, index) => (
+          (() => {
+            const projectKey = `${project.slug.current}-${index}`;
+
+            return (
           <div
-            key={`${project.slug.current}-${index}`}
+            key={projectKey}
             data-project-item
             // className={`h-full pb-(--header) transition-opacity duration-100 ease-in-out ${index < projects.length ? (visibleItems.includes(index) ? 'opacity-100' : 'opacity-0') : 'opacity-100'}`}
             // className={`${getHeightClass(distances[index] ?? 300)} sticky pl-[2px] left-0 bg-white transition-all duration-200`}
-            className={`sticky pl-[2px] left-0 hover:pt-[calc(var(--lh)+4px)] duration-500 ease-in-out bg-white transition-all duration-200`}
-            data-category={project.categories?.[0]?.title || ''}
+            className={`sticky pl-[2px] left-0 duration-500 ease-in-out bg-white transition-all duration-200 ${hoveredProjectKey === projectKey ? 'pt-[calc(var(--lh)+4px)]' : ''}`}
+            data-category={project.categories?.[0]?.slug || ''}
+            onMouseMove={() => {
+              setHoveredProjectKey(projectKey);
+              onProjectHoverChange?.(project.categories?.[0]?.slug || null);
+            }}
+            onMouseLeave={() => {
+              setHoveredProjectKey(null);
+              onProjectHoverChange?.(null);
+            }}
           >
             <div className='my-[2px]'>
               <p>
@@ -100,7 +119,7 @@ export default function ProjectsGalleryClient({ projects, onProjectOpen }: Proje
               onClick={(event) => {
                 if (!onProjectOpen) return;
                 event.preventDefault();
-                onProjectOpen(project.slug.current);
+                onProjectOpen(project.slug.current, project.categories?.[0]?.slug || null);
               }}
               className="pb-[calc(var(--lh)+4px)]"
             >
@@ -109,11 +128,13 @@ export default function ProjectsGalleryClient({ projects, onProjectOpen }: Proje
                   key={project.images[0].asset._id}
                   src={urlFor(project.images[0]).url()}
                   alt={project.title}
-                  className="w-auto h-[66.667dvh] object-cover"
+                  className="lg:w-auto w-screen h-auto lg:h-[66.667dvh] object-cover"
                 />
               )}
             </Link>
           </div>
+            );
+          })()
         ))}
       </div>
     </main>
