@@ -85,7 +85,7 @@ export default function ProjectsGalleryClient({
           return (
             <div
               key={`${project.slug.current}-${index}`}
-              className={`absolute px-[2px] top-[15.5px] left-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute px-[3px] lg:top-[17.5px] top-[15.5px] left-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
             >
 
               {project.images?.[0] && (
@@ -105,21 +105,23 @@ export default function ProjectsGalleryClient({
           );
         })}
 
-      <div className='fixed bottom-0 left-0 lg:w-1/2 w-full px-[3px_7px] flex items-end justify-between'>
+      <div className='fixed bottom-0 left-0 w-full lg:px-[3px_8px] px-[3px_7px] flex items-end justify-between'>
         
-        <div className=''>
+        <div className='lg:flex-1'>
           <h1>Javi Dardo</h1>
           {/* <Logo /> */}
         </div>
       
-        <div className='pb-[7px]'>
+        <div className='lg:flex-1 lg:pb-[8px] pb-[7px] text-center'>
           <h6>Barcelona, {time}</h6>
         </div>
 
-        <div className='pb-[7px]'>
-          <a href="https://www.instagram.com/javidardo" target='_blank'>@javidardo</a>
-          <a href="tel:+34 669 342 305">+34 669 342 305</a>
-          <a href="mailto:contact@javidardo.com">contact@javidardo.com</a>
+        <div className='lg:flex-1 lg:pb-[8px] pb-[7px] flex'>
+          <div className='flex flex-col items-start ml-auto'>
+            <a href="https://www.instagram.com/javidardo" target='_blank'>@javidardo</a>
+            <a href="tel:+34 669 342 305">+34 669 342 305</a>
+            <a href="mailto:contact@javidardo.com">contact@javidardo.com</a>
+          </div>
         </div>
 
       </div>
