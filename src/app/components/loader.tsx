@@ -114,9 +114,9 @@ export default function ProjectsGalleryClient({
         </div>
 
         <div className='pb-[7px]'>
-          <a href="">@javidardo</a>
-          <a href="">+34 678 123 456</a>
-          <a href="">hola@javidardo.com</a>
+          <a href="https://www.instagram.com/javidardo" target='_blank'>@javidardo</a>
+          <a href="tel:+34 669 342 305">+34 669 342 305</a>
+          <a href="mailto:contact@javidardo.com">contact@javidardo.com</a>
         </div>
 
       </div>
