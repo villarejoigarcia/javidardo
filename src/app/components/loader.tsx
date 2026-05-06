@@ -105,7 +105,7 @@ export default function ProjectsGalleryClient({
           );
         })}
 
-      <div className='fixed bottom-0 left-0 lg:w-1/2 w-full lg:px-[5px] px-[3px_7px] flex items-end justify-between'>
+      <div className='fixed bottom-0 left-0 lg:w-1/2 w-full px-[3px_7px] flex items-end justify-between'>
         
         <div className=''>
           <h1>Javi Dardo</h1>
