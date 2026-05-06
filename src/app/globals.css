@@ -108,9 +108,17 @@ button {
 	transition: .5s;
 }
 
-a:hover,
+/* a:hover,
 button:hover {
 	color: var(--color-grey);
+} */
+
+#loader:hover a {
+	opacity: 0;
+}
+
+#loader a:hover {
+	opacity: 1 !important;
 }
 
 /*responsive*/
