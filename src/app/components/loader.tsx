@@ -100,7 +100,7 @@ export default function ProjectsGalleryClient({
           return (
             <div
               key={`${project.slug.current}-${index}`}
-              className={`absolute left-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute left-0 top-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
             >
 
               {project.images?.[0] && (
@@ -108,7 +108,7 @@ export default function ProjectsGalleryClient({
                   key={project.images[0].asset._id}
                   src={urlFor(project.images[0]).url()}
                   alt={project.title}
-                  className="lg:w-[50vw] w-screen h-[50dvh] lg:h-screen object-cover"
+                  className="lg:w-[50vw] w-screen h-[50dvh] lg:h-dvh object-cover"
                 />
               )}
               <div className='m-[3px] absolute lg:top-1/3 top-1/2 -translate-y-1/2 mix-blend-overlay'>
@@ -138,7 +138,7 @@ export default function ProjectsGalleryClient({
                   key={project.images[0].asset._id}
                   src={urlFor(project.images[0]).url()}
                   alt={project.title}
-                  className="lg:w-[50vw] w-screen h-[50dvh] lg:h-screen object-cover"
+                  className="lg:w-[50vw] w-screen h-[50dvh] lg:h-dvh object-cover"
                 />
               )}
               <div className='m-[3px] absolute lg:top-1/3 top-1/2 -translate-y-1/2 mix-blend-overlay'>
@@ -152,7 +152,7 @@ export default function ProjectsGalleryClient({
 
       </div>
 
-      <div className='fixed top-0 left-0 w-full px-[3px] flex justify-between mix-blend-overlay'>
+      <div className='fixed top-0 left-0 w-full px-[2px] flex justify-between mix-blend-overlay'>
         
         <div className='lg:flex-[.5]'>
           <h1 className='text-white!'>Javi Dardo</h1>
@@ -160,17 +160,17 @@ export default function ProjectsGalleryClient({
         </div>
 
 
-        <div className='lg:flex-[.5] pt-[3px] flex' id='loader'>
-          <div className='flex flex-col items-start ml-auto mr-[3px]'>
+        <div className='lg:flex-[.5] pt-[2px] flex'>
+          <div className='flex flex-col ml-auto mr-[2px]' id='loader'>
             <a className='text-white!' href="https://www.instagram.com/javidardo" target='_blank'>@javidardo</a>
             <a className='text-white!' href="tel:+34 669 342 305">+34 669 342 305</a>
             <a className='text-white!' href="mailto:contact@javidardo.com">contact@javidardo.com</a>
           </div>
         </div>
 
-        <div className='lg:flex-1 lg:py-[3px] py-[7px] text-right'>
+        <div className='lg:flex-1 py-[2px] text-right'>
           {/* <h6>Barcelona, {time}</h6> */}
-          <p className='text-white! lg:relative lg:left-auto lg:top-auto fixed left-[3px] mt-[3px]! top-[50dvh]'>Fashion and still life photographer based in Barcelona and working worldwide</p>
+          <p className='text-white! lg:relative lg:left-auto lg:top-auto fixed left-[3px] top-[50dvh] lg:mt-0! mt-[2px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
         </div>
 
       </div>

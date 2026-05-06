@@ -92,8 +92,8 @@ h1 span {
 h1,
 h1 span {
 	font-family: "Sometimes Times";
-	font-size: 40px;
-	line-height: auto;
+	font-size: 46px;
+	line-height: 1em;
 }
 
 h6 {
