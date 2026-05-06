@@ -76,13 +76,16 @@ export default function ProjectsGalleryClient({
     <main
       className={`w-full`}
     >
+      <div className='py-[3px] px-[5px]'>
+      <p className='text-(--color-grey)!'>Fashion and still life photographer based in Barcelona and working worldwide.</p>
+      </div>
         {projects.map((project, index) => {
           const isActive = index === activeProjectIndex;
 
           return (
             <div
               key={`${project.slug.current}-${index}`}
-              className={`absolute p-[2px] top-0 left-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute px-[2px] top-[15.5px] left-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
             >
 
               {project.images?.[0] && (
@@ -93,7 +96,7 @@ export default function ProjectsGalleryClient({
                   className="lg:w-auto w-screen h-auto lg:h-[66.667dvh] object-cover"
                 />
               )}
-              <div className='m-[2.5px]'>
+              <div className='m-[3px]'>
                 <p>
                   {project.code}.{project.title}
                 </p>
