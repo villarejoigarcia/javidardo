@@ -108,10 +108,10 @@ export default function ProjectsGalleryClient({
                   key={project.images[0].asset._id}
                   src={urlFor(project.images[0]).url()}
                   alt={project.title}
-                  className="lg:w-[50vw] w-screen h-[50dvh] lg:h-dvh object-cover"
+                  className="lg:w-[50vw] w-screen h-dvh object-cover"
                 />
               )}
-              <div className='m-[3px] absolute lg:top-1/3 top-1/2 -translate-y-1/2 mix-blend-overlay'>
+              <div className='m-[3px] absolute top-[66.667dvh] mix-blend-overlay'>
                 <p className='text-white!'>
                   {project.code}.{project.title}
                 </p>
@@ -130,7 +130,7 @@ export default function ProjectsGalleryClient({
           return (
             <div
               key={`${project.slug.current}-${index}`}
-              className={`absolute right-0 bottom-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              className={`lg:block hidden absolute right-0 bottom-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
             >
 
               {project.images?.[0] && (
@@ -170,7 +170,7 @@ export default function ProjectsGalleryClient({
 
         <div className='lg:flex-1 py-[2px] text-right'>
           {/* <h6>Barcelona, {time}</h6> */}
-          <p className='text-white! lg:relative lg:left-auto lg:top-auto fixed left-[3px] top-[50dvh] lg:mt-0! mt-[2px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
+          <p className='text-white! lg:relative lg:left-auto lg:top-auto fixed left-[3px] top-1/3 lg:mt-0! mt-[2px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
         </div>
 
       </div>
