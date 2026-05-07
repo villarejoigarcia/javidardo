@@ -111,7 +111,7 @@ export default function ProjectsGalleryClient({
                   className="lg:w-[50vw] w-screen h-dvh object-cover"
                 />
               )}
-              <div className='m-[3px] absolute top-[66.667dvh] mix-blend-overlay'>
+              <div className='m-[3px] absolute lg:top-1/3 top-[66.667dvh] mix-blend-overlay'>
                 <p className='text-white!'>
                   {project.code}.{project.title}
                 </p>
