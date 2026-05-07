@@ -39,6 +39,8 @@ function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
+
+
 export default function ProjectsGalleryClient({
   projects,
 }: ProjectsLoaderClientProps) {
@@ -47,8 +49,16 @@ export default function ProjectsGalleryClient({
   const [rightProjects, setRightProjects] = useState(projects);
 
   useEffect(() => {
-    setLeftProjects(shuffleArray(projects));
-    setRightProjects(shuffleArray(projects));
+    const isDesktop = window.innerWidth >= 1024;
+    
+    if (isDesktop) {
+      const mid = Math.ceil(projects.length / 2);
+      setLeftProjects(shuffleArray(projects.slice(0, mid)));
+      setRightProjects(shuffleArray(projects.slice(mid)));
+    } else {
+      setLeftProjects(shuffleArray(projects));
+      setRightProjects([]);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,11 +68,11 @@ export default function ProjectsGalleryClient({
     if (projects.length <= 1) return;
 
     const intervalId = window.setInterval(() => {
-      setActiveProjectIndex((currentIndex) => (currentIndex + 1) % projects.length);
+      setActiveProjectIndex((currentIndex) => (currentIndex + 1) % (Math.max(leftProjects.length, rightProjects.length) || projects.length));
     }, 200);
 
     return () => window.clearInterval(intervalId);
-  }, [projects.length]);
+  }, [projects.length, leftProjects.length, rightProjects.length]);
 
   if (projects.length === 0) {
     return null;
