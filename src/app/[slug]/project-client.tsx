@@ -9,6 +9,7 @@ import { urlFor } from '@/sanity/helper';
 import SiteShell from '../components/site-shell';
 
 let hasAnimatedProjectList = false;
+let isProjectSwitch = false;
 const PROJECT_SWITCH_DELAY_MS = 333;
 const PROJECT_SWITCH_DELAY_S = PROJECT_SWITCH_DELAY_MS / 1000;
 
@@ -92,15 +93,17 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
         return nextValue;
     });
 
-    const [shouldAnimateContent, setShouldAnimateContent] = useState(false);
+    const [shouldAnimateContent] = useState(() => {
+        const animate = !isProjectSwitch;
+        isProjectSwitch = false;
+        return animate;
+    });
 
     const handleProjectSwitch = (slug: string) => {
         if (isLeaving || slug === project.slug || pendingSlug) return;
 
-        setPendingSlug(slug);
-        switchTimeoutRef.current = window.setTimeout(() => {
-            router.push(`/${slug}?from=switch`);
-        }, PROJECT_SWITCH_DELAY_MS);
+        isProjectSwitch = true;
+        router.push(`/${slug}`);
     };
 
     const handleNextImage = () => {
@@ -129,9 +132,6 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
 
     useEffect(() => {
         const from = new URLSearchParams(window.location.search).get('from');
-        if (from === 'home' || from === 'switch') {
-            setShouldAnimateContent(true);
-        }
 
         if (from) {
             router.replace(pathname, { scroll: false });
@@ -250,7 +250,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                     <motion.div
                         className="flex-2 lg:pl-[5px] min-w-0"
                         initial={shouldAnimateContent ? { opacity: 0 } : false}
-                        animate={isSwitchingProject ? { opacity: 0 } : { opacity: 1 }}
+                        animate={{ opacity: 1 }}
                         transition={{
                             duration: .666,
                             ease: 'easeOut',
@@ -299,24 +299,29 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                 ease: 'easeOut',
                                 // delay: isSingleViewModeChange && activeSingleView === 'single' ? .666 : 0,
                             }}
+                            onClick={(event) => {
+                                if (event.target === event.currentTarget) {
+                                    setActiveSingleView('all');
+                                }
+                            }}
                         >
 
                             <div className='lg:absolute flex lg:flex-col flex-row-reverse justify-between w-full top-0 left-0 lg:items-start z-10 lg:pt-(--kv) pt-[calc(var(--kv)*3+var(--lh))] px-(--kv)'>
 
                                 <h6
-                                    className='mb-(--kv) block cursor-pointer lg:absolute lg:top-[33.334dvh] hover:opacity-100! duration-333!'
+                                    className='mb-(--kv) block cursor-pointer hover:opacity-100! duration-333!'
                                     onClick={() => setActiveSingleView('all')}
                                 >
                                     Back
                                 </h6>
 
-                                <div className='flex pb-(--kv) lg:absolute lg:top-[66.667dvh]'>
+                                <div className='flex pb-(--kv)'>
 
                                     {project.images.map((_, index) => (
                                         <p
                                             key={index}
                                             onMouseEnter={() => setActiveImageIndex(index)}
-                                            className={` block pr-[calc(var(--lh)/2)]! duration-0! lg:py-(--kv)! cursor-ew-resize ${index === activeImageIndex ? 'text-black' : 'text-(--color-grey)!'}`}
+                                            className={` block pr-[calc(var(--lh)/2)]! duration-0! lg:py-(--kv)! cursor-ew-resize ${index === activeImageIndex ? 'opacity-100' : 'opacity-40'}`}
                                         >{index + 1}</p>
                                     ))}
 
@@ -336,7 +341,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                         key={`${img.asset._id}-${index}`}
                                         src={urlFor(img).url()}
                                         alt={project.title}
-                                        className={`w-auto max-h-full max-w-full object-cover select-none ${index === activeImageIndex ? 'block' : 'hidden'}`}
+                                        className={`w-auto h-full object-cover select-none ${index === activeImageIndex ? 'block' : 'hidden'}`}
                                     />
                                 ))}
 

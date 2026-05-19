@@ -37,6 +37,7 @@ export default function Header({
     typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : false
   );
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [localHoveredCategorySlug, setLocalHoveredCategorySlug] = useState<string | null>(null);
 
   useEffect(() => {
     const handleAboutStateChange = (event: Event) => {
@@ -58,6 +59,8 @@ export default function Header({
   const sortedCategories = [...categories].sort((a, b) =>
     a.title.localeCompare(b.title, 'es', { sensitivity: 'base' })
   );
+
+  const effectiveHoveredCategorySlug = hoveredCategorySlug ?? localHoveredCategorySlug;
 
   return (
     <>
@@ -151,7 +154,9 @@ export default function Header({
               key={category._id}
               data-category={category.slug}
               onClick={() => onCategorySelect?.(category.slug)}
-              className={`${viewMode === 'single' && activeCategorySlugs.length > 0 && !activeCategorySlugs.includes(category.slug) ? 'hidden!' : ''} ${activeCategorySlug && category.slug !== activeCategorySlug ? 'opacity-30 hover:opacity-100' : ''} ${hoveredCategorySlug && category.slug !== hoveredCategorySlug ? 'opacity-30 hover:opacity-100' : ''} ${category.slug === activeCategorySlug ? 'hover:opacity-100 before:content-["-_"]' : ''} cursor-pointer text-left duration-500 hover:opacity-30`}
+              onMouseEnter={() => setLocalHoveredCategorySlug(category.slug)}
+              onMouseLeave={() => setLocalHoveredCategorySlug(null)}
+              className={`${viewMode === 'single' && activeCategorySlugs.length > 0 && !activeCategorySlugs.includes(category.slug) ? 'hidden!' : ''} ${effectiveHoveredCategorySlug ? (category.slug === effectiveHoveredCategorySlug ? 'opacity-100' : 'opacity-40') : activeCategorySlug ? (category.slug === activeCategorySlug ? 'opacity-100' : 'opacity-40 hover:opacity-100') : 'hover:opacity-40'} ${category.slug === activeCategorySlug ? 'before:content-["-_"]' : ''} cursor-pointer text-left duration-500`}
             >
               {category.title}
             </button>
