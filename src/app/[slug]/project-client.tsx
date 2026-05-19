@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { PortableText } from 'next-sanity';
@@ -54,7 +54,6 @@ type ProjectPageClientProps = {
 export default function ProjectPageClient({ project, categories, projects }: ProjectPageClientProps) {
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
     const [isLeaving, setIsLeaving] = useState(false);
     const [pendingSlug, setPendingSlug] = useState<string | null>(null);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -93,10 +92,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
         return nextValue;
     });
 
-    const [shouldAnimateContent] = useState(() => {
-        const from = searchParams.get('from');
-        return from === 'home' || from === 'switch';
-    });
+    const [shouldAnimateContent, setShouldAnimateContent] = useState(false);
 
     const handleProjectSwitch = (slug: string) => {
         if (isLeaving || slug === project.slug || pendingSlug) return;
@@ -132,10 +128,15 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
     // };
 
     useEffect(() => {
-        if (searchParams.get('from')) {
+        const from = new URLSearchParams(window.location.search).get('from');
+        if (from === 'home' || from === 'switch') {
+            setShouldAnimateContent(true);
+        }
+
+        if (from) {
             router.replace(pathname, { scroll: false });
         }
-    }, [pathname, router, searchParams]);
+    }, [pathname, router]);
 
     useEffect(() => {
         setActiveImageIndex(0);

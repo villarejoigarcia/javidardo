@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import Gallery, { type ProjectItem } from './gallery';
 import Archive from './archive';
@@ -22,11 +22,9 @@ type HomeClientProps = {
 export default function HomeClient({ projects, categories }: HomeClientProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const shouldSkipIntro = searchParams.get('from') === 'close';
   const [activeView, setActiveView] = useState<'gallery' | 'archive'>('gallery');
   const [isLeaving, setIsLeaving] = useState(false);
-  const [showIntro, setShowIntro] = useState(!shouldSkipIntro);
+  const [showIntro, setShowIntro] = useState(true);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState<string | null>(null);
   const [hoveredCategorySlug, setHoveredCategorySlug] = useState<string | null>(null);
 
@@ -41,10 +39,12 @@ export default function HomeClient({ projects, categories }: HomeClientProps) {
   }, [showIntro]);
 
   useEffect(() => {
-    if (shouldSkipIntro) {
+    const from = new URLSearchParams(window.location.search).get('from');
+    if (from === 'close') {
+      setShowIntro(false);
       router.replace(pathname, { scroll: false });
     }
-  }, [pathname, router, shouldSkipIntro]);
+  }, [pathname, router]);
 
   const handleProjectOpen = (slug: string, _categorySlug?: string | null) => {
     if (isLeaving) return;
