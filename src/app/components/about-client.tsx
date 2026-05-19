@@ -88,7 +88,7 @@ export default function AboutClient({ data }: AboutProps) {
                                 <>
                                     <h6 className="">Listening</h6>
                                     {about.listening.map((item: AboutLink, i: number) => (
-                                        <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" className='w-fit'>
+                                        <a key={i} href={item.url} target="_blank" rel="noopener noreferrer" className='w-fit hover:opacity-40'>
                                             {item.label}
                                         </a>
                                     ))}
@@ -101,7 +101,7 @@ export default function AboutClient({ data }: AboutProps) {
                                 <>
                                     <h6 className="lg:absolute lg:right-full lg:bottom-0 lg:pr-(--kv)!">Contact</h6>
                                     {about.contactLinks.map((link: AboutLink, i: number) => (
-                                        <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className='w-fit'>
+                                        <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className='w-fit hover:opacity-40'>
                                             {link.label}
                                         </a>
                                     ))}
@@ -112,7 +112,7 @@ export default function AboutClient({ data }: AboutProps) {
                         <div className="flex-1 relative lg:mb-0 mb-[calc(36px-var(--kv))]">
                             {about.clients && about.clients.length > 0 && (
                                 <>
-                                    <h6 className="lg:absolute lg:right-full lg:bottom-0 lg:pr-(--kv)!">Clients</h6>
+                                    <h6 className="lg:absolute lg:right-full lg:bottom-0 lg:pr-(--kv)! whitespace-nowrap">Selected clients</h6>
                                     <div>
                                         {about.clients.map((client: string, i: number) => (
                                             <p key={i}>{client}</p>

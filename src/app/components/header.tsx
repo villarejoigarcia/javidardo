@@ -147,7 +147,7 @@ export default function Header({
       
       <div className={`flex relative flex-1 items-end gap-x-(--kv) ${viewMode === 'single' ? 'lg:flex-2' : 'hidden lg:flex'}`}>
         <h6 className='lg:absolute lg:right-full lg:pr-(--kv)!'>Category</h6>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-start">
           {sortedCategories.map((category) => (
             <button
               type="button"
