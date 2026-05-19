@@ -83,7 +83,7 @@ export default function AboutClient({ data }: AboutProps) {
 
                     <div className="flex flex-wrap lg:items-end p-(--kv) lg:pt-[46px] pt-[36px]">
                         
-                        <div className="lg:flex-1 w-full absolute bottom-(--kv)">
+                        <div className="lg:flex-1 w-full lg:relative absolute lg:bottom-0 bottom-(--kv)">
                             {about.listening && about.listening.length > 0 && (
                                 <>
                                     <h6 className="">Listening</h6>

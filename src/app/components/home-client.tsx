@@ -17,14 +17,15 @@ type CategoryItem = {
 type HomeClientProps = {
   projects: ProjectItem[];
   categories: CategoryItem[];
+  skipIntroOnLoad: boolean;
 };
 
-export default function HomeClient({ projects, categories }: HomeClientProps) {
+export default function HomeClient({ projects, categories, skipIntroOnLoad }: HomeClientProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [activeView, setActiveView] = useState<'gallery' | 'archive'>('gallery');
   const [isLeaving, setIsLeaving] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(!skipIntroOnLoad);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState<string | null>(null);
   const [hoveredCategorySlug, setHoveredCategorySlug] = useState<string | null>(null);
 
@@ -39,12 +40,10 @@ export default function HomeClient({ projects, categories }: HomeClientProps) {
   }, [showIntro]);
 
   useEffect(() => {
-    const from = new URLSearchParams(window.location.search).get('from');
-    if (from === 'close') {
-      setShowIntro(false);
+    if (skipIntroOnLoad) {
       router.replace(pathname, { scroll: false });
     }
-  }, [pathname, router]);
+  }, [pathname, router, skipIntroOnLoad]);
 
   const handleProjectOpen = (slug: string, _categorySlug?: string | null) => {
     if (isLeaving) return;

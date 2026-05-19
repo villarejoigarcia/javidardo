@@ -1,6 +1,7 @@
 import { client } from '@/sanity/client';
 import type { Metadata } from 'next';
 import ProjectPageClient, { type CategoryItem, type ProjectData, type ProjectListItem } from './project-client';
+import About from '../components/about';
 
 interface ProjectProps {
   params: Promise<{ slug: string }>;
@@ -49,5 +50,10 @@ export default async function ProjectPage(props: ProjectProps) {
 
   if (!project) return <p>Proyecto no encontrado</p>;
 
-  return <ProjectPageClient project={project} categories={categories} projects={projects} />;
+  return (
+    <>
+      <About />
+      <ProjectPageClient project={project} categories={categories} projects={projects} />
+    </>
+  );
 }
