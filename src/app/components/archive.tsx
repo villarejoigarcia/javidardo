@@ -31,7 +31,7 @@ export default function Archive({
             key={`${project.slug.current}-${index}`}
             // className={`w-auto relative hover:pt-[calc(var(--lh)+4px)] delay-50 duration-500 ease-in-out`}
             // className={`w-auto relative delay-50 duration-500 ${hoveredSlug && hoveredSlug !== project.slug.current ? 'invert' : ''}`}
-            className={`w-auto relative duration-500 hover:translate-y-[calc(var(--lh)+4px)] overflow-hidden ${activeCategorySlug && project.categories?.[0]?.slug !== activeCategorySlug ? 'w-0! h-0! p-0! duration-0!' : ''}`}
+            className={`w-auto relative duration-500 lg:hover:translate-y-[calc(var(--lh)+4px)] overflow-hidden ${activeCategorySlug && project.categories?.[0]?.slug !== activeCategorySlug ? 'w-0! h-0! p-0! duration-0!' : ''}`}
             data-category={project.categories?.[0]?.slug || ''}
             onMouseEnter={() => {
               onProjectHoverCategoryChange?.(project.categories?.[0]?.slug || null);
@@ -41,7 +41,7 @@ export default function Archive({
             }}
           >
 
-            <div className='flex justify-center pb-[2px] lg:pt-[calc(var(--lh)+4px+2px)]'>
+            <div className='flex justify-center pb-[2px] lg:pt-[calc(var(--lh)+4px+2px)] pt-[2px]'>
               <p className='text-center'>
                 {/* <p className='translate-x-1/2'> */}
                 {project.code}.

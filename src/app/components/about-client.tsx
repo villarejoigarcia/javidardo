@@ -83,7 +83,7 @@ export default function AboutClient({ data }: AboutProps) {
 
                     <div className="flex flex-wrap lg:items-end p-(--kv) lg:pt-[46px] pt-[36px]">
                         
-                        <div className="lg:flex-1 w-full lg:relative absolute lg:bottom-0 bottom-(--kv)">
+                        <div className="lg:flex-1 w-full lg:order-first order-last">
                             {about.listening && about.listening.length > 0 && (
                                 <>
                                     <h6 className="">Listening</h6>
@@ -109,7 +109,8 @@ export default function AboutClient({ data }: AboutProps) {
                             )}
                         </div>
 
-                        <div className="flex-1 relative lg:mb-0 mb-[calc(36px-var(--kv))]">
+                        {/* <div className="flex-1 relative lg:mb-0 mb-[calc(36px-var(--kv))]"> */}
+                        <div className="flex-1 relative lg:mb-0 mb-[36px]">
                             {about.clients && about.clients.length > 0 && (
                                 <>
                                     <h6 className="lg:absolute lg:right-full lg:bottom-0 lg:pr-(--kv)! whitespace-nowrap">Selected clients</h6>

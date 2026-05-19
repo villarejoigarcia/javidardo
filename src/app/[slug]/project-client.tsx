@@ -57,6 +57,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
     const pathname = usePathname();
     const [isLeaving, setIsLeaving] = useState(false);
     const [pendingSlug, setPendingSlug] = useState<string | null>(null);
+    const [hoveredProjectSlug, setHoveredProjectSlug] = useState<string | null>(null);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [isImageCarouselPaused, setIsImageCarouselPaused] = useState(false);
     const [activeSingleView, setActiveSingleView] = useState<'all' | 'single'>('all');
@@ -197,7 +198,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
 
                             <h6
                                 onClick={handleGoHome}
-                                className="cursor-pointer duration-333! uppercase hover:opacity-100!"
+                                className="cursor-pointer duration-333! w-fit uppercase hover:opacity-100!"
                             >
                                 Close
                             </h6>
@@ -214,11 +215,13 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                         <Link
                                             key={item.slug}
                                             href={`/${item.slug}`}
+                                            onMouseEnter={() => setHoveredProjectSlug(item.slug)}
+                                            onMouseLeave={() => setHoveredProjectSlug(null)}
                                             onClick={(event) => {
                                                 event.preventDefault();
                                                 handleProjectSwitch(item.slug);
                                             }}
-                                            className={`flex-1 duration-333 ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
+                                            className={`flex-1 duration-333 ${hoveredProjectSlug !== null ? (hoveredProjectSlug === item.slug ? 'opacity-100' : 'opacity-40') : (isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100')}`}
                                         >
                                             {item.code ? `${item.code}.` : ''}
                                             {item.title}
@@ -277,7 +280,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                         key={`${img.asset._id}-${index}`}
                                         src={urlFor(img).width(800).url()}
                                         alt={project.title}
-                                        className="w-full object-cover cursor-pointer"
+                                        className="w-full object-cover cursor-zoom-in"
                                         onClick={() => {
                                             setActiveImageIndex(index);
                                             setActiveSingleView('single');
@@ -291,7 +294,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                         {/* single */}
 
                         <motion.div
-                            className={`z-100 bg-[color-mix(in_srgb,var(--color-positive)_90%,transparent)] flex lg:flex-row flex-col justify-center top-0 left-0 lg:px-0 px-[2px] lg:py-[2px] left-0 w-screen h-dvh cursor-e-resize absolute ${activeSingleView === 'single' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                            className={`z-100 bg-[color-mix(in_srgb,var(--color-positive)_90%,transparent)] flex lg:flex-row flex-col justify-center top-0 left-0 lg:px-0 px-[2px] lg:py-[2px] left-0 w-screen h-dvh cursor-zoom-out absolute ${activeSingleView === 'single' ? 'pointer-events-auto' : 'pointer-events-none'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
                             animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'single' ? 1 : 0 }}
                             transition={{
@@ -341,7 +344,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                         key={`${img.asset._id}-${index}`}
                                         src={urlFor(img).url()}
                                         alt={project.title}
-                                        className={`w-auto h-full object-cover select-none ${index === activeImageIndex ? 'block' : 'hidden'}`}
+                                        className={`lg:w-auto lg:h-full h-auto w-full object-cover select-none cursor-e-resize ${index === activeImageIndex ? 'block' : 'hidden'}`}
                                     />
                                 ))}
 

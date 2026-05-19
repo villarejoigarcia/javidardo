@@ -121,7 +121,7 @@ export default function ProjectsGalleryClient({
             data-project-item
             // className={`h-full pb-(--header) transition-opacity duration-100 ease-in-out ${index < projects.length ? (visibleItems.includes(index) ? 'opacity-100' : 'opacity-0') : 'opacity-100'}`}
             // className={`${getHeightClass(distances[index] ?? 300)} sticky pl-[2px] left-0 bg-white transition-all duration-200`}
-            className={`sticky left-0 duration-500 bg-(--color-positive) hover:pt-[calc(var(--lh)+4px)] ${activeCategorySlug && project.categories?.[0]?.slug !== activeCategorySlug ? 'w-0 p-0! duration-0! overflow-hidden' : ''}`}
+            className={`sticky left-0 duration-500 bg-(--color-positive) lg:hover:pt-[calc(var(--lh)+4px)] ${activeCategorySlug && project.categories?.[0]?.slug !== activeCategorySlug ? 'w-0 p-0! duration-0! overflow-hidden' : ''}`}
             data-category={project.categories?.[0]?.slug || ''}
             onMouseEnter={() => {
               onProjectHoverCategoryChange?.(project.categories?.[0]?.slug || null);
