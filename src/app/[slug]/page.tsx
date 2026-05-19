@@ -1,13 +1,13 @@
 import { client } from '@/sanity/client';
 import type { Metadata } from 'next';
-import ProjectPageClient, { type CategoryItem, type ProjectData, type ProjectListItem } from './page-client';
+import ProjectPageClient, { type CategoryItem, type ProjectData, type ProjectListItem } from './project-client';
 
 interface ProjectProps {
   params: Promise<{ slug: string }>;
 }
 
 const CATEGORIES_QUERY = `
-*[_type == "category"] {
+*[_type == "category" && count(*[_type == "project" && count(images) > 1 && references(^._id)]) > 0] {
   _id,
   title,
   "slug": slug.current
@@ -39,7 +39,7 @@ export default async function ProjectPage(props: ProjectProps) {
     ),
     client.fetch<CategoryItem[]>(CATEGORIES_QUERY),
     client.fetch<ProjectListItem[]>(
-      `*[_type=="project"] | order(publishedAt desc){
+      `*[_type=="project" && count(images) > 1] | order(publishedAt desc){
         title,
         code,
         "slug": slug.current

@@ -13,7 +13,9 @@ type SiteShellProps = {
   children: React.ReactNode;
   categories?: CategoryItem[];
   activeCategorySlugs?: string[];
+  activeCategorySlug?: string | null;
   hoveredCategorySlug?: string | null;
+  onCategorySelect?: (categorySlug: string) => void;
   viewMode: 'home' | 'single';
   activeView?: 'gallery' | 'archive';
   onViewChange?: (view: 'gallery' | 'archive') => void;
@@ -25,7 +27,9 @@ export default function SiteShell({
   children,
   categories = [],
   activeCategorySlugs = [],
+  activeCategorySlug,
   hoveredCategorySlug,
+  onCategorySelect,
   viewMode,
   activeView,
   onViewChange,
@@ -47,13 +51,16 @@ export default function SiteShell({
           <Header
             categories={categories}
             activeCategorySlugs={activeCategorySlugs}
+            activeCategorySlug={activeCategorySlug}
             hoveredCategorySlug={hoveredCategorySlug}
+            onCategorySelect={onCategorySelect}
             viewMode={viewMode}
             activeView={activeView}
             onViewChange={onViewChange}
             activeSingleView={activeSingleView}
             onSingleViewChange={onSingleViewChange}
           />
+
         {/* </motion.div> */}
       {/* </AnimatePresence> */}
     </>

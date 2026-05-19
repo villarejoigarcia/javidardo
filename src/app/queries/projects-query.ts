@@ -1,4 +1,4 @@
-export const projectsQuery = `*[_type == "project"] | order(publishedAt desc){
+export const projectsQuery = `*[_type == "project" && count(images) > 1] | order(publishedAt desc){
   title,
   slug,
   code,

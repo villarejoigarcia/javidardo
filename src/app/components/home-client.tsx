@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import Gallery, { type ProjectItem } from './gallery';
 import Archive from './archive';
@@ -21,15 +21,34 @@ type HomeClientProps = {
 
 export default function HomeClient({ projects, categories }: HomeClientProps) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const shouldSkipIntro = searchParams.get('from') === 'close';
   const [activeView, setActiveView] = useState<'gallery' | 'archive'>('gallery');
   const [isLeaving, setIsLeaving] = useState(false);
-  const [hoveredCategorySlug, setHoveredCategorySlug] = useState<string | null>(null);
+  const [showIntro, setShowIntro] = useState(!shouldSkipIntro);
   const [selectedCategorySlug, setSelectedCategorySlug] = useState<string | null>(null);
+  const [hoveredCategorySlug, setHoveredCategorySlug] = useState<string | null>(null);
 
-  const handleProjectOpen = (slug: string, categorySlug?: string | null) => {
+  useEffect(() => {
+    if (!showIntro) return;
+
+    const introTimer = window.setTimeout(() => {
+      setShowIntro(false);
+    }, 5000);
+
+    return () => window.clearTimeout(introTimer);
+  }, [showIntro]);
+
+  useEffect(() => {
+    if (shouldSkipIntro) {
+      router.replace(pathname, { scroll: false });
+    }
+  }, [pathname, router, shouldSkipIntro]);
+
+  const handleProjectOpen = (slug: string, _categorySlug?: string | null) => {
     if (isLeaving) return;
 
-    setSelectedCategorySlug(categorySlug ?? null);
     setIsLeaving(true);
     const pathname = slug.startsWith('/') ? slug : `/${slug}`;
 
@@ -38,65 +57,84 @@ export default function HomeClient({ projects, categories }: HomeClientProps) {
     }, 666);
   };
 
-  const handleProjectHoverChange = (categorySlug: string | null) => {
-    if (selectedCategorySlug) return;
-    setHoveredCategorySlug(categorySlug);
+  const handleCategorySelect = (categorySlug: string) => {
+    setSelectedCategorySlug((currentSlug) =>
+      currentSlug === categorySlug ? null : categorySlug
+    );
   };
 
-  const activeCategorySlug = selectedCategorySlug ?? hoveredCategorySlug;
+  useEffect(() => {
+    setHoveredCategorySlug(null);
+  }, [activeView]);
 
   return (
-    <Loader projects={projects}/>
-    
-    // <SiteShell
-    //     categories={categories}
-    //     viewMode="home"
-    //     activeView={activeView}
-    //     onViewChange={setActiveView}
-    //     hoveredCategorySlug={activeCategorySlug}
-    //   >
-        
-      
-      
-    //   <motion.div
-    //     initial={{ opacity: 0 }}
-    //     animate={{ opacity: isLeaving ? 0 : 1}}
-    //     transition={{ duration: 0.666, ease: 'easeOut' }}
-    //     className={isLeaving ? 'pointer-events-none' : ''}
-    //   >
-    //     <div className="relative h-dvh overflow-hidden">
-    //       <motion.div
-    //       //   className="h-[66dvh]"
-    //         animate={{ opacity: activeView === 'archive' ? 0.1 : 1 }}
-    //         transition={{ duration: 0.666, ease: 'easeOut' }}
-    //       >
-    //         <Gallery
-    //           projects={projects}
-    //           onProjectOpen={handleProjectOpen}
-    //           onProjectHoverChange={handleProjectHoverChange}
-    //         />
-    //       </motion.div>
+    <>
+      <AnimatePresence initial={false}>
+        {showIntro ? (
+          <motion.div
+            key="intro-loader"
+            className="fixed inset-0 z-100"
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: .666, delay: .200 }}
+          >
+            <Loader projects={projects} />
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
-    //       <AnimatePresence initial={false}>
-    //         {activeView === 'archive' ? (
-    //           <motion.div
-    //             key="archive"
-    //             className="absolute inset-0 z-[1] h-dvh"
-    //             initial={{ opacity: 0 }}
-    //             animate={{ opacity: 1 }}
-    //             exit={{ opacity: 0 }}
-    //             transition={{ duration: .666, ease: 'easeOut' }}
-    //           >
-    //             <Archive
-    //               projects={projects}
-    //               onProjectOpen={handleProjectOpen}
-    //               onProjectHoverChange={handleProjectHoverChange}
-    //             />
-    //           </motion.div>
-    //         ) : null}
-    //       </AnimatePresence>
-    //     </div>
-    //   </motion.div>
-    // </SiteShell>
+      <SiteShell
+        categories={categories}
+        viewMode="home"
+        activeView={activeView}
+        onViewChange={setActiveView}
+        activeCategorySlug={selectedCategorySlug}
+        hoveredCategorySlug={hoveredCategorySlug}
+        onCategorySelect={handleCategorySelect}
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showIntro || isLeaving ? 0 : 1 }}
+          transition={{ duration: 0.666, ease: 'easeOut' }}
+          className={isLeaving ? 'pointer-events-none' : ''}
+        >
+          <div className="relative h-dvh overflow-hidden">
+            <motion.div
+              animate={{ opacity: activeView === 'archive' ? 0.1 : 1 }}
+              transition={{ duration: 0.666, ease: 'easeOut' }}
+            >
+              <Gallery
+                projects={projects}
+                onProjectOpen={handleProjectOpen}
+                activeCategorySlug={selectedCategorySlug}
+                onProjectHoverCategoryChange={setHoveredCategorySlug}
+              />
+            </motion.div>
+
+            <AnimatePresence initial={false}>
+              {activeView === 'archive' ? (
+                <motion.div
+                  key="archive"
+                  className="absolute inset-0 z-[1] h-dvh"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: .666, ease: 'easeOut' }}
+                >
+                  <Archive
+                    projects={projects}
+                    onProjectOpen={handleProjectOpen}
+                    activeCategorySlug={selectedCategorySlug}
+                    onProjectHoverCategoryChange={setHoveredCategorySlug}
+                  />
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+
+      </SiteShell>
+    </>
   );
 }

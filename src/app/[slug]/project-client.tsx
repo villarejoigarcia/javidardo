@@ -59,12 +59,12 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
     const [pendingSlug, setPendingSlug] = useState<string | null>(null);
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [isImageCarouselPaused, setIsImageCarouselPaused] = useState(false);
-    const [activeSingleView, setActiveSingleView] = useState<'all' | 'single'>('single');
+    const [activeSingleView, setActiveSingleView] = useState<'all' | 'single'>('all');
     const previousSingleViewRef = useRef<'all' | 'single'>(activeSingleView);
     const switchTimeoutRef = useRef<number | null>(null);
     const hoverIntervalRef = useRef<number | null>(null);
     const isSwitchingProject = pendingSlug !== null;
-    const isSingleViewModeChange = previousSingleViewRef.current !== activeSingleView;
+    // const isSingleViewModeChange = previousSingleViewRef.current !== activeSingleView;
 
     useEffect(() => {
         return () => {
@@ -83,7 +83,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
         setIsLeaving(true);
         window.setTimeout(() => {
             hasAnimatedProjectList = false;
-            router.push('/');
+            router.push('/?from=close');
         }, 666);
     };
 
@@ -177,57 +177,77 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                 transition={{ duration: 0.666, ease: 'easeOut' }}
                 className={isLeaving ? 'pointer-events-none' : ''}
             >
-                <main className="flex">
+
+                <main className="lg:flex">
+
+                    {/* list */}
 
                     <motion.div
-                        className="flex-1 "
+                        // className={`flex-1 duration-666 ${activeSingleView === 'single' ? 'opacity-0!' : 'delay-666'}`}
+                        className={`flex-1`}
                         initial={shouldAnimateList ? { opacity: 0 } : false}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.666, ease: 'easeOut' }}
                     >
 
-                        <div className='flex items-start sticky top-(--kv) mt-(--kv) pl-(--kv)'>
+                        <div className='flex lg:flex-row flex-row-reverse justify-between sticky top-(--kv) mt-(--kv) lg:pl-(--kv) px-(--kv)'>
 
-                            <div className='flex-1'>
+                            <div className='lg:flex-1'>
 
-                            <button
+                            <h6
                                 onClick={handleGoHome}
-                                className="text-black hover:text-(--color-grey) transition-colors duration-300 uppercase"
+                                className="cursor-pointer transition-colors duration-300 uppercase"
                             >
                                 Close
-                            </button>
+                            </h6>
 
                             </div>
 
-                            <div className='flex flex-2 flex-col items-start'>
+                            <div className='hidden lg:flex flex-2 flex-col items-start'>
 
-                            {projects.map((item) => {
-                                const activeSlug = pendingSlug ?? project.slug;
-                                const isActive = item.slug === activeSlug;
+                                {projects.map((item) => {
+                                    const activeSlug = pendingSlug ?? project.slug;
+                                    const isActive = item.slug === activeSlug;
 
-                                return (
-                                    <Link
-                                        key={item.slug}
-                                        href={`/${item.slug}`}
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            handleProjectSwitch(item.slug);
-                                        }}
-                                        className={`flex-1 transition-[color] duration-300 hover:text-black! ${isActive ? 'text-black' : 'text-(--color-grey)!'}`}
-                                    >
-                                        {item.code ? `${item.code}.` : ''}
-                                        {item.title}
-                                    </Link>
-                                );
-                            })}
+                                    return (
+                                        <Link
+                                            key={item.slug}
+                                            href={`/${item.slug}`}
+                                            onClick={(event) => {
+                                                event.preventDefault();
+                                                handleProjectSwitch(item.slug);
+                                            }}
+                                            className={`flex-1 transition-[color] duration-300 hover:text-(--color-negative)! ${isActive ? 'text-black' : 'text-(--color-grey)!'}`}
+                                        >
+                                            {item.code ? `${item.code}.` : ''}
+                                            {item.title}
+                                        </Link>
+                                    );
+                                })}
+
+                            </div>
+
+                            <div className='lg:hidden flex'>
+
+                                {(() => {
+                                    const activeSlug = pendingSlug ?? project.slug;
+                                    const activeProject = projects.find((item) => item.slug === activeSlug);
+                                    return activeProject ? (
+                                        <p className='flex-1'>
+                                            {activeProject.code ? `${activeProject.code}.` : ''}
+                                            {activeProject.title}
+                                        </p>
+                                    ) : null;
+                                })()}
 
                             </div>
 
                         </div>
                     </motion.div>
 
+
                     <motion.div
-                        className="flex-[2] min-w-0 relative"
+                        className="flex-2 lg:pl-[5px] min-w-0"
                         initial={shouldAnimateContent ? { opacity: 0 } : false}
                         animate={isSwitchingProject ? { opacity: 0 } : { opacity: 1 }}
                         transition={{
@@ -235,72 +255,88 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                             ease: 'easeOut',
                         }}
                     >
+
+                        {/* all */}
+
                         <motion.div
-                            className={`grid grid-cols-4 gap-[2px] py-[2px] top-0 left-0 w-full max-h-dvh overflow-y-auto ${activeSingleView === 'all' ? 'pointer-events-auto relative' : 'pointer-events-none absolute'}`}
+                            className={`flex lg:py-[2px] pt-(--kv) lg:px-0 px-[2px] top-0 left-0 w-full max-h-dvh overflow-y-auto ${activeSingleView === 'all' ? 'pointer-events-auto' : 'pointer-events-none'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
-                            animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'all' ? 1 : 0 }}
+                            // animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'all' ? 1 : 0 }}
+                            animate={isSwitchingProject ? { opacity: 1 } : { opacity: activeSingleView === 'all' ? 1 : 1 }}
                             transition={{
                                 duration: 0.666,
                                 ease: 'easeOut',
-                                delay: isSingleViewModeChange && activeSingleView === 'all' ? .666 : 0,
+                                // delay: isSingleViewModeChange && activeSingleView === 'all' ? .666 : 0,
                             }}
                         >
-                            {project.images.map((img, index) => (
-                                <img
-                                    key={`${img.asset._id}-${index}`}
-                                    src={urlFor(img).width(800).url()}
-                                    alt={project.title}
-                                    className="w-full object-cover cursor-pointer"
-                                    onClick={() => {
-                                        setActiveImageIndex(index);
-                                        setActiveSingleView('single');
-                                    }}
-                                />
-                            ))}
+
+                            <div className='grid grid-cols-4 gap-[2px] flex-2'>
+                                {project.images.map((img, index) => (
+                                    <img
+                                        key={`${img.asset._id}-${index}`}
+                                        src={urlFor(img).width(800).url()}
+                                        alt={project.title}
+                                        className="w-full object-cover cursor-pointer"
+                                        onClick={() => {
+                                            setActiveImageIndex(index);
+                                            setActiveSingleView('single');
+                                        }}
+                                    />
+                                ))}
+                            </div>
+
                         </motion.div>
 
+                        {/* single */}
+
                         <motion.div
-                            className={`flex top-0 left-0 w-full cursor-e-resize ${activeSingleView === 'single' ? 'pointer-events-auto relative' : 'pointer-events-none absolute'}`}
+                            className={`z-100 bg-[color-mix(in_srgb,var(--color-positive)_90%,transparent)] flex lg:flex-row flex-col justify-center top-0 left-0 lg:px-0 px-[2px] lg:py-[2px] left-0 w-screen h-dvh cursor-e-resize absolute ${activeSingleView === 'single' ? 'pointer-events-auto' : 'pointer-events-none'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
                             animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'single' ? 1 : 0 }}
                             transition={{
                                 duration: 0.666,
                                 ease: 'easeOut',
-                                delay: isSingleViewModeChange && activeSingleView === 'single' ? .666 : 0,
+                                // delay: isSingleViewModeChange && activeSingleView === 'single' ? .666 : 0,
                             }}
                         >
+
+                            <div className='lg:absolute flex lg:flex-col flex-row-reverse justify-between w-full top-0 left-0 lg:items-start z-10 lg:pt-(--kv) pt-[calc(var(--kv)*3+var(--lh))] px-(--kv)'>
+
+                                <h6
+                                    className='block mb-(--kv) cursor-pointer lg:absolute lg:top-[33.334dvh]'
+                                    onClick={() => setActiveSingleView('all')}
+                                >
+                                    Back
+                                </h6>
+
+                                <div className='flex pb-(--kv) lg:absolute lg:top-[66.667dvh]'>
+
+                                    {project.images.map((_, index) => (
+                                        <p
+                                            key={index}
+                                            onMouseEnter={() => setActiveImageIndex(index)}
+                                            className={` block pr-[calc(var(--lh)/2)]! duration-0! lg:py-(--kv)! cursor-ew-resize ${index === activeImageIndex ? 'text-black' : 'text-(--color-grey)!'}`}
+                                        >{index + 1}</p>
+                                    ))}
+
+                                </div>
+
+                            </div>
+
                             <div
-                                className='relative flex-1 pt-[2px] cursor'
-                                // onMouseEnter={() => setIsImageCarouselPaused(true)}
-                                // onMouseLeave={() => setIsImageCarouselPaused(false)}
+                                className='h-full relative'
                                 onClick={() => {
                                     handleNextImage();
-                                    // stopHoverImageCarousel();
                                 }}
-                                // onMouseEnter={startHoverImageCarousel}
-                                // onMouseLeave={stopHoverImageCarousel}
                             >
-                                
+
                                 {project.images.map((img, index) => (
                                     <img
                                         key={`${img.asset._id}-${index}`}
                                         src={urlFor(img).url()}
                                         alt={project.title}
-                                        className={`w-full object-cover absolute ${index === activeImageIndex ? 'block' : 'hidden'}`}
-
+                                        className={`w-auto max-h-full max-w-full object-cover select-none ${index === activeImageIndex ? 'block' : 'hidden'}`}
                                     />
-                                ))}
-
-                            </div>
-
-                            <div className='relative flex-1 flex pl-(--kv)'>
-
-                                {project.images.map((_, index) => (
-                                    <p
-                                        key={index}
-                                        onMouseEnter={() => setActiveImageIndex(index)}
-                                        className={`block pr-[calc(var(--lh)/2)]! py-(--kv)! cursor-ew-resize ${index === activeImageIndex ? 'text-black' : 'text-(--color-grey)!'}`}
-                                    >{index+1}</p>
                                 ))}
 
                             </div>

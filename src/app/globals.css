@@ -13,7 +13,6 @@
 	--transition: all .666s;
 	--transition_s: all .666s, color .333s;
 	--transition_l: all 1.333s;
-	/* --header: 66px; */
 	--header: 54px;
 	--color-positive: #ffffff;
 	--color-negative: #000000;
@@ -32,7 +31,7 @@
   --color-foreground: var(--foreground);
   --kv: var(--kv);
   --lh: var(--lh);
-  --header: 46px:
+  --header: var(--header):
 }
 
 body {
@@ -77,7 +76,7 @@ button {
 	margin: 0;
 	padding: 0;
 	color: var(--color-negative);
-	/* transition: var(--transition_s); */
+	transition: var(--transition_s);
 	line-height: 1.2em;
 }
 
@@ -98,20 +97,29 @@ h1 span {
 
 h6 {
 	text-transform: uppercase;
+	/* color: var(--color-grey); */
+	opacity: .3;
+}
+
+/* button {
 	color: var(--color-grey);
+} */
+
+h6:hover {
+	/* color: var(--color-negative); */
+	opacity: 100;
 }
 
 a,
 button {
 	display: block;
 	cursor: pointer;
-	transition: .333s;
+	/* transition: .333s; */
 }
 
-/* a:hover,
-button:hover {
+a:hover {
 	color: var(--color-grey);
-} */
+}
 
 #loader:hover a {
 	opacity: 0;
@@ -134,16 +142,18 @@ button:hover {
 @media (max-width: 1023px) {
 
 	h1 {
-		font-size: 36px;
+		font-size: 34px;
 	}
 
 	:root {
-		--header: 39px;
+		--header: 56px;
+		--lh: 9.6px;
 	}
 
 	p,
 	a,
-	h6 {
+	h6,
+	button {
 		font-size: 8px;
 	}
 

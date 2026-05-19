@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { urlFor } from '@/sanity/helper';
-import { Logo } from './logo';
 
 type ProjectImage = {
   asset: {
@@ -70,8 +69,14 @@ export default function ProjectsGalleryClient({
     const intervalId = window.setInterval(() => {
       setActiveProjectIndex((currentIndex) => (currentIndex + 1) % (Math.max(leftProjects.length, rightProjects.length) || projects.length));
     }, 200);
+    const stopAutoplayTimeout = window.setTimeout(() => {
+      window.clearInterval(intervalId);
+    }, 5000);
 
-    return () => window.clearInterval(intervalId);
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(stopAutoplayTimeout);
+    };
   }, [projects.length, leftProjects.length, rightProjects.length]);
 
   if (projects.length === 0) {
@@ -121,7 +126,7 @@ export default function ProjectsGalleryClient({
                   className="lg:w-[50vw] w-screen h-dvh object-cover"
                 />
               )}
-              <div className='m-[3px] absolute lg:top-1/3 top-[66.667dvh] mix-blend-overlay'>
+              <div className='m-[3px] absolute top-1/3 mix-blend-overlay'>
                 <p className='text-white!'>
                   {project.code}.{project.title}
                 </p>
@@ -151,7 +156,7 @@ export default function ProjectsGalleryClient({
                   className="lg:w-[50vw] w-screen h-[50dvh] lg:h-dvh object-cover"
                 />
               )}
-              <div className='m-[3px] absolute lg:top-1/3 top-1/2 -translate-y-1/2 mix-blend-overlay'>
+              <div className='m-[3px] absolute top-1/3 mix-blend-overlay'>
                 <p className='text-white!'>
                   {project.code}.{project.title}
                 </p>
@@ -162,32 +167,32 @@ export default function ProjectsGalleryClient({
 
       </div>
 
-      <div className='fixed top-0 left-0 w-full px-[3px] flex justify-between mix-blend-overlay'>
+      <div className='fixed bottom-0 left-0 w-full flex items-end justify-between mix-blend-overlay'>
         
-        <div className='lg:flex-[.5]'>
+        <div className='p-[5px]'>
           <h1 className='text-white!'>Javi Dardo</h1>
           {/* <Logo /> */}
         </div>
 
 
-        <div className='lg:flex-[.5] pt-[3px] flex'>
+        {/* <div className='lg:flex-[.5] pt-[3px] flex'>
           <div className='flex flex-col ml-auto mr-[3px]' id='loader'>
             <a className='text-white!' href="https://www.instagram.com/javidardo" target='_blank'>@javidardo</a>
             <a className='text-white!' href="tel:+34 669 342 305">+34 669 342 305</a>
             <a className='text-white!' href="mailto:contact@javidardo.com">contact@javidardo.com</a>
           </div>
-        </div>
+        </div> */}
 
-        <div className='lg:flex-1 py-[2px] text-right'>
+        <div className='p-(--kv) text-right'>
           {/* <h6>Barcelona, {time}</h6> */}
-          <p className='text-white! lg:relative lg:left-auto lg:top-auto fixed left-[3px] top-1/3 lg:mt-0! mt-[3px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
+          <p className='text-white! fixed left-[3px] top-[66.667dvh] mt-[3px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
         </div>
 
       </div>
 
-      <div className='fixed bottom-0 lg:left-1/2 left-0 p-[3px] mix-blend-overlay'>
+      {/* <div className='fixed bottom-0 lg:left-1/2 left-0 p-[3px] mix-blend-overlay'>
         <p className='uppercase text-white!'>New website soon</p>
-      </div>
+      </div> */}
 
     </main>
   );

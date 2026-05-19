@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { urlFor } from '@/sanity/helper';
-import { responsive } from './responsive';
 
 type ProjectImage = {
   asset: {
@@ -30,18 +29,20 @@ export type ProjectItem = {
 type ProjectsGalleryClientProps = {
   projects: ProjectItem[];
   onProjectOpen?: (slug: string, categorySlug?: string | null) => void;
-  onProjectHoverChange?: (categorySlug: string | null) => void;
+  activeCategorySlug?: string | null;
+  onProjectHoverCategoryChange?: (categorySlug: string | null) => void;
 };
 
 export default function ProjectsGalleryClient({
   projects,
   onProjectOpen,
-  onProjectHoverChange,
+  activeCategorySlug,
+  onProjectHoverCategoryChange,
 }: ProjectsGalleryClientProps) {
-  const isMobile = responsive();
   const mainRef = useRef<HTMLElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const [distances, setDistances] = useState<number[]>([]);
-  const [hoveredProjectKey, setHoveredProjectKey] = useState<string | null>(null);
+  const [shouldClone, setShouldClone] = useState(false);
   // const [visible, setVisible] = useState(false);
 
   // useEffect(() => {
@@ -51,9 +52,33 @@ export default function ProjectsGalleryClient({
 
   useEffect(() => {
     const main = mainRef.current;
+    const content = contentRef.current;
+
+    if (!main || !content) return;
+
+    const updateCloneState = () => {
+      const children = Array.from(content.querySelectorAll('[data-project-item]')) as HTMLElement[];
+      const baseChildren = children.slice(0, projects.length);
+      const baseWidth = baseChildren.reduce((total, child) => total + child.offsetWidth, 0);
+      setShouldClone(baseWidth > main.clientWidth);
+    };
+
+    updateCloneState();
+
+    const observer = new ResizeObserver(updateCloneState);
+    observer.observe(main);
+    observer.observe(content);
+
+    return () => observer.disconnect();
+  }, [projects, activeCategorySlug]);
+
+  useEffect(() => {
+    const main = mainRef.current;
     if (!main) return;
 
     const handleScroll = () => {
+      if (!shouldClone) return;
+
       const half = main.scrollWidth / 2;
       if (main.scrollLeft >= half) {
         main.scrollLeft -= half;
@@ -69,7 +94,7 @@ export default function ProjectsGalleryClient({
 
     main.addEventListener('scroll', handleScroll, { passive: true });
     return () => main.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [shouldClone]);
 
   // const getHeightClass = (distance: number): string => {
   //   return distance < 50 ? 'h-full' : 'h-1/2';
@@ -85,30 +110,27 @@ export default function ProjectsGalleryClient({
 
     >
 
-      <div className="flex w-max pr-[2px]">
+      <div ref={contentRef} className={`flex w-max pr-[2px]`}>
         
-        {[...projects, ...projects].map((project, index) => (
+        {(shouldClone ? [...projects, ...projects] : projects).map((project, index) => (
+        // {/* {[...projects].filter((project) => (project.images?.length ?? 0) > 1).map((project, index) => ( */}
           (() => {
-            const projectKey = `${project.slug.current}-${index}`;
-
             return (
           <div
-            key={projectKey}
+            key={`${project.slug.current}-${index}`}
             data-project-item
             // className={`h-full pb-(--header) transition-opacity duration-100 ease-in-out ${index < projects.length ? (visibleItems.includes(index) ? 'opacity-100' : 'opacity-0') : 'opacity-100'}`}
             // className={`${getHeightClass(distances[index] ?? 300)} sticky pl-[2px] left-0 bg-white transition-all duration-200`}
-            className={`sticky pl-[2px] left-0 duration-500 ease-in-out bg-white transition-all duration-200 ${hoveredProjectKey === projectKey ? 'pt-[calc(var(--lh)+4px)]' : ''}`}
+            className={`sticky left-0 duration-500 bg-(--color-positive) hover:pt-[calc(var(--lh)+4px)] ${activeCategorySlug && project.categories?.[0]?.slug !== activeCategorySlug ? 'w-0 p-0! duration-0! overflow-hidden' : ''}`}
             data-category={project.categories?.[0]?.slug || ''}
-            onMouseMove={() => {
-              setHoveredProjectKey(projectKey);
-              onProjectHoverChange?.(project.categories?.[0]?.slug || null);
+            onMouseEnter={() => {
+              onProjectHoverCategoryChange?.(project.categories?.[0]?.slug || null);
             }}
             onMouseLeave={() => {
-              setHoveredProjectKey(null);
-              onProjectHoverChange?.(null);
+              onProjectHoverCategoryChange?.(null);
             }}
           >
-            <div className='my-[2px]'>
+            <div className='my-[2px] pl-[2px]'>
               <p>
                 {project.code}.{project.title}
               </p>
@@ -128,7 +150,7 @@ export default function ProjectsGalleryClient({
                   key={project.images[0].asset._id}
                   src={urlFor(project.images[0]).url()}
                   alt={project.title}
-                  className="lg:w-auto w-screen h-auto lg:h-[66.667dvh] object-cover"
+                  className="lg:w-auto w-[90vw] h-auto lg:h-[66.667dvh] object-cover pl-[2px]"
                 />
               )}
             </Link>
