@@ -303,7 +303,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                             <div className='lg:absolute flex lg:flex-col flex-row-reverse justify-between w-full top-0 left-0 lg:items-start z-10 lg:pt-(--kv) pt-[calc(var(--kv)*3+var(--lh))] px-(--kv)'>
 
                                 <h6
-                                    className='block mb-(--kv) cursor-pointer lg:absolute lg:top-[33.334dvh]'
+                                    className='mb-(--kv) block cursor-pointer lg:absolute lg:top-[33.334dvh]'
                                     onClick={() => setActiveSingleView('all')}
                                 >
                                     Back
