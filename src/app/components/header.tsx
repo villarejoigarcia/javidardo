@@ -177,9 +177,9 @@ export default function Header({
           // aria-label="Toggle dark mode"
           className="relative"
         >
-          <div className="w-[200%] h-[8px] border-(--color-negative) border-[.95px] rounded-(--kv) absolute z-0"></div>
+          <div className="w-[200%] h-[8px] border-(--color-negative) border rounded-(--kv) absolute z-0"></div>
           <div
-            className={`w-[8px] h-[8px] bg-(--color-negative) border-(--color-negative) border-[.95px] rounded-(--kv) relative transition-transform duration-300 ${isDark ? 'translate-x-[8px]' : ''}`}
+            className={`w-[8px] h-[8px] bg-(--color-negative) border-(--color-negative) border rounded-(--kv) relative transition-transform duration-300 ${isDark ? 'translate-x-[8px]' : ''}`}
           ></div>
         </button>
         

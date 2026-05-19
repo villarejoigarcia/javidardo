@@ -98,28 +98,23 @@ h1 span {
 h6 {
 	text-transform: uppercase;
 	/* color: var(--color-grey); */
-	opacity: .3;
+	opacity: .4;
 }
 
 /* button {
 	color: var(--color-grey);
 } */
 
-h6:hover {
-	/* color: var(--color-negative); */
-	opacity: 100;
-}
-
 a,
 button {
 	display: block;
 	cursor: pointer;
-	/* transition: .333s; */
+	transition: .333s;
 }
 
-a:hover {
+/* a:hover {
 	color: var(--color-grey);
-}
+} */
 
 #loader:hover a {
 	opacity: 0;

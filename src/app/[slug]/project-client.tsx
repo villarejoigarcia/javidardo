@@ -197,7 +197,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
 
                             <h6
                                 onClick={handleGoHome}
-                                className="cursor-pointer transition-colors duration-300 uppercase"
+                                className="cursor-pointer duration-333! uppercase hover:opacity-100!"
                             >
                                 Close
                             </h6>
@@ -218,7 +218,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                                 event.preventDefault();
                                                 handleProjectSwitch(item.slug);
                                             }}
-                                            className={`flex-1 transition-[color] duration-300 hover:text-(--color-negative)! ${isActive ? 'text-black' : 'text-(--color-grey)!'}`}
+                                            className={`flex-1 duration-333 ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-100'}`}
                                         >
                                             {item.code ? `${item.code}.` : ''}
                                             {item.title}
@@ -304,7 +304,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                             <div className='lg:absolute flex lg:flex-col flex-row-reverse justify-between w-full top-0 left-0 lg:items-start z-10 lg:pt-(--kv) pt-[calc(var(--kv)*3+var(--lh))] px-(--kv)'>
 
                                 <h6
-                                    className='mb-(--kv) block cursor-pointer lg:absolute lg:top-[33.334dvh]'
+                                    className='mb-(--kv) block cursor-pointer lg:absolute lg:top-[33.334dvh] hover:opacity-100! duration-333!'
                                     onClick={() => setActiveSingleView('all')}
                                 >
                                     Back
