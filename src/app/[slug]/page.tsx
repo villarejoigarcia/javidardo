@@ -40,7 +40,7 @@ export default async function ProjectPage(props: ProjectProps) {
     ),
     client.fetch<CategoryItem[]>(CATEGORIES_QUERY),
     client.fetch<ProjectListItem[]>(
-      `*[_type=="project" && count(images) > 1] | order(publishedAt desc){
+      `*[_type=="project" && count(images) > 1] | order(coalesce(length(code), 9999) desc, code desc){
         title,
         code,
         "slug": slug.current
