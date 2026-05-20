@@ -95,13 +95,13 @@ export default function HomeClient({ projects, categories, skipIntroOnLoad }: Ho
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: showIntro || isLeaving ? 0 : 1 }}
-          transition={{ duration: 0.666, ease: 'easeOut' }}
+          transition={{ duration: 0.666 }}
           className={isLeaving ? 'pointer-events-none' : ''}
         >
           <div className="relative h-dvh overflow-hidden">
             <motion.div
               animate={{ opacity: activeView === 'archive' ? 0.1 : 1 }}
-              transition={{ duration: 0.666, ease: 'easeOut' }}
+              transition={{ duration: 0.666 }}
             >
               <Gallery
                 projects={projects}
@@ -119,7 +119,7 @@ export default function HomeClient({ projects, categories, skipIntroOnLoad }: Ho
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: .666, ease: 'easeOut' }}
+                  transition={{ duration: .666 }}
                 >
                   <Archive
                     projects={projects}

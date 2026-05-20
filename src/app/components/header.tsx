@@ -167,7 +167,9 @@ export default function Header({
       
 
     </header>
-    <div className="flex fixed z-11 bottom-(--kv) items-center gap-x-(--kv) right-[calc(8px+var(--kv))]">
+
+    <div 
+    className="flex fixed z-11 bottom-(--kv) items-center gap-x-(--kv) right-[calc(8px+var(--kv))]">
         
         <h6 
           className="cursor-pointer duration-500 opacity-100! hover:opacity-33!"

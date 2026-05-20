@@ -176,7 +176,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
         >
             <motion.div
                 animate={{ opacity: isLeaving ? 0 : 1 }}
-                transition={{ duration: 0.666, ease: 'easeOut' }}
+                transition={{ duration: 0.666 }}
                 className={isLeaving ? 'pointer-events-none' : ''}
             >
 
@@ -189,12 +189,13 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                         className={`flex-1`}
                         initial={shouldAnimateList ? { opacity: 0 } : false}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.666, ease: 'easeOut' }}
+                        transition={{ duration: 0.666 }}
                     >
 
-                        <div className='flex lg:flex-row flex-row-reverse justify-between sticky top-(--kv) mt-(--kv) lg:pl-(--kv) px-(--kv)'>
+                        {/* <div className='flex lg:flex-row flex-row-reverse justify-between absolute lg:w-1/3 top-0 w-full top-(--kv) my-(--kv) lg:pl-(--kv) px-(--kv)'> */}
+                        <div className='flex lg:gap-x-0 gap-x-[2px] flex-row justify-between absolute lg:w-1/3 top-0 w-full top-(--kv) my-(--kv) lg:pl-(--kv) px-(--kv)'>
 
-                            <div className='lg:flex-1'>
+                            <div className='flex-1'>
 
                             <h6
                                 onClick={handleGoHome}
@@ -205,7 +206,8 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
 
                             </div>
 
-                            <div className='hidden lg:flex flex-2 flex-col items-start'>
+                            {/* <div className='hidden lg:flex flex-2 flex-col items-start'> */}
+                            <div className='flex lg:flex-2 flex-1 flex-col items-start'>
 
                                 {projects.map((item) => {
                                     const activeSlug = pendingSlug ?? project.slug;
@@ -231,7 +233,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
 
                             </div>
 
-                            <div className='lg:hidden flex'>
+                            {/* <div className='lg:hidden flex'>
 
                                 {(() => {
                                     const activeSlug = pendingSlug ?? project.slug;
@@ -244,43 +246,42 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                     ) : null;
                                 })()}
 
-                            </div>
+                            </div> */}
 
                         </div>
                     </motion.div>
 
 
                     <motion.div
-                        className="flex-2 lg:pl-[5px] min-w-0"
+                        className="flex-2 lg:pl-[5px]"
                         initial={shouldAnimateContent ? { opacity: 0 } : false}
                         animate={{ opacity: 1 }}
                         transition={{
                             duration: .666,
-                            ease: 'easeOut',
                         }}
                     >
 
                         {/* all */}
 
                         <motion.div
-                            className={`flex lg:py-[2px] pt-(--kv) lg:px-0 px-[2px] top-0 left-0 w-full max-h-dvh overflow-y-auto ${activeSingleView === 'all' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                            // className={`flex lg:py-[2px] lg:px-0 px-[2px] w-full max-h-dvh pt-[calc(var(--lh)+(var(--kv)*2))] overflow-y-auto ${activeSingleView === 'all' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                            className={`flex lg:py-[2px] lg:px-0 px-[2px] w-full max-h-dvh pt-[33.333dvh] overflow-y-auto ${activeSingleView === 'all' ? 'pointer-events-auto' : 'pointer-events-none'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
                             // animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'all' ? 1 : 0 }}
                             animate={isSwitchingProject ? { opacity: 1 } : { opacity: activeSingleView === 'all' ? 1 : 1 }}
                             transition={{
                                 duration: 0.666,
-                                ease: 'easeOut',
                                 // delay: isSingleViewModeChange && activeSingleView === 'all' ? .666 : 0,
                             }}
                         >
 
-                            <div className='grid grid-cols-4 gap-[2px] flex-2'>
+                            <div className='grid lg:grid-cols-4 grid-cols-2 gap-[2px] flex-2'>
                                 {project.images.map((img, index) => (
                                     <img
                                         key={`${img.asset._id}-${index}`}
                                         src={urlFor(img).width(800).url()}
                                         alt={project.title}
-                                        className="w-full object-cover cursor-zoom-in"
+                                        className="w-full object-cover cursor-zoom-in relative z-5"
                                         onClick={() => {
                                             setActiveImageIndex(index);
                                             setActiveSingleView('single');
@@ -294,12 +295,11 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                         {/* single */}
 
                         <motion.div
-                            className={`z-100 bg-[color-mix(in_srgb,var(--color-positive)_90%,transparent)] flex lg:flex-row flex-col justify-center top-0 left-0 lg:px-0 px-[2px] lg:py-[2px] left-0 w-screen h-dvh cursor-zoom-out absolute ${activeSingleView === 'single' ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                            className={`z-100 bg-[color-mix(in_srgb,var(--color-positive)_90%,transparent)] flex lg:flex-row flex-col lg:justify-center top-0 left-0 lg:px-0 px-[2px] lg:py-[2px] left-0 w-screen h-dvh cursor-zoom-out absolute ${activeSingleView === 'single' ? 'pointer-events-auto' : 'pointer-events-none'}`}
                             initial={shouldAnimateContent ? { opacity: 0 } : false}
                             animate={isSwitchingProject ? { opacity: 0 } : { opacity: activeSingleView === 'single' ? 1 : 0 }}
                             transition={{
                                 duration: 0.666,
-                                ease: 'easeOut',
                                 // delay: isSingleViewModeChange && activeSingleView === 'single' ? .666 : 0,
                             }}
                             onClick={(event) => {
@@ -309,7 +309,8 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                             }}
                         >
 
-                            <div className='lg:absolute flex lg:flex-col flex-row-reverse justify-between w-full top-0 left-0 lg:items-start z-10 lg:pt-(--kv) pt-[calc(var(--kv)*3+var(--lh))] px-(--kv)'>
+                            {/* <div className='lg:absolute flex lg:flex-col flex-row-reverse justify-between w-full top-0 left-0 lg:items-start z-10 lg:pt-(--kv) pt-[calc(var(--kv)*3+var(--lh))] px-(--kv)'> */}
+                            <div className='lg:absolute flex flex-col justify-between w-full top-0 left-0 items-start z-10 pt-(--kv) px-(--kv)'>
 
                                 <h6
                                     className='mb-(--kv) block cursor-pointer hover:opacity-100! duration-333!'
@@ -324,7 +325,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                                         <p
                                             key={index}
                                             onMouseEnter={() => setActiveImageIndex(index)}
-                                            className={` block pr-[calc(var(--lh)/2)]! duration-0! lg:py-(--kv)! cursor-ew-resize ${index === activeImageIndex ? 'opacity-100' : 'opacity-40'}`}
+                                            className={` block pr-[calc(var(--lh)/2)]! duration-0! lg:py-(--kv)! pt-(--kv)! cursor-ew-resize ${index === activeImageIndex ? 'opacity-100' : 'opacity-40'}`}
                                         >{index + 1}</p>
                                     ))}
 
@@ -333,7 +334,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                             </div>
 
                             <div
-                                className='h-full relative'
+                                className='lg:h-full relative'
                                 onClick={() => {
                                     handleNextImage();
                                 }}

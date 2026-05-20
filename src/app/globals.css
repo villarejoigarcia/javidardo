@@ -38,7 +38,7 @@ body {
 	margin: 0;
 	padding: 0;
 	background-color: var(--color-positive);
-	transition: var(--transition_s);
+	transition: .333s;
 }
 
 * {
@@ -141,7 +141,7 @@ button {
 	}
 
 	:root {
-		--header: 56px;
+		--header: 54px;
 		--lh: 9.6px;
 	}
 
