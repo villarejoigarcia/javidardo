@@ -9,6 +9,7 @@ type ArchiveProps = {
   onProjectOpen?: (slug: string, categorySlug?: string | null) => void;
   activeCategorySlug?: string | null;
   onProjectHoverCategoryChange?: (categorySlug: string | null) => void;
+  onBackgroundClick?: () => void;
 };
 
 export default function Archive({
@@ -16,13 +17,20 @@ export default function Archive({
   onProjectOpen,
   activeCategorySlug,
   onProjectHoverCategoryChange,
+  onBackgroundClick,
 }: ArchiveProps) {
   return (
 
     <main>
 
-      <div className="flex flex-wrap justify-center content-start h-dvh overflow-y-auto lg:pb-[calc(33.333vh-var(--lh)-4px)] pb-(--header)">
-
+      {/* <div className="flex flex-wrap justify-center content-start h-dvh overflow-y-auto lg:pb-[calc(33.333vh-var(--lh)-4px)] pb-(--header)"> */}
+      <div
+        className="flex flex-wrap justify-center content-start h-dvh overflow-y-auto lg:pb-[calc(33.333vh-var(--lh)-4px)]"
+        onClick={(event) => {
+          if (event.target !== event.currentTarget) return;
+          onBackgroundClick?.();
+        }}
+      >
         
         {[...projects].filter((project) => (project.images?.length ?? 0) > 1).map((project, index) => (
           
@@ -70,10 +78,11 @@ export default function Archive({
                   {project.images.slice(0, 3).map((image, imageIndex) => (
                     <img
                       key={image.asset._id || `${project.slug.current}-${imageIndex}`}
-                      src={urlFor(image).url()}
+                      src={urlFor(image).width(400).url()}
                       alt={`${project.title} ${imageIndex + 1}`}
                       // className="w-auto h-[22.223dvh] object-cover"
-                      className="w-auto lg:h-[calc(22.222vh-((var(--lh))+4px)*2)] h-[16.667vh] object-cover"
+                      // className="w-auto lg:h-[calc(22.222vh-((var(--lh))+4px)*2)] h-[16.667vh] object-cover"
+                      className="w-auto lg:h-[calc(22.222vh-((var(--lh))+4px)*2)] h-[8.334vh] object-cover"
                     />
                   ))}
                 </div>

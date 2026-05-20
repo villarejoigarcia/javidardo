@@ -126,6 +126,7 @@ export default function HomeClient({ projects, categories, skipIntroOnLoad }: Ho
                     onProjectOpen={handleProjectOpen}
                     activeCategorySlug={selectedCategorySlug}
                     onProjectHoverCategoryChange={setHoveredCategorySlug}
+                    onBackgroundClick={() => setActiveView('gallery')}
                   />
                 </motion.div>
               ) : null}
