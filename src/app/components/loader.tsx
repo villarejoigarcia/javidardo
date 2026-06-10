@@ -83,6 +83,13 @@ export default function ProjectsGalleryClient({
     return null;
   }
 
+  const leftActiveIndex = leftProjects.length
+    ? activeProjectIndex % leftProjects.length
+    : -1;
+  const rightActiveIndex = rightProjects.length
+    ? activeProjectIndex % rightProjects.length
+    : -1;
+
   const getProjectLabel = (project: ProjectItem) =>
     project.code ? `${project.code}.${project.title}` : project.title;
 
@@ -113,7 +120,7 @@ export default function ProjectsGalleryClient({
     >
       <div>
         {leftProjects.map((project, index) => {
-          const isActive = index === activeProjectIndex;
+          const isActive = index === leftActiveIndex;
 
           return (
             <div
@@ -144,7 +151,7 @@ export default function ProjectsGalleryClient({
 
       <div>
         {rightProjects.map((project, index) => {
-          const isActive = index === activeProjectIndex;
+          const isActive = index === rightActiveIndex;
 
           return (
             <div
