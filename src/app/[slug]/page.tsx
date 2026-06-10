@@ -8,7 +8,7 @@ interface ProjectProps {
 }
 
 const CATEGORIES_QUERY = `
-*[_type == "category" && count(*[_type == "project" && count(images) > 1 && references(^._id)]) > 0] {
+*[_type == "category" && count(*[_type == "project" && defined(code) && code != "" && references(^._id)]) > 0] {
   _id,
   title,
   "slug": slug.current
@@ -40,7 +40,7 @@ export default async function ProjectPage(props: ProjectProps) {
     ),
     client.fetch<CategoryItem[]>(CATEGORIES_QUERY),
     client.fetch<ProjectListItem[]>(
-      `*[_type=="project" && count(images) > 1] | order(coalesce(length(code), 9999) desc, code desc){
+      `*[_type=="project" && defined(code) && code != ""] | order(coalesce(length(code), 9999) desc, code desc){
         title,
         code,
         "slug": slug.current

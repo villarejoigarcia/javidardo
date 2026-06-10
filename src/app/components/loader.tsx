@@ -20,8 +20,8 @@ export type ProjectItem = {
   slug: {
     current: string;
   };
-  code: string;
-  images: ProjectImage[];
+  code?: string;
+  images?: ProjectImage[];
   categories?: ProjectCategory[];
 };
 
@@ -83,26 +83,29 @@ export default function ProjectsGalleryClient({
     return null;
   }
 
+  const getProjectLabel = (project: ProjectItem) =>
+    project.code ? `${project.code}.${project.title}` : project.title;
+
   // clock
 
-  const [time, setTime] = useState('');
+  // const [time, setTime] = useState('');
 
-  useEffect(() => {
-        const updateTime = () => {
-            const now = new Date();
-            setTime(
-                new Intl.DateTimeFormat('es-ES', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    timeZone: 'Europe/Madrid',
-                }).format(now)
-            );
-        };
-        updateTime();
-        const interval = setInterval(updateTime, 1000);
-        return () => clearInterval(interval);
-    }, []);
+  // useEffect(() => {
+  //       const updateTime = () => {
+  //           const now = new Date();
+  //           setTime(
+  //               new Intl.DateTimeFormat('es-ES', {
+  //                   hour: '2-digit',
+  //                   minute: '2-digit',
+  //                   second: '2-digit',
+  //                   timeZone: 'Europe/Madrid',
+  //               }).format(now)
+  //           );
+  //       };
+  //       updateTime();
+  //       const interval = setInterval(updateTime, 1000);
+  //       return () => clearInterval(interval);
+  //   }, []);
 
   return (
     <main
@@ -115,7 +118,7 @@ export default function ProjectsGalleryClient({
           return (
             <div
               key={`${project.slug.current}-${index}`}
-              className={`absolute left-0 top-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute left-0 top-0 w-screen lg:w-[50vw] h-dvh ${isActive ? 'opacity-100' : 'opacity-0'}`}
             >
 
               {project.images?.[0] && (
@@ -126,9 +129,10 @@ export default function ProjectsGalleryClient({
                   className="lg:w-[50vw] w-screen h-dvh object-cover"
                 />
               )}
+              {!project.images?.[0] && <div className="lg:w-[50vw] w-screen h-dvh" />}
               <div className='m-[3px] absolute top-1/3 mix-blend-overlay'>
                 <p className='text-white!'>
-                  {project.code}.{project.title}
+                  {getProjectLabel(project)}
                 </p>
               </div>
 
@@ -145,7 +149,7 @@ export default function ProjectsGalleryClient({
           return (
             <div
               key={`${project.slug.current}-${index}`}
-              className={`lg:block hidden absolute right-0 bottom-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              className={`lg:block hidden absolute right-0 bottom-0 w-[50vw] h-dvh ${isActive ? 'opacity-100' : 'opacity-0'}`}
             >
 
               {project.images?.[0] && (
@@ -156,9 +160,10 @@ export default function ProjectsGalleryClient({
                   className="lg:w-[50vw] w-screen h-[50dvh] lg:h-dvh object-cover"
                 />
               )}
+              {!project.images?.[0] && <div className="lg:w-[50vw] w-screen h-[50dvh] lg:h-dvh" />}
               <div className='m-[3px] absolute top-1/3 mix-blend-overlay'>
                 <p className='text-white!'>
-                  {project.code}.{project.title}
+                  {getProjectLabel(project)}
                 </p>
               </div>
             </div>

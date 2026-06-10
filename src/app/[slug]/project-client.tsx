@@ -10,8 +10,8 @@ import SiteShell from '../components/site-shell';
 
 let hasAnimatedProjectList = false;
 let isProjectSwitch = false;
-const PROJECT_SWITCH_DELAY_MS = 333;
-const PROJECT_SWITCH_DELAY_S = PROJECT_SWITCH_DELAY_MS / 1000;
+// const PROJECT_SWITCH_DELAY_MS = 3333;
+// const PROJECT_SWITCH_DELAY_S = PROJECT_SWITCH_DELAY_MS / 1000;
 
 type ProjectCategory = {
     title: string;

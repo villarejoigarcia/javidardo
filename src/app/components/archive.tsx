@@ -32,7 +32,7 @@ export default function Archive({
         }}
       >
         
-        {[...projects].filter((project) => (project.images?.length ?? 0) > 1).map((project, index) => (
+        {[...projects].map((project, index) => (
           
 
           <div

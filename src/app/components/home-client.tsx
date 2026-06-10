@@ -16,11 +16,12 @@ type CategoryItem = {
 
 type HomeClientProps = {
   projects: ProjectItem[];
+  loaderProjects: ProjectItem[];
   categories: CategoryItem[];
   skipIntroOnLoad: boolean;
 };
 
-export default function HomeClient({ projects, categories, skipIntroOnLoad }: HomeClientProps) {
+export default function HomeClient({ projects, loaderProjects, categories, skipIntroOnLoad }: HomeClientProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [activeView, setActiveView] = useState<'gallery' | 'archive'>('gallery');
@@ -78,7 +79,7 @@ export default function HomeClient({ projects, categories, skipIntroOnLoad }: Ho
             exit={{ opacity: 0 }}
             transition={{ duration: .666, delay: .200 }}
           >
-            <Loader projects={projects} />
+            <Loader projects={loaderProjects} />
           </motion.div>
         ) : null}
       </AnimatePresence>
