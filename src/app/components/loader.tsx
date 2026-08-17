@@ -29,15 +29,6 @@ type ProjectsLoaderClientProps = {
   projects: ProjectItem[];
 };
 
-function shuffleArray<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 
 
 export default function ProjectsGalleryClient({
@@ -48,18 +39,9 @@ export default function ProjectsGalleryClient({
   const [rightProjects, setRightProjects] = useState(projects);
 
   useEffect(() => {
-    const isDesktop = window.innerWidth >= 1024;
-    
-    if (isDesktop) {
-      const mid = Math.ceil(projects.length / 2);
-      setLeftProjects(shuffleArray(projects.slice(0, mid)));
-      setRightProjects(shuffleArray(projects.slice(mid)));
-    } else {
-      setLeftProjects(shuffleArray(projects));
-      setRightProjects([]);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setLeftProjects(projects);
+    setRightProjects(projects);
+  }, [projects]);
 
   // animation
 
@@ -87,7 +69,7 @@ export default function ProjectsGalleryClient({
     ? activeProjectIndex % leftProjects.length
     : -1;
   const rightActiveIndex = rightProjects.length
-    ? activeProjectIndex % rightProjects.length
+    ? (activeProjectIndex + 2) % rightProjects.length
     : -1;
 
   const getProjectLabel = (project: ProjectItem) =>

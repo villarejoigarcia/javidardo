@@ -46,7 +46,7 @@ export default function HomeClient({ projects, loaderProjects, categories, skipI
     }
   }, [pathname, router, skipIntroOnLoad]);
 
-  const handleProjectOpen = (slug: string, _categorySlug?: string | null) => {
+  const handleProjectOpen = (slug: string) => {
     if (isLeaving) return;
 
     setIsLeaving(true);
@@ -63,9 +63,10 @@ export default function HomeClient({ projects, loaderProjects, categories, skipI
     );
   };
 
-  useEffect(() => {
+  const handleViewChange = (view: 'gallery' | 'archive') => {
     setHoveredCategorySlug(null);
-  }, [activeView]);
+    setActiveView(view);
+  };
 
   return (
     <>
@@ -88,7 +89,7 @@ export default function HomeClient({ projects, loaderProjects, categories, skipI
         categories={categories}
         viewMode="home"
         activeView={activeView}
-        onViewChange={setActiveView}
+        onViewChange={handleViewChange}
         activeCategorySlug={selectedCategorySlug}
         hoveredCategorySlug={hoveredCategorySlug}
         onCategorySelect={handleCategorySelect}
@@ -112,26 +113,20 @@ export default function HomeClient({ projects, loaderProjects, categories, skipI
               />
             </motion.div>
 
-            <AnimatePresence initial={false}>
-              {activeView === 'archive' ? (
-                <motion.div
-                  key="archive"
-                  className="absolute inset-0 z-[1] h-dvh"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: .666 }}
-                >
-                  <Archive
-                    projects={projects}
-                    onProjectOpen={handleProjectOpen}
-                    activeCategorySlug={selectedCategorySlug}
-                    onProjectHoverCategoryChange={setHoveredCategorySlug}
-                    onBackgroundClick={() => setActiveView('gallery')}
-                  />
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
+            <motion.div
+              className={`absolute inset-0 z-[1] h-dvh ${activeView === 'archive' ? '' : 'pointer-events-none'}`}
+              initial={false}
+              animate={{ opacity: activeView === 'archive' ? 1 : 0 }}
+              transition={{ duration: 0.666 }}
+            >
+              <Archive
+                projects={projects}
+                onProjectOpen={handleProjectOpen}
+                activeCategorySlug={selectedCategorySlug}
+                onProjectHoverCategoryChange={setHoveredCategorySlug}
+                onBackgroundClick={() => handleViewChange('gallery')}
+              />
+            </motion.div>
           </div>
         </motion.div>
 
