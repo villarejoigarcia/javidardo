@@ -2,6 +2,7 @@ import { client } from '@/sanity/client';
 import { loaderProjectsQuery, projectsQuery } from "./queries/projects-query";
 import HomeClient from './components/home-client';
 import About from './components/about';
+import Loader from './components/loader';
 
 interface HomeProps {
   searchParams: Promise<{ from?: string }>;
@@ -30,12 +31,13 @@ export default async function Home(props: HomeProps) {
   return (
     <>
       <About />
-      <HomeClient
+      <Loader projects={loaderProjects} />
+      {/* <HomeClient
         projects={projects}
         loaderProjects={loaderProjects}
         categories={categories}
         skipIntroOnLoad={skipIntroOnLoad}
-      />
+      /> */}
     </>
   );
 }

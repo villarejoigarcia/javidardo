@@ -29,48 +29,34 @@ type ProjectsLoaderClientProps = {
   projects: ProjectItem[];
 };
 
+function useActiveProjectIndex(projectCount: number, initialIndex = 0) {
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
 
+  useEffect(() => {
+    if (projectCount <= 1) return;
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((currentIndex) => (currentIndex + 1) % projectCount);
+    }, 200);
+
+    return () => window.clearInterval(intervalId);
+  }, [projectCount]);
+
+  return projectCount ? activeIndex % projectCount : -1;
+}
 
 export default function ProjectsGalleryClient({
   projects,
 }: ProjectsLoaderClientProps) {
-  const [activeProjectIndex, setActiveProjectIndex] = useState(0);
-  const [leftProjects, setLeftProjects] = useState(projects);
-  const [rightProjects, setRightProjects] = useState(projects);
-
-  useEffect(() => {
-    setLeftProjects(projects);
-    setRightProjects(projects);
-  }, [projects]);
-
-  // animation
-
-  useEffect(() => {
-    if (projects.length <= 1) return;
-
-    const intervalId = window.setInterval(() => {
-      setActiveProjectIndex((currentIndex) => (currentIndex + 1) % (Math.max(leftProjects.length, rightProjects.length) || projects.length));
-    }, 200);
-    const stopAutoplayTimeout = window.setTimeout(() => {
-      window.clearInterval(intervalId);
-    }, 5000);
-
-    return () => {
-      window.clearInterval(intervalId);
-      window.clearTimeout(stopAutoplayTimeout);
-    };
-  }, [projects.length, leftProjects.length, rightProjects.length]);
+  const midpoint = Math.ceil(projects.length / 2);
+  const leftProjects = projects.slice(0, midpoint);
+  const rightProjects = projects.slice(midpoint);
+  const leftActiveIndex = useActiveProjectIndex(leftProjects.length);
+  const rightActiveIndex = useActiveProjectIndex(rightProjects.length, 2);
 
   if (projects.length === 0) {
     return null;
   }
-
-  const leftActiveIndex = leftProjects.length
-    ? activeProjectIndex % leftProjects.length
-    : -1;
-  const rightActiveIndex = rightProjects.length
-    ? (activeProjectIndex + 2) % rightProjects.length
-    : -1;
 
   const getProjectLabel = (project: ProjectItem) =>
     project.code ? `${project.code}.${project.title}` : project.title;
@@ -161,32 +147,46 @@ export default function ProjectsGalleryClient({
 
       </div>
 
-      <div className='fixed bottom-0 left-0 w-full flex items-end justify-between mix-blend-overlay'>
+
+
+      {/* <div className='fixed bottom-0 left-0 w-full flex items-end justify-between mix-blend-overlay'>
         
         <div className='p-[5px]'>
           <h1 className='text-white!'>Javi Dardo</h1>
-          {/* <Logo /> */}
+        </div>
+
+        <div className='p-(--kv) text-right'>
+          <p className='text-white! fixed left-[3px] top-[66.667dvh] mt-[3px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
+        </div>
+
+      </div> */}
+
+
+
+      <div className='fixed top-0 left-0 w-full px-[3px] flex justify-between mix-blend-overlay'>
+        
+        <div className='lg:flex-[.5]'>
+          <h1 className='text-white!'>Javi Dardo</h1>
         </div>
 
 
-        {/* <div className='lg:flex-[.5] pt-[3px] flex'>
+        <div className='lg:flex-[.5] pt-[3px] flex'>
           <div className='flex flex-col ml-auto mr-[3px]' id='loader'>
             <a className='text-white!' href="https://www.instagram.com/javidardo" target='_blank'>@javidardo</a>
             <a className='text-white!' href="tel:+34 669 342 305">+34 669 342 305</a>
             <a className='text-white!' href="mailto:contact@javidardo.com">contact@javidardo.com</a>
           </div>
-        </div> */}
+        </div>
 
-        <div className='p-(--kv) text-right'>
-          {/* <h6>Barcelona, {time}</h6> */}
-          <p className='text-white! fixed left-[3px] top-[66.667dvh] mt-[3px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
+        <div className='lg:flex-1 py-[2px] text-right'>
+          <p className='text-white! lg:relative lg:left-auto lg:top-auto fixed left-[3px] top-1/3 lg:mt-0! mt-[3px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
         </div>
 
       </div>
 
-      {/* <div className='fixed bottom-0 lg:left-1/2 left-0 p-[3px] mix-blend-overlay'>
+      <div className='fixed bottom-0 lg:left-1/2 left-0 p-[3px] mix-blend-overlay'>
         <p className='uppercase text-white!'>New website soon</p>
-      </div> */}
+      </div>
 
     </main>
   );
