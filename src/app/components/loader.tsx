@@ -114,7 +114,7 @@ export default function ProjectsGalleryClient({
                 />
               )}
               {!project.images?.[0] && <div className="lg:w-[50vw] w-screen h-dvh" />}
-              <div className='m-[3px] absolute lg:top-1/3 top-2/3 mix-blend-overlay'>
+              <div className='m-[3px] absolute top-1/3 mix-blend-overlay'>
                 <p className='text-white!'>
                   {getProjectLabel(project)}
                 </p>
