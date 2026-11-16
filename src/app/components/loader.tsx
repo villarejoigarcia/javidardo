@@ -39,7 +39,14 @@ function useActiveProjectIndex(projectCount: number, initialIndex = 0) {
       setActiveIndex((currentIndex) => (currentIndex + 1) % projectCount);
     }, 200);
 
-    return () => window.clearInterval(intervalId);
+    const stopAutoplayTimeout = window.setTimeout(() => {
+      window.clearInterval(intervalId);
+    }, 5000);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(stopAutoplayTimeout);
+    };
   }, [projectCount]);
 
   return projectCount ? activeIndex % projectCount : -1;
@@ -51,6 +58,7 @@ export default function ProjectsGalleryClient({
   const midpoint = Math.ceil(projects.length / 2);
   const leftProjects = projects.slice(0, midpoint);
   const rightProjects = projects.slice(midpoint);
+  const mobileActiveIndex = useActiveProjectIndex(projects.length);
   const leftActiveIndex = useActiveProjectIndex(leftProjects.length);
   const rightActiveIndex = useActiveProjectIndex(rightProjects.length, 2);
 
@@ -87,13 +95,14 @@ export default function ProjectsGalleryClient({
       className={`w-full`}
     >
       <div>
-        {leftProjects.map((project, index) => {
-          const isActive = index === leftActiveIndex;
+        {projects.map((project, index) => {
+          const isMobileActive = index === mobileActiveIndex;
+          const isLeftActive = index < midpoint && index === leftActiveIndex;
 
           return (
             <div
               key={`${project.slug.current}-${index}`}
-              className={`absolute left-0 top-0 w-screen lg:w-[50vw] h-dvh ${isActive ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute left-0 top-0 w-screen lg:w-[50vw] h-dvh ${isMobileActive ? 'opacity-100' : 'opacity-0'} ${isLeftActive ? 'lg:opacity-100' : 'lg:opacity-0'} ${index >= midpoint ? 'lg:hidden' : ''}`}
             >
 
               {project.images?.[0] && (
@@ -105,7 +114,7 @@ export default function ProjectsGalleryClient({
                 />
               )}
               {!project.images?.[0] && <div className="lg:w-[50vw] w-screen h-dvh" />}
-              <div className='m-[3px] absolute top-1/3 mix-blend-overlay'>
+              <div className='m-[3px] absolute lg:top-1/3 top-2/3 mix-blend-overlay'>
                 <p className='text-white!'>
                   {getProjectLabel(project)}
                 </p>
@@ -149,7 +158,7 @@ export default function ProjectsGalleryClient({
 
 
 
-      {/* <div className='fixed bottom-0 left-0 w-full flex items-end justify-between mix-blend-overlay'>
+      <div className='fixed bottom-0 left-0 w-full flex items-end justify-between mix-blend-overlay'>
         
         <div className='p-[5px]'>
           <h1 className='text-white!'>Javi Dardo</h1>
@@ -159,11 +168,11 @@ export default function ProjectsGalleryClient({
           <p className='text-white! fixed left-[3px] top-[66.667dvh] mt-[3px]!'>Fashion and still life photographer based in Barcelona and working worldwide</p>
         </div>
 
-      </div> */}
+      </div>
 
 
 
-      <div className='fixed top-0 left-0 w-full px-[3px] flex justify-between mix-blend-overlay'>
+      {/* <div className='fixed top-0 left-0 w-full px-[3px] flex justify-between mix-blend-overlay'>
         
         <div className='lg:flex-[.5]'>
           <h1 className='text-white!'>Javi Dardo</h1>
@@ -186,7 +195,7 @@ export default function ProjectsGalleryClient({
 
       <div className='fixed bottom-0 lg:left-1/2 left-0 p-[3px] mix-blend-overlay'>
         <p className='uppercase text-white!'>New website soon</p>
-      </div>
+      </div> */}
 
     </main>
   );

@@ -31,13 +31,13 @@ export default async function Home(props: HomeProps) {
   return (
     <>
       <About />
-      <Loader projects={loaderProjects} />
-      {/* <HomeClient
+      {/* <Loader projects={loaderProjects} /> */}
+      <HomeClient
         projects={projects}
         loaderProjects={loaderProjects}
         categories={categories}
         skipIntroOnLoad={skipIntroOnLoad}
-      /> */}
+      />
     </>
   );
 }

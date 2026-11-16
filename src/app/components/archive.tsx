@@ -25,7 +25,7 @@ export default function Archive({
 
       {/* <div className="flex flex-wrap justify-center content-start h-dvh overflow-y-auto lg:pb-[calc(33.333vh-var(--lh)-4px)] pb-(--header)"> */}
       <div
-        className="flex flex-wrap justify-center content-start h-dvh overflow-y-auto lg:pb-[calc(33.333vh-var(--lh)-4px)]"
+        className="flex flex-wrap justify-center content-start h-dvh overflow-y-auto lg:pb-[calc(33.333vh-var(--lh)-4px)] pb-[8.334vh]"
         onClick={(event) => {
           if (event.target !== event.currentTarget) return;
           onBackgroundClick?.();

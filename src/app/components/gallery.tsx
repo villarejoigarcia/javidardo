@@ -41,6 +41,7 @@ export default function ProjectsGalleryClient({
 }: ProjectsGalleryClientProps) {
   const mainRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const previousScrollLeftRef = useRef(0);
   const [distances, setDistances] = useState<number[]>([]);
   const [shouldClone, setShouldClone] = useState(false);
   // const [visible, setVisible] = useState(false);
@@ -76,15 +77,19 @@ export default function ProjectsGalleryClient({
     const main = mainRef.current;
     if (!main) return;
 
+    previousScrollLeftRef.current = main.scrollLeft;
+
     const handleScroll = () => {
       if (!shouldClone) return;
 
-      const half = main.scrollWidth / 2;
-      if (main.scrollLeft >= half) {
-        main.scrollLeft -= half;
-      } else if (main.scrollLeft <= 0) {
-        main.scrollLeft += half;
+      let scrollLeft = main.scrollLeft;
+      const scrollingRight = scrollLeft > previousScrollLeftRef.current;
+
+      if (scrollingRight && scrollLeft >= main.scrollWidth / 2) {
+        main.scrollLeft = scrollLeft - main.scrollWidth / 2;
+        scrollLeft = main.scrollLeft;
       }
+      previousScrollLeftRef.current = scrollLeft;
 
       // Calcular distancia de cada elemento al borde izquierdo
       const children = Array.from(main.querySelectorAll('[data-project-item]')) as HTMLElement[];
