@@ -270,7 +270,7 @@ export default function ProjectPageClient({ project, categories, projects }: Pro
                             animate={isSwitchingProject ? { opacity: 1 } : { opacity: activeSingleView === 'all' ? 1 : 1 }}
                             transition={{
                                 duration: 0.666,
-                                delay: .5
+                                delay: .333
                                 // delay: isSingleViewModeChange && activeSingleView === 'all' ? .666 : 0,
                             }}
                         >
